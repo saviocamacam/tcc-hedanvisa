@@ -1,0 +1,50 @@
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutGap="0.5%" fxLayoutWrap fxLayoutAlign="center">
+    <div class="grid">
+        <div>
+            <mat-form-field class="example-full-width" style="width: 100%">
+                <textarea matInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
+            </mat-form-field>
+            <mat-card style="width: 100%">Simple card</mat-card>
+        </div>
+        <div>
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Compartilhado com:
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Willian, Savio...
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <mat-form-field>
+                        <input matInput placeholder="Compartilhar com:" type="email" width="100%">
+                    </mat-form-field>
+
+                    <button matInput mat-button color="accent">Compartilhar</button>
+                    <div>
+                        <span>Savio</span>
+                        <button mat-icon-button color="warn">
+                            <mat-icon aria-label="Example icon-button with a heart icon">close</mat-icon>
+                        </button>
+                    </div>
+                    <div>
+                        <span>Jefferson</span>
+                        <button mat-icon-button color="warn">
+                            <mat-icon aria-label="Example icon-button with a heart icon">close</mat-icon>
+                        </button>
+                    </div>
+                    <div>
+                        <span>Willian</span>
+                        <button mat-icon-button color="warn">
+                            <mat-icon aria-label="Example icon-button with a heart icon">close</mat-icon>
+                        </button>
+                    </div>
+                </mat-expansion-panel>
+
+            </mat-accordion>
+        </div>
+    </div>
+
+</div>

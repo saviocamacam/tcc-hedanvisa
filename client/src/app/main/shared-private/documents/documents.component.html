@@ -1,0 +1,80 @@
+<div class="page-layout carded left-sidebar inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg mat-primary-300-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- SIDEBAR -->
+    <fuse-sidebar class="sidebar" name="carded-left-sidebar-2" position="left" lockedOpen="gt-md">
+
+        <!-- SIDEBAR HEADER -->
+        <div class="header p-24 mat-primary-300-bg">
+            <!-- <h2 class="m-0">Sidebar header</h2> -->
+            <!-- <button mat-raised-button isIconButton class="w-100-p mt-32 mat-accent-bg">
+                <mat-icon class="mr-32">save</mat-icon>SALVAR
+            </button> -->
+
+            <!-- <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput> -->
+
+            <button mat-raised-button isIconButton class="w-100-p mt-48 mat-accent-bg" (click)="upload()">
+                <mat-icon class="mr-16">file_upload</mat-icon>CARREGAR PDF
+            </button>
+
+        </div>
+        <!-- / SIDEBAR HEADER -->
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="content p-24" fusePerfectScrollbar>
+            <app-sidebar-documents-list></app-sidebar-documents-list>
+        </div>
+        <!-- / SIDEBAR CONTENT -->
+
+    </fuse-sidebar>
+    <!-- / SIDEBAR -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- CONTENT HEADER -->
+        <div class=" mat-primary-300-bg p-24" fxLayoutAlign="space-between center">
+            <h1 class="m-0">Meus Documentos</h1>
+        </div>
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card mat-white-bg">
+
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar px-24 py-8">
+
+                <button mat-icon-buttonclass="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('carded-left-sidebar-2')">
+                    <mat-icon>menu</mat-icon>
+                </button>
+
+                <div _ngcontent-c151="" fxlayout="column" fxlayout.gt-xs="column" fxlayoutalign="center center"
+                    fxlayoutalign.gt-xs="center start" style="flex-direction: column; box-sizing: border-box; display: flex; max-width: 100%; place-content: flex-start center; align-items: flex-start;">
+                    <div _ngcontent-c151="" class="black-fg" fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                        <mat-icon _ngcontent-c151="" class="secondary-text s-18 mat-icon material-icons" role="img"
+                            aria-hidden="true">home</mat-icon>
+                        <mat-icon _ngcontent-c151="" class="secondary-text s-16 mat-icon material-icons" role="img"
+                            aria-hidden="true">chevron_right</mat-icon><span _ngcontent-c151="" class="secondary-text">Meus
+                            Documentos</span>
+                    </div>
+                </div>
+
+            </div>
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT -->
+            <div class="content p-24" fusePerfectScrollbar>
+                <app-selected-file-content></app-selected-file-content>
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

@@ -1,0 +1,96 @@
+<div id="profile" class="page-layout simple tabbed">
+    <!-- HEADER -->
+    <div
+        class="header p-24"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxLayout.gt-sm="row"
+        fxLayoutAlign.gt-sm="space-between end"
+    >
+        <div
+            class="user-info"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start center"
+        >
+            <img
+                class="profile-image avatar huge"
+                [src]="profile?.avatar || 'assets/images/avatars/profile.jpg'"
+                [@animate]="{
+                    value: '*',
+                    params: { delay: '50ms', scale: '0.2' }
+                }"
+            />
+            <div
+                class="name"
+                [@animate]="{
+                    value: '*',
+                    params: { delay: '100ms', x: '-25px' }
+                }"
+            >
+                {{ profile?.user?.people?.name }}
+                <mat-icon
+                    *ngIf="profile?.school?.status == 'accepted'"
+                    class="green-fg"
+                    matTooltip="Ativo"
+                    >check_circle</mat-icon
+                >
+                <mat-icon
+                    *ngIf="profile?.school?.status == 'waiting'"
+                    class="blue-fg"
+                    matTooltip="Em espera"
+                    >access_time</mat-icon
+                >
+                <mat-icon
+                    *ngIf="profile?.school?.status == 'denied'"
+                    class="warn-fg"
+                    matTooltip="Negado"
+                    >block</mat-icon
+                >
+                <mat-icon
+                    *ngIf="profile?.school?.status == 'closed'"
+                    class="grey-fg"
+                    matTooltip="Suspenso"
+                    >close</mat-icon
+                >
+                <div class="subtitle">
+                    <span>@{{ profile?.user?.shortName }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="actions"
+            fxLayout="row"
+            fxLayoutAlign="end center"
+            [@animate]="{ value: '*', params: { delay: '200ms' } }"
+        >
+            <button mat-raised-button color="accent" aria-label="Follow">
+                Seguir
+            </button>
+            <button mat-raised-button color="primary" aria-label="Send Message">
+                Enviar Mensagem
+            </button>
+        </div>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content">
+        <mat-tab-group dynamicHeight="true">
+            <mat-tab label="Novidades">
+                <profile-timeline></profile-timeline>
+            </mat-tab>
+
+            <mat-tab label="Sobre Mim">
+                <profile-about></profile-about>
+            </mat-tab>
+
+            <!-- <mat-tab label="Photos & Videos">
+                <profile-photos-videos></profile-photos-videos>
+            </mat-tab> -->
+        </mat-tab-group>
+    </div>
+    <!-- / CONTENT -->
+</div>

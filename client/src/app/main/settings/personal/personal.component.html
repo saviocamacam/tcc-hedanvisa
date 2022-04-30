@@ -1,0 +1,58 @@
+<h2 style="text-align: center">Informações Pessoais</h2>
+
+<form [formGroup]="peopleForm" class="mt-16">
+
+
+    <div align="center">
+
+        <mat-form-field style="width: 80%">
+            <input matInput type="text" placeholder="Nome Completo" formControlName="name" required>
+            <mat-error *ngIf="name.errors?.required">Nome Completo é obrigatório.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 80%">
+            <mat-label>Data de Nascimento</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="born" placeholder="DD/MM/AAAA"
+                formControlName="born">
+            <mat-datepicker-toggle matSuffix [for]="born"></mat-datepicker-toggle>
+            <mat-datepicker #born></mat-datepicker>
+
+        </mat-form-field>
+
+        <mat-form-field style="width: 80%">
+            <mat-select placeholder="Gênero" formControlName="gender">
+                <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                    {{ gender.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field style="width: 45%">
+            <mat-label>RG</mat-label>
+            <input matInput type="text" name="rg" formControlName="rg" placeholder="00.000.000-0" [brmasker]="{form: peopleForm.get('rg'), mask:'00.000.000-0', len:12}">
+        </mat-form-field>
+        <mat-form-field style="width: 35%">
+            <mat-select placeholder="UF" formControlName="rg_uf">
+                <mat-option *ngFor="let state of states" [value]="state.abbr">
+                    {{ state.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field style="width: 80%">
+            <mat-label>CPF</mat-label>
+            <input matInput type="text" name="cpf" formControlName="cpf" placeholder="000.000.000-00" [brmasker]="{form: peopleForm.get('cpf'), mask:'000.000.000-00', len:14}">
+        </mat-form-field>
+
+        <br>
+        <button id="submitButton" mat-raised-button color="accent" class="mt-24" (click)="onSubmit()" [disabled]="peopleForm.invalid || !peopleForm.dirty">Salvar
+        </button>
+        &nbsp;&nbsp;
+        <button mat-raised-button *ngIf="user?.$profiles?.length <= 0" color="primary" class="mt-24" (click)="nextStep()"
+            [disabled]="!people || !people.id">Próximo
+        </button>
+
+
+
+    </div>
+</form>

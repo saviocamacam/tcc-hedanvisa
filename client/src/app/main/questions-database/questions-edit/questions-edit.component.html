@@ -1,0 +1,363 @@
+<div id="academy-course" class="page-layout simple left-sidebar inner-scroll">
+    <!-- SIDEBAR -->
+    <fuse-sidebar
+        class="sidebar"
+        name="academy-course-left-sidebar-1"
+        position="left"
+        lockedOpen="gt-md"
+    >
+        <!-- SIDEBAR CONTENT -->
+        <div class="content" fusePerfectScrollbar>
+            <div class="steps">
+                <div
+                    class="step"
+                    *ngFor="
+                        let step of course.steps;
+                        let i = index;
+                        let last = last;
+                        let first = first
+                    "
+                    (click)="gotoStep(i)"
+                    [ngClass]="{
+                        current: currentStep === i,
+                        completed: currentStep > i,
+                        last: last,
+                        first: first
+                    }"
+                >
+                    <div class="index">
+                        <span>{{ i + 1 }}</span>
+                    </div>
+                    <div class="title">{{ step.title }}</div>
+                </div>
+            </div>
+        </div>
+        <!-- / SIDEBAR CONTENT -->
+    </fuse-sidebar>
+    <!-- / SIDEBAR -->
+
+    <!-- CENTER -->
+    <div class="center">
+        <!-- HEADER -->
+        <div
+            class="header mat-accent-bg p-24"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+        >
+            <button
+                mat-icon-button
+                class="sidebar-toggle mr-16"
+                fxHide.gt-md
+                (click)="toggleSidebar('academy-course-left-sidebar-1')"
+            >
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <button
+                mat-icon-button
+                class="mr-16"
+                [routerLink]="'/professor/banco-questoes'"
+            >
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+
+            <div>
+                <h2>{{ course.title }}</h2>
+            </div>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT -->
+        <div id="course-content" class="content">
+            <ng-container *ngFor="let step of course.steps; let i = index">
+                <div
+                    class="course-step"
+                    fusePerfectScrollbar
+                    *ngIf="currentStep === i"
+                    [@slideIn]="animationDirection"
+                >
+                    <form [formGroup]="formQuestion">
+                        <div
+                            id="course-step-content"
+                            class="course-step-content"
+                            *ngIf="i === 0"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <mat-radio-group
+                                class="example-radio-group"
+                                formControlName="year"
+                            >
+                                <mat-radio-button
+                                    class="example-radio-button"
+                                    *ngFor="let year of years"
+                                    [value]="year.id"
+                                >
+                                    {{ year.viewValue }}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <!-- <div class="example-selected-value">
+                                O ano selecionado é: {{ year }}
+                            </div> -->
+                        </div>
+
+                        <div
+                            id="course-step-content"
+                            class="course-step-content"
+                            *ngIf="i === 1"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <mat-radio-group
+                                class="example-radio-group"
+                                formControlName="theme"
+                            >
+                                <mat-radio-button
+                                    class="example-radio-button"
+                                    *ngFor="let discipline of disciplines"
+                                    [value]="discipline.id"
+                                >
+                                    {{ discipline.viewValue }}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <!-- <div class="example-selected-value">
+                                A disciplina seleciona é: {{ discipline }}
+                            </div> -->
+                        </div>
+                        <div
+                            id="course-step-content"
+                            class="course-step-content px-0 pb-0"
+                            *ngIf="i === 2"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <div class="px-24">
+                                <mat-form-field class="w-100-p text-uppercase">
+                                    <mat-select
+                                        placeholder="Nível de Dificuldade da Pergunta"
+                                        formControlName="level"
+                                    >
+                                        <mat-option
+                                            *ngFor="let type of levels"
+                                            [value]="type.value"
+                                        >
+                                            {{ type.viewValue }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <app-text-editor
+                                [(dataModel)]="content"
+                            ></app-text-editor>
+                        </div>
+                        <div
+                            id="course-step-content"
+                            class="course-step-content px-0 pb-0"
+                            *ngIf="i === 3"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <app-bncc-list
+                                [discipline]="formQuestion.get('theme').value"
+                                [year]="formQuestion.get('year').value"
+                                (habilitiesChanged)="habilitiesChanged($event)"
+                            ></app-bncc-list>
+                        </div>
+                        <div
+                            *ngIf="i === 4"
+                            id="course-step-content"
+                            class="px-0 pb-0  course-step-content"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <app-descriptors-list
+                                [discipline]="formQuestion.get('theme').value"
+                                [year]="formQuestion.get('year').value"
+                                (descriptorsChanged)="
+                                    descriptoresChanged($event)
+                                "
+                            ></app-descriptors-list>
+                        </div>
+                        <div
+                            id="course-step-content"
+                            class="course-step-content px-0 pb-0"
+                            *ngIf="i === 5"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <div class="px-24">
+                                <mat-form-field class="w-100-p text-uppercase">
+                                    <mat-select
+                                        placeholder="Tipo de resposta"
+                                        formControlName="answerType"
+                                        name="answerType"
+                                    >
+                                        <mat-option
+                                            *ngFor="let type of answerTypes"
+                                            [value]="type.value"
+                                        >
+                                            {{ type.viewValue }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <div
+                                    *ngIf="
+                                        formQuestion.get('answerType').value ==
+                                        'objective'
+                                    "
+                                >
+                                    <div
+                                        formArrayName="answer_objective"
+                                        *ngFor="
+                                            let item of formQuestion.get(
+                                                'answer_objective'
+                                            ).controls;
+                                            let i = index
+                                        "
+                                    >
+                                        <div [formGroupName]="i">
+                                            <mat-form-field class="w-100-p">
+                                                <input
+                                                    matInput
+                                                    formControlName="0"
+                                                    placeholder="Resposta A"
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field class="w-100-p">
+                                                <input
+                                                    matInput
+                                                    formControlName="1"
+                                                    placeholder="Resposta B"
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field class="w-100-p">
+                                                <input
+                                                    matInput
+                                                    formControlName="2"
+                                                    placeholder="Resposta C"
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field class="w-100-p">
+                                                <input
+                                                    matInput
+                                                    formControlName="3"
+                                                    placeholder="Resposta D"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <mat-form-field
+                                        class="w-100-p text-uppercase"
+                                    >
+                                        <mat-select
+                                            placeholder="Resposta Correta"
+                                            formControlName="correctAnswer"
+                                            name="correctAnswer"
+                                        >
+                                            <mat-option value="a">
+                                                A
+                                            </mat-option>
+                                            <mat-option value="b">
+                                                B
+                                            </mat-option>
+                                            <mat-option value="c">
+                                                C
+                                            </mat-option>
+                                            <mat-option value="d">
+                                                D
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <app-text-editor
+                                *ngIf="
+                                    formQuestion.get('answerType').value ==
+                                    'discursive'
+                                "
+                                [(dataModel)]="answer"
+                            ></app-text-editor>
+                        </div>
+                        <div
+                            *ngIf="i === 6"
+                            id="course-step-content"
+                            class="px-0 pb-0  course-step-content"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <div class="px-24">
+                                <mat-form-field class="w-100-p">
+                                    <textarea
+                                        formControlName="goal"
+                                        matInput
+                                        placeholder="Objetivos"
+                                    ></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div
+                            id="course-step-content"
+                            class="course-step-content"
+                            *ngIf="i === 7"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <app-creating-restrictions></app-creating-restrictions>
+                        </div>
+                    </form>
+                </div>
+            </ng-container>
+        </div>
+        <!-- / CONTENT -->
+
+        <div class="step-navigation">
+            <button
+                mat-fab
+                class="previous mat-accent white-fg"
+                (click)="gotoPreviousStep()"
+                [disabled]="currentStep === 0"
+                [fxHide]="currentStep === 0"
+            >
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+
+            <button
+                mat-fab
+                class="next mat-accent white-fg"
+                (click)="gotoNextStep()"
+                [disabled]="currentStep === course.totalSteps - 1"
+                [fxHide]="currentStep === course.totalSteps - 1"
+            >
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+
+            <button
+                mat-fab
+                class="done mat-green-600-bg"
+                (click)="updateQuestion()"
+                [disabled]="currentStep !== course.totalSteps - 1"
+                [fxShow]="currentStep === course.totalSteps - 1"
+            >
+                <mat-icon>check</mat-icon>
+            </button>
+        </div>
+    </div>
+    <!-- / CENTER -->
+</div>

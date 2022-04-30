@@ -1,0 +1,217 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{ dialogTitle }}</span>
+            <button
+                mat-icon-button
+                (click)="closeDialog()"
+                aria-label="Close dialog"
+            >
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+        <form [formGroup]="frequencyForm">
+            <mat-form-field>
+                <input
+                    matInput
+                    [matDatepicker]="picker"
+                    placeholder="Clique no Calendário"
+                    formControlName="date"
+                    autocomplete="off"
+                    required
+                />
+                <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="date?.errors?.required">
+                    O campo Data é obrigatório.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100-p mb-24">
+                <input
+                    matInput
+                    placeholder="Conteúdo abordado"
+                    formControlName="content"
+                />
+                <mat-error *ngIf="content?.errors?.required">
+                    O campo Conteúdo Abordado é obrigatório.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-100-p mb-24">
+                <input
+                    matInput
+                    placeholder="Observações gerais"
+                    formControlName="obs"
+                />
+                <mat-error *ngIf="content?.errors?.required">
+                    O campo Conteúdo Abordado é obrigatório.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-slide-toggle
+                *ngIf="data?.action != 'view'"
+                class="pb-32"
+                formControlName="presents"
+            >
+                LANÇAR ALUNOS
+            </mat-slide-toggle>
+
+            <div *ngIf="frequencyForm.value['presents']">
+                <button>
+                    <!--
+                        Botão sem funcionalidade. Usado para descartar o
+                        comportamento padrão do HTML quando pressionado
+                        o botão enter. Como foi usado botões para dizer
+                        que o aluno estará ou não na chamada, por padrão,
+                        quando se pressiona 'enter' em um formulário, o
+                        primeiro botão encontrado era acionado. Logo, o
+                        primeiro aluno era removido da chamada. Este botão
+                        vazio é usada para evitar este comportamento.
+
+                        Por favor, não remover este botão daqui.
+                    -->
+                </button>
+
+                <div *ngFor="let student of students" class="mt-12">
+                    <div fxLayoutAlign="space-between">
+                        <!-- Nome do aluno-->
+                        <mat-slide-toggle
+                            *ngIf="data?.action != 'view'"
+                            [formControlName]="student.basic.cgm"
+                            checked="false"
+                            (click)="onClickTogglePresence(student)"
+                        >
+                            {{ student?.basic.nome_do_aluno }}
+                        </mat-slide-toggle>
+
+                        <div *ngIf="data?.action !== 'view'">
+                            <!-- Botão para remover o aluno da chamada -->
+                            <ng-template
+                                [ngIf]="!getPresence(student).disabled"
+                                [ngIfElse]="enabled"
+                            >
+                                <button
+                                    mat-button
+                                    color="warn"
+                                    fill="full"
+                                    (click)="toggleEnableDisable(student)"
+                                >
+                                    Remover
+                                    <mat-icon>
+                                        highlight_off
+                                    </mat-icon>
+                                </button>
+                            </ng-template>
+
+                            <!-- Botão para desfazer a remoção -->
+                            <ng-template #enabled>
+                                <button
+                                    mat-button
+                                    color="accent"
+                                    fill="full"
+                                    (click)="toggleEnableDisable(student)"
+                                >
+                                    Adicionar
+                                    <mat-icon>
+                                        add
+                                    </mat-icon>
+                                </button>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <div *ngIf="data?.action == 'view'">
+                        <h3>{{ student?.basic.nome_do_aluno }}</h3>
+                        <mat-chip-list>
+                            <mat-chip
+                                class="mat-accent-bg"
+                                *ngIf="getPresence(student).value"
+                            >
+                                presente
+                            </mat-chip>
+                            <mat-chip
+                                class="mat-primary-bg"
+                                *ngIf="!getPresence(student).value"
+                            >
+                                ausente
+                            </mat-chip>
+                        </mat-chip-list>
+                    </div>
+
+                    <div *ngIf="getPresence(student).enabled">
+                        <!-- Checkbox para marcar justificativa -->
+                        <mat-checkbox
+                            *ngIf="!getPresence(student).value"
+                            [formControlName]="student.basic.cgm + '_jus'"
+                            checked="false"
+                        >
+                            Justificar
+                        </mat-checkbox>
+
+                        <!-- Entrada da justificativa/nota -->
+                        <mat-form-field
+                            class="w-100-p"
+                            *ngIf="data?.action != 'view'"
+                        >
+                            <input
+                                matInput
+                                placeholder="Observações"
+                                [formControlName]="student.basic.cgm + '_obs'"
+                                (keydown)="$event.stopPropagation()"
+                                [matAutocomplete]="auto"
+                            />
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option
+                                    *ngFor="let obs of defaultsObs.values"
+                                    [value]="obs"
+                                >
+                                    {{ obs }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div
+    mat-dialog-actions
+    class="m-0 p-16"
+    fxLayout="row"
+    fxLayoutAlign="end center"
+>
+    <button
+        mat-button
+        mat-dialog-close
+        class="mat-primary-bg"
+        *ngIf="data?.action == 'view'"
+    >
+        Fechar
+    </button>
+    <button
+        mat-button
+        class="mat-primary-bg"
+        *ngIf="data?.action != 'view'"
+        (click)="closeDialog()"
+    >
+        Cancelar
+    </button>
+    <button
+        *ngIf="data?.action != 'view'"
+        id="submitButton"
+        mat-button
+        mat-dialog-close
+        class="mat-accent-bg"
+        [disabled]="frequencyForm.invalid"
+        (click)="onSubmit()"
+    >
+        Salvar
+    </button>
+</div>

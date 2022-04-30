@@ -1,0 +1,92 @@
+{
+  "ano": "5º Ano",
+  "nivel": "Ensino Fundamental 1",
+  "disciplina": "Língua Portuguesa",
+  "temas": [
+    {
+      "1": "Procedimentos de Leitura",
+      "descritores": [
+        { "D1": "Localizar informações explícitas em um texto." },
+        { "D3": "Inferir o sentido de uma palavra ou expressão." },
+        { "D4": "Inferir uma informação implícita em um texto."},
+        { "D6": "Identificar o tema de um texto."},
+        { "D11": "Distinguir um fato da opinião relativa a esse fato."}
+      ]
+    },
+
+    {
+      "2": "Implicações do Suporte, do Gênero e/ou do Enunciador na Compreensão do Texto",
+      "descritores": [
+        { "D5": "Interpretar texto com auxílio de material gráfico diverso (propagandas, quadrinhos, foto etc.)." },
+        { "D9": "Identificar a finalidade de textos de diferentes gêneros."}
+      ]
+    },
+
+    {
+      "3": "Relação entre Textos",
+      "descritores": [
+        { "D15": "Reconhecer diferentes formas de tratar uma informação na comparação de textos que tratam do mesmo tema, em função das condições em que ele foi produzido e daquelas em que será recebido."}
+      ]
+    },
+
+    {
+      "4": "Coerência e Coesão no Processamento do Texto",
+      "descritores": [
+        { "D2": "Estabelecer relações entre partes de um texto, identificando repetições ou substituições que contribuem para a continuidade de um texto." },
+        { "D7": "Identificar o conflito gerador do enredo e os elementos que constroem a narrativa."},
+        { "D8": "Estabelecer relação causa/consequência entre partes e elementos do texto."},
+        { "D12": "Estabelecer relações lógico-discursivas presentes no texto, marcadas por conjunções, advérbios etc."}
+      ]
+    },
+
+    {
+      "5": "Relações entre Recursos Expressivos e Efeitos de Sentido",
+      "descritores": [
+        { "D13": "Identificar efeitos de ironia ou humor em textos variados." },
+        { "D14": "Identificar o efeito de sentido decorrente do uso da pontuação e de outras notações."}
+      ]
+    },
+
+    {
+      "6": "Variação Linguística",
+      "descritores": [
+        { "D10": "Identificar as marcas linguísticas que evidenciam o locutor e o interlocutor de um texto."}
+      ]
+    }
+  ],
+
+
+
+  "topicos": [
+    {
+      "1": "Procedimentos de leitura",
+      "descritores": [{ "1": "D1", "2": "D3", "3": "D4", "4": "D6", "5": "D11" }]
+    },
+
+    {
+      "2": "Implicações do suporte, do gênero e/ou do enunciador na compreensão do texto",
+      "descritores": [{ "1": "D5", "2": "D9" }]
+    },
+
+    {
+      "3": "Relação entre textos",
+      "descritores": [{ "1": "D15" }]
+    },
+
+    {
+      "4": "Coerência e coesão no processamento do texto",
+      "descritores": [{ "1": "D2", "2": "D7", "3": "D8", "4": "D12" }]
+    },
+
+    {
+      "5": "Relações entre recursos expressivos e efeitos de sentido",
+      "descritores": [{ "1": "D13", "2": "D14" }]
+    },
+
+    {
+      "6": "Variação linguística",
+      "descritores": [{ "1": "D10" }]
+    }
+
+  ]
+}

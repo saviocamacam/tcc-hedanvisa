@@ -1,0 +1,15 @@
+<div align="center" *ngIf="!selectedFile">
+    <button mat-raised-button isIconButton class="w-30-p mat-accent-bg" (click)="upload()">
+        <mat-icon class="mr-16">file_upload</mat-icon>NOVO ANEXO
+    </button>
+</div>
+
+<app-sidebar-documents-list *ngIf="!selectedFile"></app-sidebar-documents-list>
+
+<div align="right" *ngIf="selectedFile">
+    <button matButton isIconButton (click)="selectedFile = null">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<app-selected-file-content *ngIf="selectedFile"></app-selected-file-content>

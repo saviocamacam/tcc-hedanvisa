@@ -1,0 +1,61 @@
+<div class="page-layout carded fullwidth inner-scroll">
+
+
+    <div class="top-bg mat-primary-bg"></div>
+
+
+
+    <div class="center">
+
+
+        <div class="header mat-primary-bg p-24" fxLayout="row" fxLayoutAlign="start center">
+            <h2 class="m-0">Planejamento de Trabalho Docente</h2>
+        </div>
+
+
+        <div class="content-card mat-white-bg">
+
+
+            <div class="toolbar px-24 py-8">
+                <mat-form-field class="w-20-p mt-16">
+                    <mat-select placeholder="Ano" [(ngModel)]="schoolYearSelected" (selectionChange)="schoolYearChanged()">
+                        <mat-option *ngFor="let schoolYear of schoolYears" value="schoolYear">{{schoolYear?.year?.substring(0,4)}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-20-p ml-8 mt-16">
+                    <mat-select placeholder="Período" [(ngModel)]="periodSelected">
+                        <mat-option *ngFor="let period of periods" value="period">{{period}}º
+                            {{regime?.showListValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+                <mat-form-field class="w-20-p ml-8 mt-16">
+                    <mat-select placeholder="Turma">
+                        <mat-option *ngFor="let period of periods" value="period">{{period}}º
+                            {{regime?.showListValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <button mat-raised-button class="mat-primary-bg ml-24" (click)="save()" [disabled]="(!schoolYearSelected && !periodSelected) || view">Salvar</button>
+                <button mat-raised-button *ngIf="!view" class="mat-primary-bg ml-8" (click)="view = !view">Vizualizar</button>
+                <button mat-raised-button *ngIf="view" class="mat-primary-bg ml-8" (click)="view = !view">Editar</button>
+            </div>
+
+            <div class="content p-24" fusePerfectScrollbar>
+
+                <app-text-editor *ngIf="!view" [(dataModel)]="dataModel"></app-text-editor>
+
+                <div *ngIf="view" [innerHtml]="dataModel | sanitizeHtml"></div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>

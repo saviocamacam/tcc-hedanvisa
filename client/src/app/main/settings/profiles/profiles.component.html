@@ -1,0 +1,114 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="mb-16">
+    <button mat-raised-button (click)="newProfile()" class="mat-accent-bg ">
+        Novo Perfil
+    </button>
+</div>
+
+<h3 style="text-align: center" *ngIf="!profiles || profiles.length == 0">
+    Você ainda não criou nenhum perfil.
+</h3>
+
+<div class="mat-elevation-z8" *ngIf="profiles && profiles.length > 0">
+    <table mat-table #table [dataSource]="profiles">
+        <ng-container matColumnDef="profileType">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let profile">
+                <span *ngIf="profile.county">
+                    <p class="text-truncate ">
+                        {{
+                            profile?.role
+                                ? profile?.role?.type
+                                : profile?.showType
+                        }}
+                        em {{ profile?.county?.requested?.name }}
+                    </p>
+                </span>
+                <span *ngIf="profile.school">
+                    <p class="text-truncate ">
+                        {{
+                            profile?.role
+                                ? profile?.role?.type
+                                : profile?.showType
+                        }}
+                        em {{ profile?.school?.requested?.institution?.name }}
+                    </p>
+                </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mainProfile" *ngIf="!breakdown">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let profile">
+                <mat-chip-list>
+                    <mat-chip
+                        *ngIf="profile?.user?.mainProfile == profile?._id"
+                        color="primary"
+                        selected
+                        >Principal</mat-chip
+                    >
+                </mat-chip-list>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status" *ngIf="!breakdown">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let profile">
+                <!-- <mat-chip-list>
+                        <mat-chip *ngIf="profile?.user?.mainProfile == profile?._id" color="primary" selected>Principal</mat-chip>
+                    </mat-chip-list> -->
+                <mat-icon
+                    *ngIf="
+                        profile?.school?.status == 'accepted' ||
+                        profile?.county?.status == 'accepted'
+                    "
+                    class="green-fg"
+                    matTooltip="Ativo"
+                    >check_circle</mat-icon
+                >
+                <mat-icon
+                    *ngIf="
+                        profile?.school?.status == 'waiting' ||
+                        profile?.county?.status == 'waiting'
+                    "
+                    class="blue-fg"
+                    matTooltip="Em espera"
+                    >access_time</mat-icon
+                >
+                <mat-icon
+                    *ngIf="
+                        profile?.school?.status == 'denied' ||
+                        profile?.county?.status == 'denied'
+                    "
+                    class="warn-fg"
+                    matTooltip="Negado"
+                    >block</mat-icon
+                >
+                <mat-icon
+                    *ngIf="
+                        profile?.school?.status == 'closed' ||
+                        profile?.county?.status == 'closed'
+                    "
+                    class="grey-fg"
+                    matTooltip="Suspenso"
+                    >close</mat-icon
+                >
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+            mat-row
+            *matRowDef="let profile; columns: displayedColumns"
+            class="contact"
+            (window:resize)="onResize($event)"
+        ></tr>
+
+        <!-- (click)="viewProfile(profile)" id="table-row" -->
+    </table>
+</div>
+
+<!-- <button mat-fab isIconModule class="
+                primary-bg" id="add-contact-button" (click)="newProfile()"
+    aria-label="add contact">
+    <mat-icon>person_add</mat-icon>
+</button> -->

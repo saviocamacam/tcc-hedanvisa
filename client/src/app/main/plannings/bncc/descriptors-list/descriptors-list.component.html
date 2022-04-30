@@ -1,0 +1,24 @@
+<div
+    *ngIf="descriptors?.temas?.length === 0"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxFlexFill
+>
+    <span class="no-messages-text hint-text">{{ bla }}</span>
+</div>
+
+<div class="mail-list" [@animateStagger]="{ value: '50' }">
+    <app-descriptor-item
+        (itemSelected)="itemSelected($event)"
+        matRipple
+        *ngFor="let descriptor of descriptors?.temas"
+        (click)="selectDescriptor(descriptor)"
+        [descriptor]="descriptor"
+        [ngClass]="{
+            'current-mail mat-accent-50-bg':
+                descriptor?.codigo == currentDescriptor?.codigo
+        }"
+        [@animate]="{ value: '*', params: { y: '100%' } }"
+    >
+    </app-descriptor-item>
+</div>

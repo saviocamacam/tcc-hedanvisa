@@ -1,0 +1,55 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{ dialogTitle }}</span>
+            <button
+                mat-icon-button
+                (click)="matDialogRef.close()"
+                aria-label="Close dialog"
+            >
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div
+        mat-dialog-content
+        *ngIf="data.action == 'new'"
+        class="p-24  m-0"
+        fxLayout="column"
+    >
+        <mat-form-field class="w-100-p">
+            <mat-label>Tipo de Perfil</mat-label>
+            <mat-select [(ngModel)]="profileType">
+                <mat-option
+                    *ngFor="let profile of profiles"
+                    [value]="profile.value"
+                    [disabled]="
+                        profile.value === 'student' ||
+                        profile.value === 'parent' ||
+                        profile.value === 'comunity'
+                    "
+                >
+                    {{ profile.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <profile-county-form
+            fxFlex
+            *ngIf="profileType === 'county'"
+        ></profile-county-form>
+        <profile-school-form
+            fxFlex
+            *ngIf="profileType === 'school'"
+        ></profile-school-form>
+        <profile-professor-form
+            fxFlex
+            *ngIf="profileType === 'professor'"
+        ></profile-professor-form>
+
+        <!-- <profile-comunity-form *ngIf="profileType === 'comunity'"></profile-comunity-form>
+        <profile-parent-form *ngIf="profileType === 'parent'"></profile-parent-form>
+        <profile-student-form *ngIf="profileType === 'student'"></profile-student-form> -->
+    </div>
+</div>

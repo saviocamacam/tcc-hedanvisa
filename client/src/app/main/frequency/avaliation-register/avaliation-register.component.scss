@@ -1,0 +1,63 @@
+@media print {
+    .break-page {
+        page-break-before: always;
+    }
+}
+
+.line-through {
+    text-decoration-line: line-through;
+}
+
+.border {
+    border: 1px solid black;
+}
+
+.cell-props {
+    // Text
+    font-size: 11px;
+    font-family: Verdana, Sans-Serif;
+    color: black;
+    // Centering
+    vertical-align: middle;
+    text-align: center;
+    // Border
+    border: 1px solid black;
+
+    min-width: 25px;
+    max-width: 25px;
+}
+
+.rotate {
+    transform: rotate(270deg) translate(-30px);
+}
+
+.mat-header-cell {
+    height: 170px;
+    white-space: nowrap;
+    text-align: left !important;
+}
+
+.mat-column-subject {
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.mat-column-category {
+    min-width: 100%;
+    max-width: 100%;
+}
+
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type,
+th.mat-header-cell:last-of-type {
+    padding-right: 0px;
+}
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type,
+th.mat-header-cell:first-of-type {
+    padding-left: 0;
+}
+tr.mat-footer-row,
+tr.mat-row {
+    height: 0;
+}

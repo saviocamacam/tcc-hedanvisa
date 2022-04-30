@@ -1,0 +1,138 @@
+<div id="login" class="inner-scroll" fxLayout="row" fxLayoutAlign="start">
+    <div id="login-intro" fxFlex fxHide fxShow.gt-xs>
+        <div class="logo" [@animate]="{ value: '*', params: { scale: '0.2' } }">
+            <img src="assets/images/logos/fuse.svg" />
+        </div>
+
+        <div
+            class="title font-weight-900"
+            [@animate]="{ value: '*', params: { delay: '50ms', y: '25px' } }"
+        >
+            Bem vindo(a) ao OCAMACAM!
+        </div>
+
+        <div
+            class="description"
+            [@animate]="{ value: '*', params: { delay: '100ms', y: '25px' } }"
+        >
+            Alunos, Familiares, Professores e Orientadores Pedagógicos, Gestores
+            Escolares e de Rede de Ensino, Voluntários e toda Comunidade de
+            vários cantos do país.
+        </div>
+    </div>
+
+    <div
+        id="login-form-wrapper"
+        fusePerfectScrollbar
+        [@animate]="{ value: '*', params: { delay: '300ms', x: '100%' } }"
+    >
+        <div id="login-form">
+            <div class="logo" fxHide.gt-xs>
+                <img src="assets/images/logos/fuse.svg" />
+            </div>
+
+            <fuse-progress-bar></fuse-progress-bar>
+
+            <div class="title">ENTRE EM SUA CONTA</div>
+
+            <form
+                (ngSubmit)="login()"
+                name="loginForm"
+                [formGroup]="loginForm"
+                novalidate
+            >
+                <mat-form-field floatLabel="never">
+                    <input
+                        matInput
+                        placeholder="Nome de Usuário"
+                        id="shortName"
+                        formControlName="shortName"
+                        (blur)="shortNameExists()"
+                        (keyup)="_shortNameExists = true"
+                    />
+                    <mat-error *ngIf="shortName.errors?.required">
+                        Nome de usuário é obrigatório
+                    </mat-error>
+                </mat-form-field>
+                <mat-error *ngIf="!_shortNameExists && !shortName.errors">
+                    Este nome de usuário não está cadastrado no OCAMACAM.
+                </mat-error>
+
+                <mat-form-field floatLabel="never">
+                    <input
+                        matInput
+                        type="password"
+                        placeholder="Senha"
+                        id="password"
+                        formControlName="password"
+                    />
+                    <mat-error *ngIf="password.errors?.required">
+                        Senha é obrigatória.
+                    </mat-error>
+                    <!-- <mat-error *ngIf="password.errors?.minLength">
+                        Mínimo de 8 dígitos.
+                    </mat-error> -->
+                </mat-form-field>
+
+                <div
+                    class="remember-forgot-password"
+                    fxLayout="row"
+                    fxLayout.xs="column"
+                    fxLayoutAlign="space-between center"
+                >
+                    <mat-checkbox
+                        color="warn"
+                        class="remember-me"
+                        aria-label="Remember Me"
+                    >
+                        Lembrar-me
+                    </mat-checkbox>
+
+                    <a
+                        class="forgot-password"
+                        [routerLink]="'/auth/forgot-password'"
+                    >
+                        Esqueceu sua senha?
+                    </a>
+                </div>
+
+                <button
+                    id="submitButton"
+                    mat-raised-button
+                    color="warn"
+                    class="submit-button"
+                    aria-label="ENTRAR"
+                    [disabled]="loginForm.invalid || !_shortNameExists"
+                >
+                    <!-- [disabled]="loginForm.invalid" -->
+                    ENTRAR
+                </button>
+            </form>
+
+            <!--
+                <div class="separator">
+                    <span class="text">OR</span>
+                </div>
+
+                <button mat-raised-button class="google">
+                    Log in with Google
+                </button>
+
+                <button mat-raised-button class="facebook">
+                    Log in with Facebook
+                </button>
+            -->
+
+            <div
+                class="register"
+                fxLayout="column"
+                fxLayoutAlign="center center"
+            >
+                <span class="text">Ainda não é cadastrado?</span>
+                <a class="link" [routerLink]="'/auth/register'"
+                    >Crie uma conta</a
+                >
+            </div>
+        </div>
+    </div>
+</div>

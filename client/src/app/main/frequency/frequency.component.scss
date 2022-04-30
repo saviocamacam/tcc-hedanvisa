@@ -1,0 +1,95 @@
+@import "src/@fuse/scss/fuse";
+
+#contacts {
+  /*.header {
+    .search-wrapper {
+      width: 100%;
+      max-width: 480px;
+      border-radius: 28px;
+      overflow: hidden;
+      @include mat-elevation(1);
+
+      .search {
+        width: 100%;
+        height: 48px;
+        line-height: 48px;
+        padding: 0 18px;
+
+        input {
+          width: 100%;
+          height: 48px;
+          min-height: 48px;
+          max-height: 48px;
+          padding: 0 16px;
+          border: none;
+          outline: none;
+        }
+      }
+    }
+  }
+
+  .content {
+    .sidebar {
+      &:not(.locked-open) {
+        background: white;
+      }
+    }
+  }*/
+  .header {
+    flex: unset !important;
+    .logo {
+      .logo-icon {
+        margin: 0 16px 0 0;
+      }
+
+      .logo-text {
+        font-size: 24px;
+        line-height: 24px;
+      }
+    }
+
+    .search-wrapper {
+      @include mat-elevation(7);
+
+      .sidebar-toggle {
+        margin: 0;
+        width: 56px;
+        height: 56px;
+        background: #fff;
+        border-radius: 0;
+        border-right: 1px solid rgba(0, 0, 0, 0.12);
+      }
+
+      .search {
+        width: 100%;
+        height: 56px;
+        line-height: 56px;
+        padding: 18px;
+
+        input {
+          height: 56px;
+          padding-left: 16px;
+          color: rgba(0, 0, 0, 0.54);
+          border: none;
+          outline: none;
+        }
+      }
+    }
+
+    .account {
+      width: 100%;
+    }
+  }
+
+  .select-message-text {
+    font-size: 24px;
+    font-weight: 300;
+  }
+  .example-tab-icon {
+    margin-right: 8px;
+  }
+}
+
+.custom {
+  display: inline-grid !important;
+}

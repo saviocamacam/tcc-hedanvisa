@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Novo Calendário de Turmas</h2>
+<mat-dialog-content>
+
+    <form [formGroup]="schoolYearClassroomForm" fxLayout="column" fxLayoutAlign="center center">
+
+
+        <mat-form-field class="w-80-p">
+            <mat-select placeholder="Ano" formControlName="schoolYear">
+                <mat-option *ngFor="let year of schoolYears" [value]="year._id">
+                    {{year.year.substring(0, 4)}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="mat-primary-bg">Cancelar</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-button id="onSubmitButton" class="mat-primary-bg" (click)="onSubmit()" [disabled]="schoolYearClassroomForm.invalid">Salvar</button>
+</mat-dialog-actions>

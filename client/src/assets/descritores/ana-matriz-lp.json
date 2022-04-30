@@ -1,0 +1,121 @@
+{
+  "eixos": [
+    {
+      "eixo": "LEITURA",
+      "habilidades": [
+        {
+          "H1": "Ler palavras com estrutura silábica canônica ",
+          "especificacoes": [
+            {
+              "1": "CV"
+            }
+          ]
+        },
+        {
+          "H2": "Ler palavras com estrutura silábica não canônica",
+          "especificacoes": [
+            {
+              "1": "CCV, CVC, VC, VC; VV, CCVC, entre outras."
+            }
+          ]
+        },
+        {
+          "H3": "Reconhecer a finalidade do texto",
+          "especificacoes": []
+        },
+        {
+          "H4": "Localizar informações explícitas em textos",
+          "especificacoes": [
+            {
+              "1": "Exemplos de suporte: Cartazes, listas de telefone, guias de programação infantil, pequenos anúncios, reportagens de jornais infantis, textos informativos."
+            }
+          ]
+        },
+        {
+          "H5": "Compreender os sentidos de palavras e expressões em textos",
+          "especificacoes": [
+            {
+              "1": "Exemplos de suporte: Textos literários (contos, histórias, pequenas crônicas), pequenas reportagens."
+            }
+          ]
+        },
+        {
+          "H6": "Realizar inferências a partir da leitura de textos verbais",
+          "especificacoes": [
+            {
+              "1": "Exemplos de suporte: Textos literários ( contos, histórias), artigos de revista infantil, reportagens de suplementos infantis"
+            }
+          ]
+        },
+        {
+          "H7": "Realizar inferências a partir da leitura de textos que articulem a linguagem verbal e não verbal",
+          "especificacoes": [
+            {
+              "1": "Exemplos de suporte: Pequenas tirinhas próximas do universo infantil, quadrinhos de uma página, primeira página de jornais ou suplementos infantis, piadas, etc"
+            }
+          ]
+        },
+        {
+          "H8": "Identificar o assunto de um texto",
+          "especificacoes": [
+            {
+              "1": "Exemplos de suporte: Pequenas reportagens, textos informativos"
+            }
+          ]
+        },
+        {
+          "H9": "Estabelecer relações entre partes de um texto marcadas por conectores",
+          "especificacoes": [
+            {
+              "1": "Tempo, causa e consequência, finalidade. Exemplos de suporte: Contos, histórias, reportagens, textos informativos."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "eixo": "ESCRITA",
+      "habilidades": [
+        {
+          "H10": "Grafar palavras com correspondências regulares diretas",
+          "especificacoes": [
+            {
+              "1": "Grafar palavras com correspondências regulares diretas (P, B, T, D, F, V e M ou N em início de sílaba)."
+            }
+          ]
+        },
+        {
+          "H11": " Grafar palavras com correspondências regulares contextuais entre letras ou grupos de letras e seu valor sonoro",
+          "especificacoes": [
+            {
+              "1": "Grafar palavras com correspondências regulares contextuais entre letras ou grupos de letras e seu valor sonoro (C/QU; G/GU; R/RR; SA/SO/SU em início de palavra; JA/JO/JU; Z inicial; O ou U/E ou I em sílaba final; M e N nasalizando final de sílaba; NH; Ã e ÃO"
+            }
+          ]
+        },
+        {
+          "H12": "Produzir um texto a partir de uma situação dada.",
+          "especificacoes": [
+            {
+              "1": "Gerar o conteúdo textual de acordo com o gênero solicitado."
+            },
+            {
+              "2": "Organizar o conteúdo textual, estruturando os períodos e utilizando recursos coesivos (progressão do tempo, marcação do espaço e relações de sentido)."
+            },
+            {
+              "3": "Pontuar o texto."
+            },
+            {
+              "4": "Usar convencionalmente os espaços entre palavras no texto."
+            },
+            {
+              "5": "Fazer uso da letra maiúscula nos textos, segundo as convenções."
+            },
+            {
+              "6": "Grafar convencionalmente as palavras do texto."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

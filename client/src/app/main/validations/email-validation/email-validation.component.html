@@ -1,0 +1,30 @@
+<div id="maintenance" fxLayout="column" align="center">
+    <div id="maintenance-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
+        <fuse-progress-bar></fuse-progress-bar>
+
+        <div id="maintenance-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+
+            <div class="logo">
+                <img src="assets/images/logos/fuse.svg">
+            </div>
+
+            <div *ngIf="checked" class="title">Pronto!</div>
+            <div *ngIf="!checked" class="title">Ops!</div>
+
+            <div class="subtitle" *ngIf="checked">
+                Contato validado com sucesso!
+                <br>
+                <a onClick="window.close()" class="mt-16">Fechar esta aba do navegador</a>
+            </div>
+            <br>
+            <div class="subtitle mt-24" *ngIf="!checked">
+                <p>Este email não pôde ser validado no momento.</p>
+                <p>Verifique se o link clicado é do último email enviado para você pela OCAMACAM.</p>
+                <br>
+                <a onClick="window.close()">Fechar esta aba do navegador</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>

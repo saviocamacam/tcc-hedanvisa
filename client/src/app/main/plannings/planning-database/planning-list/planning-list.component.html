@@ -1,0 +1,231 @@
+<div *ngIf="plannings?.length == 0">
+    <h3 class="text-center">Não há aulas aqui</h3>
+</div>
+<div *ngIf="plannings?.length > 0">
+    <h3 class="text-center">{{ plannings?.length }} aulas encontradas</h3>
+</div>
+<div class="px-24 py-12" *ngFor="let planning of plannings">
+    <div class="fuse-card w-100-p">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="p-16" fxLayout="row" fxLayoutAlign="start center">
+                <img
+                    class="w-40 h-40 border-radius-100"
+                    src="assets/images/avatars/profileOriginal.jpg"
+                />
+
+                <div class="ml-16">
+                    <div class="text-bold">
+                        {{ planning?.owner?.user?.people?.name }} (@{{
+                            planning?.owner?.user?.shortName
+                        }})
+                    </div>
+                    <div class="h5 text-bold secondary-text">
+                        professor(a) na escola
+                        {{
+                            planning?.owner?.school?.requested?.institution
+                                ?.name
+                        }}
+                    </div>
+                    <div class="h5 text-bold secondary-text">
+                        atualizado em
+                        {{ planning?.updatedAt | date: "dd/MM/yyyy H:mm" }}
+                    </div>
+                </div>
+            </div>
+            <div class="p-16" *ngIf="!planning.meta.forked">
+                <div class="h4 secondary-text">
+                    Avaliação
+                </div>
+                <div class="h5 secondary-text">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon class="s-16 amber-fg">star</mat-icon>
+                        <mat-icon class="s-16 amber-fg">star</mat-icon>
+                        <mat-icon class="s-16 amber-fg">star</mat-icon>
+                        <mat-icon class="s-16 amber-fg">star</mat-icon>
+                        <mat-icon class="s-16 amber-fg">star_half</mat-icon>
+                        <div class="ml-8 secondary-text">
+                            4.7
+                        </div>
+                        <div class="ml-4 secondary-text">
+                            (51)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-16" *ngIf="planning.meta.forked">
+                <div class="h4 secondary-text">
+                    Aula Copiada
+                </div>
+                <div class="h5 secondary-text">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon class="s-16 amber-fg">share</mat-icon>
+                        <div class="ml-8 secondary-text">
+                            <a
+                                [routerLink]="[
+                                    '/professor/banco-planejamentos/view',
+                                    planning?.meta?.forked?._id,
+                                    'ver-plano',
+                                    planning?.meta?.forked?.version
+                                ]"
+                                >{{
+                                    planning?.meta?.forked?.owner?.user?.people
+                                        ?.name
+                                }}
+                            </a>
+                        </div>
+                        <div class="ml-4 secondary-text">
+                            (versão {{ planning?.meta?.forked?.version }})
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="end">
+                        <div class="ml-8 secondary-text">
+                            @{{
+                                planning?.meta?.forked?.owner?.user?.shortName
+                            }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-16 pt-0 line-height-1.75">
+            <div class="h1">{{ planning?.meta?.name }}</div>
+            <div class="h4 secondary-text">
+                <div
+                    *ngIf="
+                        _planningsService.years$
+                            | async
+                            | getByElementIdUnderscore
+                                : planning?.meta?.year as year
+                    "
+                >
+                    {{ year.viewValue }}
+                </div>
+                <div
+                    *ngIf="
+                        _planningsService.disciplines$
+                            | async
+                            | getByElementIdUnderscore
+                                : planning?.meta?.theme as theme
+                    "
+                >
+                    {{ theme.viewValue }}
+                </div>
+                <!-- | {{ getPlanningYear(planning?.meta?.year) }} |
+                {{ getPlanningTheme(planning?.meta?.theme) }} -->
+            </div>
+            <div
+                *ngIf="
+                    planningDatabaseService.licenses$
+                        | async
+                        | getByElementId: planning?.meta?.license as license
+                "
+                class="h4 secondary-text"
+            >
+                <a target="_blank" [href]="license?.link"
+                    >Licença: {{ license?._id }}</a
+                >
+            </div>
+            <div class="h4 secondary-text" *ngIf="planning?.meta?.habilities">
+                <div
+                    class="h4 secondary-text"
+                    *ngIf="planning?.meta?.habilities"
+                >
+                    Está relacionado à {{ planning?.meta?.habilities.length }}
+                    {{
+                        planning?.meta?.habilities.length == 0
+                            ? "habilidade"
+                            : "habilidades"
+                    }}
+                    da BNCC
+                </div>
+                <div class="h4 secondary-text">
+                    Versão {{ planning?.documentVersion }}
+                    <p *ngIf="planning?.documentVersion > 1">
+                        Última alteração: {{ planning?.meta?.why }}
+                    </p>
+                </div>
+            </div>
+
+            <div
+                class="p-8 pt-0"
+                fxLayout="row"
+                fxLayoutAlign="space-between center"
+            >
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <button
+                        mat-button
+                        color="accent"
+                        [routerLink]="[
+                            '/professor/banco-planejamentos/view',
+                            planning._id,
+                            'ver-plano',
+                            planning.documentVersion
+                        ]"
+                    >
+                        VER
+                    </button>
+                    <button
+                        *ngIf="profile?.id == planning.owner?._id"
+                        mat-button
+                        color="accent"
+                        [routerLink]="[
+                            '/professor/banco-planejamentos/edit',
+                            planning._id,
+                            'editar-plano',
+                            planning.documentVersion
+                        ]"
+                    >
+                        EDITAR
+                    </button>
+                    <button
+                        *ngIf="profile?.id == planning.owner?._id"
+                        mat-button
+                        color="warn"
+                        (click)="deletePlanning(planning)"
+                    >
+                        EXCLUIR
+                    </button>
+                    <button
+                        *ngIf="profile?.id != planning.owner?._id"
+                        mat-button
+                        color="accent"
+                        (click)="forkPlanning(planning)"
+                    >
+                        ADICIONAR À BIBLIOTECA
+                    </button>
+                </div>
+                <button
+                    *ngIf="planning?.meta?.goal"
+                    mat-button
+                    aria-label="expand card"
+                    (click)="planning.expanded = !planning.expanded"
+                >
+                    <mat-icon *ngIf="planning.expanded"
+                        >keyboard_arrow_up</mat-icon
+                    >
+                    <mat-icon *ngIf="!planning.expanded"
+                        >keyboard_arrow_down</mat-icon
+                    >
+                    Objetivo do planejamento
+                </button>
+            </div>
+            <div
+                class="card-expand-area"
+                *ngIf="planning.expanded"
+                [@expandCollapse]
+            >
+                <div class="card-expanded-content">
+                    {{ planning?.meta?.goal }}
+
+                    <mat-chip-list>
+                        <mat-chip
+                            *ngFor="let hability of planning?.meta?.habilities"
+                            (click)="openHability(hability)"
+                            >{{ hability }}</mat-chip
+                        >
+                    </mat-chip-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

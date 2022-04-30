@@ -1,0 +1,58 @@
+<h1 mat-dialog-title style="text-align: center">Detalhes da matrícula</h1>
+<mat-dialog-content>
+    <h3>{{ student.basic["Nome do Aluno"] }}</h3>
+    <p matLine>CGM: {{ student.basic.CGM }}</p>
+    <p matLine>Data de Nascimento: {{ student.basic["Data Nascimento"] }}</p>
+    <p matLine>Sexo: {{ student.basic["Sexo"] }}</p>
+    <p matLine>Situação da Matrícula: {{ student.basic["Sit da Matrícula"] }}</p>
+    <p matLine>Data de Movimentação: {{ student.basic["Data Matric/Mov"] }}</p>
+
+
+    <mat-divider></mat-divider>
+
+    <h4><b>Contato</b></h4>
+    <p matLine *ngIf="student.contato['Celular Aluno']">Celular do Aluno: {{ student.contato["Celular Aluno"] }}</p>
+    <p matLine *ngIf="student.contato['Celular Responsável']">Celular do Responsável: {{ student.contato["Celular
+        Responsável"]
+        }}</p>
+    <p matLine *ngIf="student.contato['Email aluno']">Email do Aluno: {{ student.contato["Email aluno"] }}</p>
+    <p matLine *ngIf="student.contato['Email responsável']">Email do Responsável: {{ student.contato["Email
+        responsável"]
+        }}</p>
+    <p matLine *ngIf="student.contato['Ramal']">Ramal: {{ student.contato["Ramal"] }}</p>
+    <p matLine *ngIf="student.contato['Telefone Comercial']">
+        Telefone Comercial: {{ student.contato["Telefone Comercial"] }}
+    </p>
+    <p text-wrap *ngIf="student.contato['Telefone Residencial']">
+        Telefone Residencial: {{ student.contato["Telefone Residencial"] }}
+    </p>
+
+    <mat-divider></mat-divider>
+
+    <h4><b>Endereço</b></h4>
+    <p matLine *ngIf="student.endereco['Bairro']">Bairro: {{ student.endereco["Bairro"] }}</p>
+    <p matLine *ngIf="student.endereco['CEP']">CEP: {{ student.endereco.CEP }}</p>
+    <p matLine *ngIf="student.endereco['Caixa Postal']">Caixa Postal: {{ student.endereco["Caixa Postal"] }}</p>
+    <p matLine *ngIf="student.endereco['Cidade']">Cidade: {{ student.endereco.Cidade }}</p>
+    <p matLine *ngIf="student.endereco['Complemento']">Complemento: {{ student.endereco.Complemento }}</p>
+    <p matLine *ngIf="student.endereco['Endereço']">Rua: {{ student.endereco["Endereço"] }}</p>
+    <p matLine *ngIf="student.endereco['Número']">Número: {{ student.endereco["Número"] }}</p>
+    <p matLine *ngIf="student.endereco['UF']">UF: {{ student.endereco.UF }}</p>
+
+    <mat-divider></mat-divider>
+
+    <h4><b>Filiação</b></h4>
+    <p matLine *ngIf="student.filiacao['Nome da Mãe']">Nome da Mãe: {{ student.filiacao["Nome da Mãe"] }}</p>
+    <p matLine *ngIf="student.filiacao['Nome do Pai']">Nome do Pai: {{ student.filiacao["Nome do Pai"] }}</p>
+    <p matLine *ngIf="student.filiacao['Nome do Responsável']">
+        Nome do Responsável: {{ student.filiacao["Nome do Responsável"] }}
+    </p>
+    <p matLine *ngIf="student.filiacao['Parentesco do Responsável']">
+        Parentesco do Responsável:
+        {{ student.filiacao["Parentesco do Responsável"] }}
+    </p>
+
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutAlign="end center">
+    <button mat-button mat-dialog-close>Ok</button>
+</mat-dialog-actions>

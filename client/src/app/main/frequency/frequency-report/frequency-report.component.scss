@@ -1,0 +1,33 @@
+// Informações para impressão
+// Define uma classe para selecionar campos que não devem ser impressos.
+// Remove a página, formata o tamanho e a orientação da página.
+// Faz o mesmo com o html.
+@media print {
+    .doNotPrint {
+        display: none;
+    }
+    * {
+        -webkit-print-color-adjust: exact;
+    }
+    @page {
+        margin: 0 !important;
+        size: A4 Landscape !important;
+        -webkit-print-color-adjust: exact;
+    }
+    html,
+    body {
+        margin: 0 !important;
+        size: A4 Landscape !important;
+        -webkit-print-color-adjust: exact;
+    }
+}
+
+.center {
+    vertical-align: middle;
+    text-align: center;
+}
+
+// Acrestenta borda
+.border {
+  border: 1px solid black; // White blue;
+}

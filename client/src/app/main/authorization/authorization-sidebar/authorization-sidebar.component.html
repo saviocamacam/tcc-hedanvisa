@@ -1,0 +1,45 @@
+<div class="sidebar-content">
+    <div class="card mat-white-bg">
+        <!-- SIDEBAR CONTENT -->
+        <div class="content py-16" fusePerfectScrollbar>
+            <div class="nav material2">
+                <div class="nav-item" aria-label="inbox">
+                    <a
+                        class="nav-link"
+                        [ngClass]="{
+                            'active mat-accent-bg': filterBy === 'waiting'
+                        }"
+                        (click)="changeFilter('waiting')"
+                    >
+                        <span class="title">Em Espera</span>
+                    </a>
+                </div>
+
+                <div class="nav-item" aria-label="frequently contacted">
+                    <a
+                        class="nav-link"
+                        [ngClass]="{
+                            'active mat-accent-bg': filterBy === 'accepted'
+                        }"
+                        (click)="changeFilter('accepted')"
+                    >
+                        <div class="title">Aceitas</div>
+                    </a>
+                </div>
+
+                <div class="nav-item" aria-label="starred">
+                    <a
+                        class="nav-link"
+                        [ngClass]="{
+                            'active mat-accent-bg': filterBy === 'closed'
+                        }"
+                        (click)="changeFilter('closed')"
+                    >
+                        <div class="title">Suspensas</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / SIDEBAR CONTENT -->

@@ -1,0 +1,216 @@
+<!-- <h3
+    *ngIf="(!dataSource?.data || !(dataSource?.data?.length > 0)) && !isLoading"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+>
+    Nenhuma chamada foi encontrada.
+</h3> -->
+
+<mat-card
+    *ngIf="isLoading"
+    style="display: flex; justify-content: center; align-items: center"
+>
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+</mat-card>
+<div
+    class="py-24"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    fxflex
+    *ngIf="profile?.$profileType === 'ProfileCounty' && classroom"
+>
+    <button
+        mat-raised-button
+        [routerLink]="['/frequencias', classroom?._id, 'relatorio']"
+        class="mat-accent-bg"
+    >
+        Imprimir Livro
+    </button>
+</div>
+
+<mat-table
+    #table
+    [dataSource]="dataSource.data"
+    matSort
+    (matSortChange)="onSortChange($event)"
+    [@animateStagger]="{ value: '50' }"
+    matSortActive="date"
+    matSortDirection="desc"
+>
+    <ng-container matColumnDef="content">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Conteúdo
+        </mat-header-cell>
+        <mat-cell *matCellDef="let frequency">
+            <p class="text-truncate font-weight-600">
+                {{ frequency?.content }}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="owner">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Autor
+        </mat-header-cell>
+        <mat-cell *matCellDef="let frequency">
+            <p
+                matTooltip="@{{ frequency?.owner_shortName }}"
+                class="text-truncate font-weight-600"
+            >
+                {{ frequency?.owner }}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Data
+        </mat-header-cell>
+        <mat-cell *matCellDef="let frequency">
+            <p class="text-truncate font-weight-600">
+                {{ frequency?.date | date: "dd/MM/yyyy" }}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="updatedAt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Lançada em
+        </mat-header-cell>
+        <mat-cell *matCellDef="let frequency">
+            <p class="text-truncate font-weight-600">
+                {{ frequency.updatedAt | date: "dd/MM/yyyy H:mm" }}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="menu">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let frequency">
+            <mat-menu #menu>
+                <button
+                    *ngIf="
+                        frequency.owner_id != profile._id ||
+                        profile.profileType == 'ProfileSchool'
+                    "
+                    mat-menu-item
+                    (click)="viewFrequency(frequency)"
+                >
+                    Ver
+                </button>
+                <button
+                    *ngIf="frequency.owner_id == profile._id"
+                    mat-menu-item
+                    (click)="deleteFrequency(frequency)"
+                >
+                    Excluir
+                </button>
+                <button
+                    *ngIf="
+                        frequency.owner_id == profile._id ||
+                        profile.profileType == 'ProfileSchool'
+                    "
+                    mat-menu-item
+                    (click)="editFrequency(frequency)"
+                >
+                    Editar
+                </button>
+            </mat-menu>
+
+            <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                aria-label="more"
+            >
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="buttons">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let frequency">
+            <button
+                *ngIf="
+                    frequency.owner_id != profile._id ||
+                    profile.profileType == 'ProfileSchool'
+                "
+                class="mat-primary-bg"
+                item-end
+                mat-raised-button
+                (click)="viewFrequency(frequency)"
+            >
+                Ver
+            </button>
+            &nbsp; &nbsp;
+            <button
+                *ngIf="frequency.owner_id == profile._id"
+                class="mat-primary-bg"
+                mat-raised-button
+                item-end
+                (click)="deleteFrequency(frequency)"
+            >
+                Excluir
+            </button>
+            &nbsp; &nbsp;
+            <button
+                *ngIf="
+                    frequency.owner_id == profile._id ||
+                    profile.profileType == 'ProfileSchool'
+                "
+                class="mat-primary-bg"
+                mat-raised-button
+                item-end
+                (click)="editFrequency(frequency)"
+            >
+                Editar
+            </button>
+        </mat-cell>
+    </ng-container> -->
+
+    <ng-container matColumnDef="footer">
+        <mat-footer-cell *matFooterCellDef>
+            <mat-paginator
+                id="paginator"
+                [length]="frequenciesLength"
+                [pageSize]="10"
+                [pageSizeOptions]="[10, 20, 50, 100]"
+                showFirstLastButtons
+                (page)="onPaginateChange()"
+                class="mat-paginator-sticky"
+            ></mat-paginator>
+        </mat-footer-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef>
+            <div class="w-100-p text-center">
+                Nenhuma chamada foi encontrada.
+            </div>
+        </mat-footer-cell>
+    </ng-container>
+
+    <mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+    ></mat-header-row>
+    <mat-row
+        id="table-row"
+        *matRowDef="let frequency; columns: displayedColumns"
+        class="contact"
+        [@animate]="{ value: '*', params: { y: '100%' } }"
+    >
+    </mat-row>
+
+    <mat-footer-row
+        *matFooterRowDef="['noData']"
+        [hidden]="dataSource.data.length !== 0"
+    >
+    </mat-footer-row>
+
+    <mat-footer-row
+        *matFooterRowDef="['footer']"
+        [hidden]="dataSource.data.length === 0"
+    >
+    </mat-footer-row>
+</mat-table>

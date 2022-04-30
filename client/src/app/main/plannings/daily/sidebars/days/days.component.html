@@ -1,0 +1,91 @@
+<!-- SIDEBAR CONTENT -->
+<div
+    class="content"
+    fusePerfectScrollbar
+    [@animate]="{ value: '*', params: { y: '50px' } }"
+>
+    <div class="nav">
+        <div class="p-8">
+            <button
+                mat-raised-button
+                class="mat-accent-bg  compose-dialog-button w-100-p"
+                (click)="newDocument()"
+                aria-label="Compose"
+            >
+                NOVO DOCUMENTO
+            </button>
+        </div>
+
+        <div class="nav-subheader text-uppercase">
+            FILTRO DE Planejamentos
+        </div>
+        <mat-form-field floatLabel="never" class="w-100-p p-8 text-uppercase">
+            <mat-select
+                class="account-selection "
+                placeholder="Selecione a Disciplina"
+                [ngModel]="discipline"
+                (onChange)="changeFilter()"
+            >
+                <mat-option
+                    *ngFor="let discipline of disciplines"
+                    class="text-uppercase"
+                    [value]="discipline.id"
+                >
+                    {{ discipline.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="p-8 w-100-p">
+            <mat-select
+                [(ngModel)]="selectedTypeFilter"
+                placeholder="Filtro"
+                (selectionChange)="changeFilterSort()"
+            >
+                <mat-option
+                    *ngFor="let filter of filters"
+                    [value]="filter.value"
+                >
+                    {{ filter.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="p-8 w-100-p">
+            <mat-select
+                [(ngModel)]="selectedSortFilter"
+                placeholder="Ordem"
+                (selectionChange)="changeFilterSort()"
+            >
+                <mat-option *ngFor="let sort of sorts" [value]="sort.value">
+                    {{ sort.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div
+            class="nav-item"
+            *ngFor="let day of days"
+            (click)="changeSubjectFilter(day)"
+        >
+            <a
+                *ngIf="selectedTypeFilter == 'date'"
+                class="nav-link"
+                matRipple
+                [ngClass]="{
+                    'active mat-accent-bg': subjectFilter === day._id
+                }"
+            >
+                <span>{{ day.meta.date | date: "dd/MM/yyyy" }}</span>
+            </a>
+            <a
+                *ngIf="selectedTypeFilter == 'name'"
+                class="nav-link"
+                matRipple
+                [ngClass]="{
+                    'active mat-accent-bg': subjectFilter === day._id
+                }"
+            >
+                <span>{{ day.meta.name }}</span>
+            </a>
+        </div>
+    </div>
+</div>

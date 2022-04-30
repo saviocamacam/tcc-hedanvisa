@@ -1,0 +1,87 @@
+<div class="page-layout simple left-sidebar inner-scroll">
+
+    <!-- SIDEBAR -->
+    <fuse-sidebar class="sidebar" name="simple-left-sidebar-2" position="left" lockedOpen="gt-md">
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="content p-24" fusePerfectScrollbar>
+            <mat-form-field class="w-100-p">
+                <mat-select placeholder="Ano" [(ngModel)]="year" (selectionChange)="yearChanged($event)">
+                    <mat-option *ngFor="let year of years" [value]="year.viewValue">
+                        {{year.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-100-p">
+                <mat-select placeholder="Disciplinas" [(ngModel)]="subject" (selectionChange)="subjectChanged($event)">
+                    <mat-option *ngFor="let subject of subjects" [value]="subject.viewValue">
+                        {{subject.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-divider></mat-divider>
+
+            <mat-nav-list>
+                <mat-list-item *ngFor="let hability of habilities" (click)="habilityDetail(hability)">
+                    {{hability.codigo}}
+                </mat-list-item>
+            </mat-nav-list>
+        </div>
+        <!-- / SIDEBAR CONTENT -->
+
+    </fuse-sidebar>
+    <!-- / SIDEBAR -->
+
+    <!-- CENTER -->
+    <div class="center" fusePerfectScrollbar>
+
+        <!-- HEADER -->
+        <div class="header mat-primary-bg p-24" fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button class="sidebar-toggle mr-8" fxHide.gt-md (click)="toggleSidebar('simple-left-sidebar-2')">
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <h2 class="m-0">Base Nacional Comum Curricular</h2>
+
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT -->
+        <div class="content mat-white-bg p-24">
+            <img *ngIf="!currentHability" src="https://bit.ly/2ASO9gj" alt="bncc">
+
+            <mat-card *ngIf="currentHability">
+                <mat-card-title>{{currentHability?.codigo}}</mat-card-title>
+                <mat-card-subtitle>
+                    <p *ngIf="currentHability?.camposDeAtuacao">
+                        Campos de Atuação: {{currentHability?.camposDeAtuacao}}
+                    </p>
+                    <p *ngIf="currentHability?.praticasDeLinguagem">
+                        Práticas de Linguagem: {{currentHability?.praticasDeLinguagem}}
+                    </p>
+                    <p *ngIf="currentHability?.unidadesTematicas">
+                        Unidades Temáticas: {{currentHability?.unidadesTematicas}}
+                    </p>
+                </mat-card-subtitle>
+
+                <mat-card-content>
+                    <p *ngIf="currentHability?.objetosDeConhecimento">
+                        Objetos de Conhecimento: {{currentHability?.objetosDeConhecimento}}
+                    </p>
+                    <p *ngIf="currentHability?.habilidades">
+                        Habilidades: {{currentHability?.habilidades}}
+                    </p>
+                </mat-card-content>
+            </mat-card>
+
+
+        </div>
+        <!-- / CONTENT -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

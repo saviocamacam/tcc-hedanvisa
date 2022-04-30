@@ -1,0 +1,37 @@
+<h3
+    *ngIf="!classroom && !isLoading"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+>
+    Nenhuma turma foi encontrada.
+</h3>
+
+<mat-card
+    *ngIf="isLoading"
+    style="display: flex; justify-content: center; align-items: center"
+>
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+</mat-card>
+
+<mat-tab-group
+    *ngIf="classroom && !isLoading"
+    class="content-card mat-white-bg mat-elevation-z4"
+>
+    <mat-tab label="Alunos">
+        <div class="tab-content " inner-scroll>
+            <app-enrollment-list></app-enrollment-list>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Professores">
+        <div class="tab-content " inner-scroll>
+            <app-professor-list></app-professor-list>
+        </div>
+    </mat-tab>
+    <mat-tab label="Frequências">
+        <div class="tab-content " inner-scroll>
+            <app-frequency-list></app-frequency-list>
+        </div>
+    </mat-tab>
+</mat-tab-group>

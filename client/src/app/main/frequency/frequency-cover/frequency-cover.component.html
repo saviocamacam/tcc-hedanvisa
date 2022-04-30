@@ -1,0 +1,37 @@
+<div id="frequency-cover">
+    <div style="display: flex; padding-bottom: 30px;">
+        <div style="flex: 3" class="inline"></div>
+        <div style="flex: 5" class="inline">
+            <h1>Município de Campo&nbsp;Mourão</h1>
+        </div>
+        <div style="flex: 3" class="inline"></div>
+    </div>
+
+    <h2 class="space">Secretaria da educação</h2>
+
+    <h2>Registro de classe</h2>
+
+    <p class="space center-text">
+        Ensino fundamental - Anos iniciais
+    </p>
+
+    <h3>Frequência</h3>
+    <h3>Aproveitamento escolar</h3>
+    <h3 class="space">Conteúdos / observações</h3>
+
+    <p>Ano letivo: 2019 </p>
+    <p>Unidade de ensino: {{ profile?.school?.requested?.institution?.name }}</p>
+    <p>Professor (a): {{ profile?.user?.people?.name }}</p>
+    <p>Disciplinas ministradas: {{ myMatrixes }}</p>
+    <div>
+        <div class="inline">
+            <span>Modalidade:</span>
+        </div>
+        <div class="inline">
+            <span>Turma: {{ classroom?.series + " " + classroom?.subClass }} </span>
+        </div>
+        <div class="inline">
+            <span>Turno: {{ classroom?.shift }}</span>
+        </div>
+    </div>
+</div>

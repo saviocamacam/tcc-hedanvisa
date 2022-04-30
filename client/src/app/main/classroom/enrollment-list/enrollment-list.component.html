@@ -1,0 +1,34 @@
+<h3 *ngIf="dataSource?.data?.length == 0" fxLayout="row" fxLayoutAlign="center center">
+    Nenhuma matrícula foi encontrada.
+</h3>
+
+<div class="mat-elevation-z8" *ngIf="dataSource?.data && (dataSource?.data?.length > 0)">
+
+    <mat-table #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Nome</mat-header-cell>
+            <mat-cell *matCellDef="let enrollment">
+                <p class="text-truncate font-weight-600">{{enrollment?.name}}</p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="situation">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Situação</mat-header-cell>
+            <mat-cell *matCellDef="let enrollment">
+                <p class="text-truncate font-weight-600">{{enrollment?.situation}}</p>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row id="table-row" *matRowDef="let enrollment; columns: displayedColumns;" class="contact" [@animate]="{value:'*',params:{y:'100%'}}"
+            (click)="enrollmentDetail(enrollment._id)">
+        </mat-row>
+    </mat-table>
+
+    <h3 style="text-align: center" *ngIf="dataSource.filteredData.length === 0">
+        Não existe escola com este filtro.
+    </h3>
+
+    <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+</div>

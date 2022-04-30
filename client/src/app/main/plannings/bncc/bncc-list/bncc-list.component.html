@@ -1,0 +1,24 @@
+<div
+    *ngIf="habilities?.length === 0"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxFlexFill
+>
+    <span class="no-messages-text hint-text">{{ bla }}</span>
+</div>
+
+<div class="mail-list" [@animateStagger]="{ value: '50' }">
+    <app-bncc-list-item
+        (itemSelected)="itemSelected($event)"
+        matRipple
+        *ngFor="let hability of habilities"
+        (click)="selectHability(hability)"
+        [hability]="hability"
+        [ngClass]="{
+            'current-mail mat-accent-50-bg':
+                hability?._id == currentHability?._id
+        }"
+        [@animate]="{ value: '*', params: { y: '100%' } }"
+    >
+    </app-bncc-list-item>
+</div>

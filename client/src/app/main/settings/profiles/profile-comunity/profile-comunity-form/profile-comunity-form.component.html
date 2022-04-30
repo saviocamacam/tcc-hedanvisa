@@ -1,0 +1,57 @@
+<fuse-progress-bar></fuse-progress-bar>
+
+<form
+    [formGroup]="profileForm"
+    class="product w-100-p "
+    fxLayout="column "
+    fxFlex
+>
+    <div class="tab-content p-24 " align="center" fusePerfectScrollbar>
+        <mat-form-field class="w-100-p">
+            <mat-select
+                placeholder="Representação"
+                formControlName="personality"
+                (selectionChange)="personalityChanged($event.value)"
+            >
+                <mat-option value="entity ">Entidade</mat-option>
+                <mat-option value="individual ">Individual</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <br />
+
+        <div *ngIf="personality == 'entity'">
+            <mat-form-field class="w-100-p ">
+                <mat-select placeholder="Tipo " formControlName="type ">
+                    <mat-option value="private ">Empresa Privada</mat-option>
+                    <mat-option value="ong ">ONG</mat-option>
+                    <mat-option value="syndicate ">Sindicato</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-100-p ">
+                <input
+                    placeholder="Nome da Organização "
+                    formControlName="name "
+                />
+            </mat-form-field>
+
+            <mat-form-field class="w-100-p ">
+                <input placeholder="Meu Cargo " formControlName="post " />
+            </mat-form-field>
+
+            <mat-form-field class="w-100-p ">
+                <mat-select
+                    placeholder="Voluntário "
+                    formControlName="voluntary "
+                >
+                    <mat-option
+                        *ngFor="let voluntary of voluntaries"
+                        [value]="voluntary.value"
+                        >{{ voluntary.viewValue }}</mat-option
+                    >
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+</form>

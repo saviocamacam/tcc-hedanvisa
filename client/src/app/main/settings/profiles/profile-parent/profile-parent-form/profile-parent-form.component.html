@@ -1,0 +1,57 @@
+<fuse-progress-bar></fuse-progress-bar>
+
+<form
+    name="profileForm "
+    [formGroup]="profileForm"
+    class="product w-100-p "
+    fxLayout="column "
+    fxFlex
+>
+    <div class="tab-content p-24 " fusePerfectScrollbar>
+        <mat-form-field class="w-100-p">
+            <mat-label>Parentesco</mat-label>
+            <mat-select formControlName="kinship">
+                <mat-option
+                    *ngFor="let kinship of kinships"
+                    [value]="kinship.value"
+                    >{{ kinship.viewValue }}</mat-option
+                >
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="w-100-p">
+            <mat-label>Convidar Dependente</mat-label>
+            <input
+                matInput
+                placeholder="Celular ou Email"
+                [(ngModel)]="child"
+                (keyup)="searchChild()"
+                required
+            />
+        </mat-form-field>
+
+        <br />
+
+        <mat-card *ngIf="child">
+            <img mat-card-avatar [src]="child.profile.avatar" />
+            <mat-card-title class="h2">{{ child.name }}</mat-card-title>
+            <mat-card-subtitle>{{ child.contact }}</mat-card-subtitle>
+            <mat-card-content>
+                <p>Uma solicitação será enviada ao contato</p>
+                <p *ngIf="!child">
+                    Nenhum usuário encontrado com estecontato. Verifique se está
+                    correto, pois iremos mandar um convite.
+                </p>
+            </mat-card-content>
+        </mat-card>
+
+        <br />
+        <button
+            (click)="onSubmit()"
+            mat-raised-button
+            class="save-product-button mat-primary-bg "
+        >
+            <span>Salvar</span>
+        </button>
+    </div>
+</form>

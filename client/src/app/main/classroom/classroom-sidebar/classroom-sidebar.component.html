@@ -1,0 +1,71 @@
+<div class="sidebar-content">
+    <div class="card mat-white-bg" *ngIf="years && years.length > 0">
+        <!-- SIDEBAR HEADER -->
+        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
+            <div
+                *ngIf="
+                    profile.profileType === 'ProfileSchool' && !isFrequencyPage
+                "
+            >
+                <button
+                    mat-raised-button
+                    (click)="newSchoolYearClassroom()"
+                    class="mat-accent-bg w-100-p"
+                >
+                    Novo Calendário de Turmas
+                </button>
+            </div>
+
+            <mat-form-field class="w-100-p mt-16">
+                <mat-select
+                    placeholder="Calendário"
+                    [(ngModel)]="yearSelected"
+                    (selectionChange)="onYearChange()"
+                >
+                    <mat-option *ngFor="let year of years" [value]="year?._id">
+                        {{ year?.schoolYear?.year?.slice(0, 4) }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-100-p mt-16">
+                <mat-select
+                    placeholder="Período"
+                    [(ngModel)]="periodSelected"
+                    (selectionChange)="onPeriodChange($event.value)"
+                >
+                    <mat-option *ngFor="let period of periods" [value]="period">
+                        {{ period?.formated }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!-- / SIDEBAR HEADER -->
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="content py-16" fusePerfectScrollbar>
+            <div class="nav">
+                <div
+                    class="nav-item"
+                    aria-label="inbox"
+                    *ngFor="let classroom of classrooms"
+                >
+                    <a
+                        class="nav-link"
+                        matRipple
+                        (click)="changeClassroom(classroom)"
+                        [ngClass]="{
+                            'active mat-accent-bg':
+                                classroom?._id == currentClassroom?._id
+                        }"
+                    >
+                        <span class="title">
+                            {{ classroom?.series + " | " + classroom?.subClass}}
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / SIDEBAR CONTENT -->

@@ -1,0 +1,225 @@
+{
+  "eixos": [
+    {
+      "eixo": "EIXO NUMÉRICO E ALGÉBRICO",
+      "habilidades": [
+        {
+          "H1": "Associar a contagem de coleções de objetos à representação numérica das suas respectivas quantidades",
+          "especificacoes": [
+            {
+              "1": "Contar agrupamentos de até 20 objetos dispostos: de forma organizada; de forma desorganizada; agrupados de 2 em 2, de 3 em 3, de 4 em 4, de 5 em 5 e 10 em 10."
+            },
+            {
+              "2": "Contar agrupamentos de mais de 20 objetos agrupados de 2 em 2, de 3 em 3, de 4 em 4, de 5 em 5 e 10 em 10 (com limite numérico de 200)."
+            }
+          ]
+        },
+        {
+          "H2": "Associar a denominação do número a sua respectiva representação simbólica",
+          "especificacoes": [
+            {
+              "1": "Observação: Apenas números de 10 a 999 em algarismos indoarábicos, ou em linguagem materna."
+            }
+          ]
+        },
+        {
+          "H3": "Comparar ou ordenar quantidades pela contagem para identificar igualdade ou desigualdade numérica.",
+          "especificacoes": [
+            {
+              "1": "Comparar quantidades de: objetos organizados; objetos apresentados desordenadamente"
+            }
+          ]
+        },
+        {
+          "H4": "Comparar ou ordenar números naturais",
+          "especificacoes": [
+            {
+              "1": "Escolher entre alternativas apresentadas aquela que: completa uma sequência de quantidades crescentes; completa uma sequência de quantidades decrescentes; corresponde a uma ordenação crescente de quantidades."
+            },
+            {
+              "2": "Resolver problemas simples de comparação numérica. Observação: 1. Representados ou não na reta numérica"
+            }
+          ]
+        },
+        {
+          "H5": "Compor e decompor números",
+          "especificacoes": [
+            {
+              "1": "Observação: 1) Sistema de numeração decimal até 999"
+            }
+          ]
+        },
+        {
+          "H6": "- Resolver problemas que demandam as ações de juntar, separar, acrescentar e retirar quantidades.",
+          "especificacoes": [
+            {
+              "1": "Operar com e sem reagrupamentos"
+            },
+            {
+              "2": "Adicionar com até três parcelas."
+            }
+          ]
+        },
+        {
+          "H7": "Resolver problemas que demandam as ações de comparar e completar quantidades.",
+          "especificacoes": [
+            {
+              "1": "Operar com e sem reagrupamentos."
+            }
+          ]
+        },
+        {
+          "H8": "Cálculo de adições e subtrações",
+          "especificacoes": [
+            {
+              "1": "Operar com e sem reagrupamentos."
+            },
+            {
+              "2": "Adicionar com duas parcelas"
+            }
+          ]
+        },
+        {
+          "H9": "Resolver problemas que envolvam as ideias da multiplicação",
+          "especificacoes": [
+            {
+              "1": "Situações que envolvam adição de parcelas iguais."
+            },
+            {
+              "2": "Situações que envolvam objetos organizados em disposição retangular."
+            },
+            {
+              "3": "Situações envolvendo a ideia de proporcionalidade (dobro, triplo etc)."
+            },
+            {
+              "4": "Situações envolvendo a ideia de combinação"
+            }
+          ]
+        },
+        {
+          "H10": "Resolver problemas que envolvam as ideias da divisão",
+          "especificacoes": [
+            {
+              "1": "Repartir uma coleção de objetos em partes iguais."
+            },
+            {
+              "2": "Quantas vezes uma quantidade cabe em outra"
+            },
+            {
+              "3": "Situações envolvendo a ideia de proporcionalidade (metade, terça e quarta parte). Observação: Considerar situações contínuas e discretas."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "eixo": "EIXO GEOMETRIA",
+      "habilidades": [
+        {
+          "H11": "Identificar figuras geométricas planas. ",
+          "especificacoes": [
+            {
+              "1": "Associar as seguintes figuras planas com seus respectivos nomes: triângulos, quadrados, retângulos e círculos em posição prototípica ou não. Observação: 1. Nos distratores podem ser utilizadas quaisquer figuras planas (ex. trapézio, pentágono etc). 2. Evitar usar quadrados, retângulos e losangos num mesmo item."
+            }
+          ]
+        },
+        {
+          "H12": "Reconhecer as representações de figuras geométricas espaciais. ",
+          "especificacoes": [
+            {
+              "1": "Associar representações de objetos do mundo físico a representações de alguns sólidos geométricos simples: cubo, paralelepípedo, esfera, cilindro, cone, pirâmide. (exemplo: caixa com paralelepípedo, casquinha de sorvete com cone). "
+            },
+            {
+              "2": "Reconhecer planificações de prismas. Observação: Evitar usar cubos e paralelepípedos num mesmo item. "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "eixo": "EIXO GRANDEZAS E MEDIDAS",
+      "habilidades": [
+        {
+          "H13": "Comparar e ordenar comprimentos",
+          "especificacoes": [
+            {
+              "1": "Situações envolvendo desenhos de objetos ou personagens para estabelecer comparativamente: o maior, o menor, igual, o mais alto, o mais baixo, o mais comprido o mais curto, o mais grosso, o mais fino, o mais estreito, o mais largo. "
+            }
+          ]
+        },
+        {
+          "H14": "Identificar e relacionar cédulas e moedas.",
+          "especificacoes": [
+            {
+              "1": "Identificar cédulas e moeda do sistema monetário brasileiro. "
+            },
+            {
+              "2": "Identificar trocas e diferentes formas para representar um mesmo valor. "
+            },
+            {
+              "3": "Dada uma cédula ou moeda, reconhecer agrupamentos de outras cédulas ou moedas, de valores iguais, correspondentes ao mesmo valor. "
+            },
+            {
+              "4": "Dado um valor qualquer representado por cédulas e ou moedas, identificar outra forma de obter o mesmo valor."
+            }
+          ]
+        },
+        {
+          "H15": "Identificar, comparar, relacionar e ordenar tempo em diferentes sistemas de medida. ",
+          "especificacoes": [
+            {
+              "1": "Situações envolvendo intervalos de tempo, diferentes medidas de tempo (hora, dia, semana, mês, ano, semestre, bimestre); diferentes instrumentos de medida de tempo (relógios analógicos e digitais, calendário). "
+            },
+            {
+              "2": "Apresentar situações de rotina escolar e de vida comparando com os períodos do dia, do mês e do ano; "
+            },
+            {
+              "3": "Reconhecer horas cheias e intervalos de cinco minutos em relógio digital e em relógio analógico;"
+            },
+            {
+              "4": "Relacionar horários apresentados em relógios digital e analógico;"
+            },
+            {
+              "5": "Identificar instrumentos de medida de tempo;"
+            }
+          ]
+        },
+        {
+          "H16": "Ler resultados de medições",
+          "especificacoes": [
+            {
+              "1": "Grandezas de comprimento, massa, capacidade, temperatura. Observação: Considerar apenas medidas expressas por números naturais."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "eixo": "EIXO DE TRATAMENTO DA INFORMAÇÃO",
+      "habilidades": [
+        {
+          "H17": "Identificar informações apresentadas em tabelas.",
+          "especificacoes": [
+            {
+              "1": "Identificar informação em listas ou tabelas de uma entrada, com mais do que duas categorias. "
+            },
+            {
+              "2": "Identificar informação que exijam dois níveis de localização, como tabelas de dupla entrada. "
+            }
+          ]
+        },
+        {
+          "H18": "Identificar informações apresentadas em gráficos.",
+          "especificacoes": [
+            {
+              "1": "Reconhecer no gráfico (barras, coluna ou pictórico) qual a maior/menor frequência."
+            },
+            {
+              "2": "Dada uma frequência, localizar a informação correspondente no gráfico e vice-versa. "
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+@media print {
+  .doNotPrint {
+    display: none;
+  }
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+  @page {
+    -webkit-print-color-adjust: exact;
+  }
+  html,
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+  .invoice {
+    page-break-after: always;
+  }
+  .invoice:last-child {
+    page-break-after: avoid;
+  }
+}
+
+.fuse-card {
+  max-width: 100% !important;
+}
+.center {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.mat-list-option {
+  height: 100%;
+}

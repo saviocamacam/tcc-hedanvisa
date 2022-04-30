@@ -1,0 +1,21 @@
+<div align="center" class="mb-32 mt-16">
+    <button
+        mat-raised-button
+        class="mat-primary-bg"
+        (click)="openSchoolYearForm(null)"
+    >
+        <mat-icon>add_circle</mat-icon>
+        Adicionar Calendário
+    </button>
+</div>
+
+<mat-nav-list>
+    <mat-list-item
+        align="center"
+        *ngFor="let schoolYear of schoolYears"
+        (click)="openSchoolYearForm(schoolYear)"
+    >
+        <p matLine>{{ schoolYear?.year?.substring(0, 4) }}</p>
+        <p matLine>{{ schoolYear?.regime?.showValue }}</p>
+    </mat-list-item>
+</mat-nav-list>

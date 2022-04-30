@@ -1,0 +1,33 @@
+<!-- <button mat-raised-button class="mat-primary-bg w-100-p mb-8" (click)="newDocument()">
+      <mat-icon>add_circle_outline</mat-icon>
+      Planejamento Anual
+  </button> -->
+
+
+<div class="mt-32" align="center" *ngIf="!hasFile ">
+    <div class="fuse-card ">
+
+        <img src="https://assets-ouch.icons8.com/preview/311/a245f433-04f4-4d3a-a34d-b769787bf70d.png">
+
+        <div class="p-16">
+            <div class="h1">Ops!</div>
+            <!-- <div class="h4 secondary-text">Free on Thursdays</div> -->
+        </div>
+
+        <div class="p-16 pt-0 line-height-1.75" *ngIf="profile && (profile.$profileType !== 'ProfileCounty')">
+            Aguarde o Gestor de Rede submeter o Planejamento Anual para este calendário. Ou contate-o!
+        </div>
+
+        <div class="p-16 pt-0 line-height-1.75" *ngIf="profile && (profile.$profileType === 'ProfileCounty')">
+            Planejamento Anual ainda não foi adicionado para este calendário.
+        </div>
+
+    </div>
+</div>
+
+<pdf-viewer *ngIf="hasFile" [src]="pdfSrc" [original-size]="false" [fit-to-page]="true" [autoresize]="true"
+    [render-text]="true" style="display: block;"></pdf-viewer>
+<fuse-progress-bar></fuse-progress-bar>
+
+<!-- (on-progress)="onProgress($event)" (after-load-complete)="afterLoadCompete($event)"
+    (text-layer-rendered)="textLayerRendered($event)" -->

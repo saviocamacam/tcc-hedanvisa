@@ -1,0 +1,16 @@
+@import "src/@fuse/scss/fuse";
+
+#planing-center {
+  .header {
+    flex: 0 1 auto;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+    .search-input-wrapper {
+      max-width: 480px;
+    }
+  }
+
+  .example-tab-icon {
+    margin-right: 8px;
+  }
+}

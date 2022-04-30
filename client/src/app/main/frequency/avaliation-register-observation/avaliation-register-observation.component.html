@@ -1,0 +1,46 @@
+<div style="background-color: white; width: 100%;">
+    <table mat-table [dataSource]="tableControl?.dataSource" style="min-width: 100%">
+        <ng-container
+            *ngFor="let column of tableControl?.columns"
+            matColumnDef="{{ column.name }}"
+        >
+            <th mat-header-cell
+                class="cell-props"
+                *matHeaderCellDef
+            >
+                <div class="rotate header-{{ column.label }}">
+                    <b>{{ column.label }}</b>
+                </div>
+            </th>
+
+            <td mat-cell
+                class="cell-props"
+                *matCellDef="let element"
+            >
+                {{ element[column.name] }}
+            </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="tableControl?.displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: tableControl?.displayedColumns"></tr>
+    </table>
+
+    <mat-grid-list cols="11" rowHeight="50px">
+        <mat-grid-tile class="border" colspan="5" rowspan="1">
+            <span class="pb-32 text-bold">
+                Observações
+            </span>
+        </mat-grid-tile>
+        <mat-grid-tile class="border" colspan="3" rowspan="1">
+            <span class="pb-32 text-bold">
+                Rubrica / Diretor / Orientador
+            </span>
+        </mat-grid-tile>
+        <mat-grid-tile class="border" colspan="3" rowspan="1">
+            <span class="pb-32 text-bold">
+                Rubrica do professor
+            </span>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

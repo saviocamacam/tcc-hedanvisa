@@ -1,0 +1,38 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+    <mat-checkbox
+        [(ngModel)]="descriptor.check"
+        (ngModelChange)="onSelectedChange()"
+        (click)="$event.stopPropagation()"
+    ></mat-checkbox>
+
+    <div class="info" fxFlex FlexLayout="column">
+        <div class="row-1" fxLayout="row" fxLayoutAlign="start center">
+            <div
+                class="name"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxFlex
+            >
+                <span class="text-truncate" *ngIf="descriptor?.codigo">{{
+                    descriptor.codigo
+                }}</span>
+            </div>
+        </div>
+
+        <div class="row-2" fxLayout="row" fxLayoutAlign="start center">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <div class="subject ">
+                    <span class="mat-title">
+                        {{ descriptor.valor }}
+                    </span>
+                </div>
+
+                <div class="message text-truncate" *ngIf="descriptor?.tema">
+                    <span class="mat-subheading-2">
+                        {{ descriptor?.tema }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

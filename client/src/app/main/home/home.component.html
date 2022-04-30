@@ -1,0 +1,130 @@
+<div
+    id="dashboard-project"
+    class="page-layout simple right-sidebar"
+    fxLayout="row"
+>
+    <!-- CENTER -->
+    <div class="center" fusePerfectScrollbar>
+        <!-- HEADER -->
+        <div
+            class="header mat-accent-bg p-24 pb-0"
+            fxLayout="column"
+            fxLayoutAlign="space-between"
+        >
+            <div fxLayout="row" fxLayoutAlign="space-between start">
+                <span
+                    *ngIf="user && !user.$peopleAsObject"
+                    class="mat-display-1 mb-0 welcome-message"
+                    style="font-size: 28px"
+                    [@animate]="{ value: '*', params: { x: '50px' } }"
+                >
+                    Olá, {{ user?.shortName.split(" ")[0] }}!
+                </span>
+                <span
+                    *ngIf="user && user.$peopleAsObject"
+                    class="mat-display-1 mb-0 welcome-message"
+                    style="font-size: 28px"
+                    [@animate]="{ value: '*', params: { x: '50px' } }"
+                >
+                    Olá, {{ user?.$peopleAsObject?.$name.split(" ")[0] }}!
+                </span>
+            </div>
+
+            <div fxLayout="row">
+                <div class="selected-project" id="selectedProject">
+                    <span *ngIf="currentProfile?.county"
+                        >{{
+                            currentProfile?.role
+                                ? currentProfile?.role?.type
+                                : currentProfile?.showType
+                        }}
+                        em {{ currentProfile?.county?.requested?.name }}</span
+                    >
+                    <span *ngIf="currentProfile?.school"
+                        >{{
+                            currentProfile?.role
+                                ? currentProfile?.role?.type
+                                : currentProfile?.showType
+                        }}
+                        em
+                        {{
+                            currentProfile?.school?.requested?.institution?.name
+                        }}</span
+                    >
+                </div>
+
+                <button
+                    mat-icon-button
+                    class="project-selector"
+                    id="menuProjectsButton"
+                    [matMenuTriggerFor]="projectsMenu"
+                    aria-label="Select project"
+                >
+                    <mat-icon>more_horiz</mat-icon>
+                </button>
+
+                <mat-menu #projectsMenu="matMenu">
+                    <button
+                        mat-menu-item
+                        *ngFor="let profile of profiles"
+                        (click)="changeSelected(profile)"
+                    >
+                        <span *ngIf="profile?.profileType === 'ProfileCounty'"
+                            >{{
+                                profile?.role
+                                    ? profile?.role?.type
+                                    : profile?.showType
+                            }}
+                            em {{ profile?.county?.requested?.name }}</span
+                        >
+                        <span
+                            *ngIf="
+                                profile?.profileType === 'ProfileSchool' ||
+                                profile?.profileType === 'ProfileProfessor'
+                            "
+                        >
+                            {{
+                                profile?.role
+                                    ? profile?.role?.type
+                                    : profile?.showType
+                            }}
+                            em
+                            {{ profile?.school?.requested?.institution?.name }}
+                        </span>
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT -->
+        <div class="content mt-32">
+            <mat-grid-list
+                [cols]="breakpoint"
+                rowHeight="1:0.5"
+                (window:resize)="onResize($event)"
+            >
+                <mat-grid-tile *ngFor="let item of navigation[0]?.children">
+                    <a
+                        style="text-decoration: none"
+                        (click)="loadDestine(item)"
+                    >
+                        <mat-card class="w-300">
+                            <mat-card-header>
+                                <h2 mat-card-title>{{ item.title }}</h2>
+                                <img
+                                    mat-card-sm-image
+                                    src="assets/icons/education/{{
+                                        item.id
+                                    }}.svg"
+                                />
+                            </mat-card-header>
+                        </mat-card>
+                    </a>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+    <!-- / CENTER -->
+</div>

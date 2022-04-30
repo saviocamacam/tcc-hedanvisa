@@ -1,0 +1,252 @@
+<div
+    id="questions-center"
+    class="page-layout simple left-sidebar inner-sidebar tabbed inner-scroll"
+>
+    <!-- HEADER -->
+    <div
+        class="header mat-accent-bg p-16 p-sm-24"
+        fxLayout="column"
+        fxLayoutAlign="start start"
+        fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between center"
+    >
+        <!-- APP TITLE -->
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <button
+                mat-icon-button
+                class="sidebar-toggle mr-12"
+                fxHide.gt-md
+                (click)="toggleSidebar('simple-left-sidebar-4')"
+            >
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon
+                    class="logo-icon mr-16"
+                    [@animate]="{
+                        value: '*',
+                        params: { delay: '50ms', scale: '0.2' }
+                    }"
+                    >account_box
+                </mat-icon>
+                <span
+                    class="logo-text h1 text-uppercase"
+                    [@animate]="{
+                        value: '*',
+                        params: { delay: '100ms', x: '-25px' }
+                    }"
+                >
+                    Banco de Questões
+                </span>
+            </div>
+        </div>
+        <!-- / APP TITLE -->
+
+        <!-- SEARCH -->
+        <div
+            class="search-input-wrapper mt-16 ml-8 m-sm-0"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+        >
+            <label for="search" class="mr-8">
+                <mat-icon>search</mat-icon>
+            </label>
+            <mat-form-field mat-no-float class="m-0" floatLabel="never">
+                <input matInput id="search" placeholder="Pesquise por algo" />
+            </mat-form-field>
+        </div>
+        <!-- / SEARCH -->
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content">
+        <!-- SIDEBAR -->
+        <fuse-sidebar
+            class="sidebar"
+            name="simple-left-sidebar-4"
+            position="left"
+            lockedOpen="gt-md"
+        >
+            <!-- SIDEBAR CONTENT -->
+            <div class="nav content p-24" fusePerfectScrollbar>
+                <div class="header pb-24">
+                    <button
+                        mat-raised-button
+                        class="mat-accent compose-dialog-button w-100-p text-uppercase"
+                        routerLink="/professor/banco-questoes/new/nova-questao"
+                        aria-label="Compose"
+                    >
+                        criar questão
+                    </button>
+                </div>
+                <div class="nav-subheader text-uppercase">
+                    filtro de questões
+                </div>
+                <mat-form-field class="w-100-p text-uppercase">
+                    <mat-label>Disciplina</mat-label>
+                    <mat-select
+                        (selectionChange)="filter($event)"
+                        [(ngModel)]="discipline"
+                    >
+                        <mat-option
+                            *ngFor="let discipline of disciplines"
+                            class="text-uppercase "
+                            [value]="discipline.id"
+                        >
+                            {{ discipline.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p text-uppercase">
+                    <mat-label>Ano</mat-label>
+                    <mat-select
+                        (selectionChange)="filter($event)"
+                        [(ngModel)]="year"
+                    >
+                        <mat-option
+                            *ngFor="let year of years"
+                            class="text-uppercase "
+                            [value]="year.id"
+                        >
+                            {{ year.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field
+                    *ngIf="profile?.$profileType == 'ProfileCounty'"
+                    class="w-100-p text-uppercase"
+                >
+                    <mat-label>Escola</mat-label>
+                    <mat-select
+                        [(ngModel)]="school"
+                        (selectionChange)="filter($event)"
+                    >
+                        <mat-option
+                            *ngFor="let school of schools"
+                            [value]="school._id"
+                            class="text-uppercase"
+                        >
+                            {{ school?.institution?.name }}
+                            {{ school?.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p text-uppercase">
+                    <mat-label>Dificuldade</mat-label>
+                    <mat-select
+                        [(ngModel)]="level"
+                        (selectionChange)="filter($event)"
+                    >
+                        <mat-option
+                            *ngFor="let level of levels"
+                            [value]="level.value"
+                            class="text-uppercase"
+                        >
+                            {{ level.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- <fuse-demo-sidebar></fuse-demo-sidebar> -->
+            </div>
+            <!-- / SIDEBAR CONTENT -->
+        </fuse-sidebar>
+        <!-- / SIDEBAR -->
+
+        <!-- CENTER -->
+        <div class="center">
+            <!-- CONTENT -->
+
+            <mat-tab-group
+                mat-stretch-tabs
+                dynamicHeight="true"
+                [selectedIndex]="indexTab"
+            >
+                <mat-tab class="content" fxLayout="row">
+                    <ng-template mat-tab-label class="text-uppercase">
+                        <mat-icon class="example-tab-icon "
+                            >star_border</mat-icon
+                        >
+                        Em Alta
+                    </ng-template>
+                    <div class="my-64 tab-content" fusePerfectScrollbar>
+                        <app-content-blocked></app-content-blocked>
+                    </div>
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label class="text-uppercase">
+                        <mat-icon class="example-tab-icon ">share</mat-icon>
+                        Minha Rede
+                    </ng-template>
+                    <div
+                        class="my-64 tab-content"
+                        fusePerfectScrollbar
+                        *ngIf="profile?.$profileType != 'ProfileCounty'"
+                    >
+                        <app-content-blocked></app-content-blocked>
+                    </div>
+                    <div
+                        class="my-24 tab-content"
+                        fusePerfectScrollbar
+                        *ngIf="profile?.$profileType == 'ProfileCounty'"
+                    >
+                        <app-questions-list
+                            [view]="indexTab"
+                        ></app-questions-list>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label class="text-uppercase">
+                        <mat-icon class="example-tab-icon ">share</mat-icon>
+                        Minha Escola
+                    </ng-template>
+                    <div
+                        fusePerfectScrollbar
+                        class="my-64 tab-content"
+                        *ngIf="profile?.$profileType != 'ProfileSchool'"
+                    >
+                        <app-content-blocked></app-content-blocked>
+                    </div>
+                    <div
+                        class="my-24 tab-content"
+                        fusePerfectScrollbar
+                        *ngIf="profile?.$profileType == 'ProfileSchool'"
+                    >
+                        <app-questions-list
+                            [view]="indexTab"
+                        ></app-questions-list>
+                    </div>
+                </mat-tab>
+
+                <mat-tab *ngIf="profile?.$profileType != 'ProfileCounty'">
+                    <ng-template mat-tab-label class="text-uppercase">
+                        <mat-icon class="example-tab-icon">done</mat-icon>
+                        Minha Biblioteca
+                    </ng-template>
+                    <!-- <div
+                        class="my-64"
+                        *ngIf="profile?.$profileType != 'ProfileProfessor'"
+                        *ngIf="profile?.$profileType == 'ProfileProfessor'"
+                    >
+                        <app-content-blocked></app-content-blocked>
+                    </div> -->
+                    <div class="my-24 tab-content" fusePerfectScrollbar>
+                        <app-questions-list
+                            [view]="indexTab"
+                        ></app-questions-list>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+
+            <!-- / CONTENT -->
+        </div>
+        <!-- / CENTER -->
+    </div>
+    <!-- / CONTENT -->
+</div>

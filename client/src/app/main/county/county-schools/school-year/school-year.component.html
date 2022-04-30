@@ -1,0 +1,87 @@
+<fuse-progress-bar></fuse-progress-bar>
+<h2 mat-dialog-title *ngIf="!schoolYear" align="center">Novo Calendário</h2>
+<h2 mat-dialog-title *ngIf="schoolYear" align="center">Calendário de {{schoolYear?.year?.substring(0, 4)}}</h2>
+
+
+<mat-dialog-content>
+    <form [formGroup]="schoolYearForm">
+        <mat-form-field class="w-80-p" *ngIf="!schoolYear">
+            <mat-select placeholder="Ano" formControlName="year">
+                <mat-option *ngFor="let _year of years" [value]="_year.value">{{_year.showValue}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="schoolYearForm.get('year')?.errors?.required">O campo Ano é obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-80-p" *ngIf="schoolYear">
+            <mat-select placeholder="Ano" value="currentYear">
+                <mat-option value="currentYear">{{schoolYear?.year?.substring(0, 4)}}</mat-option>
+                <!-- <mat-option *ngFor="let _year of years" [value]="_year.value">{{_year.showValue}}</mat-option> -->
+            </mat-select>
+            <mat-error *ngIf="schoolYearForm.get('year')?.errors?.required">O campo Ano é obrigatório</mat-error>
+        </mat-form-field>
+
+
+
+
+        <mat-form-field class="w-80-p">
+            <mat-select placeholder="Regime Avaliativo" formControlName="regime">
+                <mat-option *ngFor="let regime of regimes" [value]="regime.value">
+                    {{regime.showValue}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="schoolYearForm.get('regime')?.errors?.required">O campo Regime é obrigatório</mat-error>
+        </mat-form-field>
+    </form>
+
+    <h3 *ngIf="periods"><b>Períodos:</b></h3>
+    <mat-list *ngIf="periods">
+        <mat-list-item *ngFor="let period of periods">
+            {{period?.start.start.substring(0, 10)}} - {{period?.end?.start.substring(0, 10)}}
+            <!-- {{period?.start?.start?.getDate()}}/
+            {{months[period?.start?.start.getMonth()]}}/
+            {{period?.start?.start?.getFullYear()}} --
+            {{period?.end?.start.getDate()}}/
+            {{months[period?.end?.start?.getMonth()]}}/
+            {{period?.end?.start?.getFullYear()}} -->
+            <span class="ml-4">
+                <button mat-icon-button isIconButton (click)="editPeriod(period)">
+                    <mat-icon class="primary-fg">edit</mat-icon>
+                </button>
+                <button mat-icon-button isIconButton (click)="deletePeriod(period)">
+                    <mat-icon class="warn-fg">delete_outline</mat-icon>
+                </button>
+            </span>
+        </mat-list-item>
+    </mat-list>
+
+    <div *ngIf="_newPeriod">
+        <mat-form-field style="width: 30%">
+            <input matInput [min]="minDate" [max]="maxDate" (dateChange)="dateChange($event.target.value._d)"
+                [matDatepicker]="periodInit" placeholder="Início" [(ngModel)]="periodStart">
+            <mat-datepicker-toggle matSuffix [for]="periodInit"></mat-datepicker-toggle>
+            <mat-datepicker #periodInit></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field style="width: 30%">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="periodFinish" placeholder="Fim"
+                [(ngModel)]="periodEnd">
+            <mat-datepicker-toggle matSuffix [for]="periodFinish"></mat-datepicker-toggle>
+            <mat-datepicker #periodFinish></mat-datepicker>
+        </mat-form-field>
+        <button mat-icon-button isIconButton class="ml-8" (click)="createPeriod()" matTooltip="Salvar">
+            <mat-icon class="green-fg">check</mat-icon>
+        </button>
+        <button mat-icon-button isIconButton matTooltip="Cancelar" (click)="cancelCreatePeriod()">
+            <mat-icon class="warn-fg">close</mat-icon>
+        </button>
+    </div>
+
+    <button *ngIf="schoolYear" mat-raised-button class="mat-accent-bg mt-4" (click)="newPeriod()">
+        <mat-icon>add</mat-icon> Adicionar Período
+    </button>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button class="mat-primary-bg" (click)="closeDialog()">Fechar</button>
+    <button mat-raised-button class="mat-accent-bg ml-4" (click)="onSubmit()" [disabled]="schoolYearForm.pristine && schoolYearForm.untouched && !schoolYearForm.dirty">Salvar</button>
+</mat-dialog-actions>

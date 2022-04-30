@@ -1,0 +1,22 @@
+service cloud.firestore {
+  match /databases/{database}/documents {  
+    function canRead(request) {
+      return request.auth.uid != null && (request.auth.uid == resource.data.senderId || request.auth.uid == resource.data.receiverId);
+    }
+    
+    function canWrite() {
+      return request.auth.uid != null && (request.auth.uid == request.resource.data.senderId);
+    }
+    
+    match /messages/{message} {
+      allow read: if canRead(request);
+      allow write: if canWrite();
+
+    }
+
+    match /devices/{device} {
+      allow read: if false; // Cloud functions "burla" essa proteção
+      allow write: if request.auth.uid != null && request.auth.uid == request.resource.id;
+    }
+  }
+}

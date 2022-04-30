@@ -1,0 +1,153 @@
+<div class="page-layout blank" fusePerfectScrollbar>
+    <div class="center doNotPrint">
+        <button
+            mat-raised-button
+            style="border-radius: 4px 0px 0px 4px"
+            [ngClass]="{ 'mat-pink-bg': !onlyMyCalls }"
+            (click)="toggleButtonSplitFrequency(false)"
+        >
+            Todos
+        </button>
+        <button
+            mat-raised-button
+            class="mr-16"
+            style="border-radius: 0px 4px 4px 0px"
+            [ngClass]="{ 'mat-pink-bg': onlyMyCalls }"
+            (click)="toggleButtonSplitFrequency(true)"
+        >
+            Meus lançamentos
+        </button>
+
+        <button
+            mat-raised-button
+            (click)="downloadPDF()"
+            class="mat-accent-bg m-16"
+        >
+            Imprimir
+        </button>
+
+        <button mat-raised-button (click)="back()" class="mat-accent-bg m-16">
+            Voltar
+        </button>
+        <br />
+        <br />
+    </div>
+
+    <app-frequency-cover [matrixes]="matrixes"></app-frequency-cover>
+
+    <div class="border" style="background: white;">
+        <mat-grid-list lins="3" cols="9" rowHeight="50px">
+            <mat-grid-tile
+                style="border-right: 1px solid black"
+                colspan="1"
+                rowspan="3"
+            >
+                <i class="material-icons">3d_rotation</i>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="7" rowspan="1">
+                <span style="font-size: 30px;">
+                    Registro de Frequência
+                </span>
+            </mat-grid-tile>
+            <mat-grid-tile
+                style="border-left: 1px solid black"
+                colspan="1"
+                rowspan="3"
+            >
+                <i class="material-icons">3d_rotation</i>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="4" rowspan="1">
+                <span style="font-size: 20px;">
+                    Curso: {{ classroom?.course }}
+                </span>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="3" rowspan="1">
+                <span style="font-size: 20px;">
+                    {{ period?.periodType }}: {{ period?.period }}º
+                </span>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2" rowspan="1">
+                <span style="font-size: 20px;">
+                    Turno: {{ classroom?.shift }}
+                </span>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="3" rowspan="1">
+                <span style="font-size: 20px;">
+                    Período: {{ period?.start?.start | date: "dd/MM/yyyy" }} -
+                    {{ period?.end?.start | date: "dd/MM/yyyy" }}
+                </span>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2" rowspan="1">
+                <span style="font-size: 20px;">
+                    Dias letivos: {{ effectiveDays }} / {{ expectedDays }}
+                </span>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+    <!-- <app-avaliation-register2 [tableControl]="avaliationTable">
+    </app-avaliation-register2>
+    <br/> -->
+    <app-call-register [tableControl]="frequencyTable"> </app-call-register>
+    <br />
+    <app-content-register [tableControl]="contentTable"> </app-content-register>
+    <br />
+    <app-avaliation-register [tableControl]="avaliationTable">
+    </app-avaliation-register>
+    <br />
+    <app-avaliation-register-simple [tableControl]="simpleAvaliationTable">
+    </app-avaliation-register-simple>
+    <br />
+    <app-avaliation-register-observation [tableControl]="observationTable">
+    </app-avaliation-register-observation>
+    <br />
+
+    <div style="border: 1px solid black; margin: 20px; font-size: 16px;">
+        <h3>Observações Individuais:</h3>
+        <h3>Observações da Turma/Aula:</h3>
+        <h3>Faltas Amparadas/Justificativas:</h3>
+        <ul style="list-style-type: none">
+            <li *ngFor="let jus of justifications">
+                {{ jus.date | date: "dd/MM/yyyy" }} -
+                {{ jus.date | date: "dd/MM/yyyy" }}: {{ jus.student }}:
+                {{ jus.jus }}: Afecções (Decreto-Lei nº 1044/69)
+            </li>
+        </ul>
+    </div>
+    <br />
+
+    <app-frequency-report-instructions></app-frequency-report-instructions>
+
+    <div class="center doNotPrint">
+        <br />
+        <br />
+        <button
+            mat-raised-button
+            style="border-radius: 4px 0px 0px 4px"
+            [ngClass]="{ 'mat-pink-bg': !onlyMyCalls }"
+            (click)="toggleButtonSplitFrequency(false)"
+        >
+            Todos
+        </button>
+        <button
+            mat-raised-button
+            class="mr-16"
+            style="border-radius: 0px 4px 4px 0px"
+            [ngClass]="{ 'mat-pink-bg': onlyMyCalls }"
+            (click)="toggleButtonSplitFrequency(true)"
+        >
+            Meus lançamentos
+        </button>
+
+        <button
+            mat-raised-button
+            class="mat-accent-bg m-16"
+            (click)="downloadPDF()"
+        >
+            Imprimir
+        </button>
+
+        <button mat-raised-button (click)="back()" class="mat-accent-bg m-16">
+            Voltar
+        </button>
+    </div>
+</div>

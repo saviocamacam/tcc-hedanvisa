@@ -1,0 +1,162 @@
+<div
+    id="contacts"
+    class="page-layout carded left-sidebar inner-scroll"
+>
+
+    <!-- SELECTED BAR -->
+    <!-- <selected-bar class="accent-600" *ngIf="hasSelectedContacts" [@slideInTop]></selected-bar> -->
+    <!-- / SELECTED BAR -->
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg mat-accent-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- SIDEBAR -->
+    
+    <fuse-sidebar
+        class="sidebar"
+        name="contacts-main-sidebar"
+        position="left"
+        lockedOpen="gt-md"
+    >
+        <!-- HEADER -->
+        <div
+            fxLayout="column"
+            fxLayoutAlign="space-between start"
+            class="header mat-accent-bg p-24 pb-4"
+        >
+            <!-- APP TITLE -->
+            <div
+                fxFlex
+                fxLayout="row"
+                fxLayoutAlign="start center"
+            >
+
+                <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon
+                        class="logo-icon mr-16"
+                        [@animate]="{
+                            value: '*',
+                            params: { delay: '50ms', scale: '0.2' }
+                        }"
+                        >list_alt
+                    </mat-icon>
+                    <span
+                        class="logo-text h1"
+                        [@animate]="{
+                            value: '*',
+                            params: { delay: '100ms', x: '-25px' }
+                        }"
+                    >
+                        Frequências
+                    </span>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+            <div
+                class="account py-12"
+                fxLayout="column"
+                *ngIf="
+                    (profile?.$profileType === 'ProfileProfessor' ||
+                        profile?.$profileType === 'ProfileSchool') &&
+                    profileActive &&
+                    classroom
+                "
+            >
+                <button
+                    mat-raised-button
+                    (click)="newFrequency()"
+                    class="fuse-white w-100-p text-uppercase"
+                >
+                    Fazer nova chamada
+                </button>
+            </div>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="content" fusePerfectScrollbar>
+            <div class="m-24"
+                *ngIf="
+                    (profile?.$profileType === 'ProfileProfessor' ||
+                        profile?.$profileType === 'ProfileSchool') &&
+                    profileActive &&
+                    classroom
+                "
+            >
+                <button
+                    mat-raised-button
+                    class="mat-accent add-todo-button w-100-p"
+                    [routerLink]="['/frequencias', classroom._id, 'relatorio']"
+                >
+                    Imprimir Livro
+                </button>
+            </div>
+            <div class="mr-20">           
+                <app-classroom-sidebar
+                    [@animate]="{ value: '*' }"
+                    *ngIf="profileActive"
+                ></app-classroom-sidebar>
+            </div>
+        </div>
+        <!-- / SIDEBAR CONTENT -->
+    </fuse-sidebar>
+    
+    <!-- / SIDEBAR -->
+
+    <!-- CENTER -->
+    <div class="center pt-8">
+        <!-- CENTER HEADER -->
+        <div class="header" fxLayout="row" fxLayoutAlign="start center">
+            <!-- SEARCH -->
+            <div 
+                class="search-wrapper"
+                fxFlex
+                fxLayout="row"
+                fxLayoutAlign="start center"
+            >
+                <button
+                    mat-icon-button
+                    class="sidebar-toggle"
+                    fxHide.gt-md
+                    (click)="toggleSidebar('contacts-main-sidebar')"
+                >
+                    <mat-icon>menu</mat-icon>
+                </button>
+
+                <div
+                    class="search mat-white-bg"
+                    fxFlex
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                >
+                    <mat-icon>search</mat-icon>
+                    <input
+                        [formControl]="searchInput"
+                        placeholder="Pesquisar"
+                        fxFlex
+                    />
+                </div>
+            </div>
+            <!-- / SEARCH -->
+        </div>
+        <!-- / CENTER HEADER -->
+        
+        <!-- CONTENT -->
+        <div class="content-card">
+            <app-frequency-list *ngIf="profileActive" fusePerfectScrollbar></app-frequency-list>
+            <h3 *ngIf="!profileActive">
+                Você ainda não foi autorizado para vizualizar as Turmas.
+                Entre em contato conosco!
+            </h3>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+    <!-- / CENTER -->
+</div>
+
+<!-- ADD CONTACT BUTTON -->
+<!-- <button mat-fab class="accent" id="add-contact-button" (click)="newContact()" aria-label="add contact" [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}">
+    <mat-icon>person_add</mat-icon>
+</button> -->
+<!-- / ADD CONTACT BUTTON -->

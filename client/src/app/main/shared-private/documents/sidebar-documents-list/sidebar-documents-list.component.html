@@ -1,0 +1,20 @@
+<div class="content py-16" fusePerfectScrollbar>
+
+    <div class="nav" *ngFor="let document of documents">
+
+        <div class="nav-item" aria-label="inbox" align="center">
+            <a class="nav-link w-70-p" matRipple (click)="changeCurrentfile(document.meta.hashname)" [ngClass]="{'active mat-primary-bg':document.meta.hashname === currentFile}"
+                matTooltip={{document.meta.name}}>
+                <span class="title">{{document.meta.name}}</span>
+                <!-- <span>
+                    <button matButton isIconButton>
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </span> -->
+            </a>
+
+            <mat-divider class="w-70-p"></mat-divider>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,42 @@
+<div class="sidebar-content">
+
+    <div class="card mat-white-bg">
+
+        <!-- SIDEBAR HEADER -->
+        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
+
+            <!-- <img [src]="user.avatar" class="avatar mr-16" [alt]="user.name" />
+            <span class="h5">{{user.name}}</span> -->
+
+        </div>
+        <!-- / SIDEBAR HEADER -->
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="content py-16" fusePerfectScrollbar>
+
+            <div class="nav">
+
+                <div class="nav-item" aria-label="inbox">
+                    <a class="nav-link" matRipple (click)="changeFilter('schools')" [ngClass]="{'active mat-accent-bg':filterBy ==='schools'}">
+                        <span class="title">Escolas</span>
+                    </a>
+                </div>
+
+                <div class="nav-item" aria-label="frequently contacted" (click)="changeFilter('courses')">
+                    <a class="nav-link" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='courses'}">
+                        <div class="title">Cursos</div>
+                    </a>
+                </div>
+
+                <div class="nav-item" aria-label="starred" (click)="changeFilter('calendar')">
+                    <a class="nav-link" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='calendar'}">
+                        <div class="title">Calendários</div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

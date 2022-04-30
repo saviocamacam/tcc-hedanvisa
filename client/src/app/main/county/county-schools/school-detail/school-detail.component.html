@@ -1,0 +1,57 @@
+<h2 mat-dialog-title align="center">{{data.school?.institution?.name}}</h2>
+
+<mat-dialog-content>
+
+    <!-- <mat-form-field class="w-80-p" align="center">
+        <mat-select placeholder="Ano" [(ngModel)]="currentSchoolYear" name="schoolYear">
+            <mat-option *ngFor="let schoolYear of schoolYears" [value]="schoolYear.year">
+                {{schoolYear.year.substring(0, 4)}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field> -->
+
+    <mat-card *ngIf="(!classrooms || !(classrooms.length > 0)) && !currentClassroom" class="primary-100-bg">
+        <h3 mat-card-title>Nenhuma Sala de Aula cadastrada nesta Escola para este calendário. Entre em contato conosco
+            para mais informações.</h3>
+    </mat-card>
+
+    <mat-nav-list *ngIf="(classrooms && (classrooms.length > 0)) && !currentClassroom">
+        <mat-list-item *ngFor="let classroom of classrooms" (click)="classroomDetail(classroom)">
+            <h3 matLine>
+                {{classroom?.series}} | {{classroom?.subClass}}
+            </h3>
+            <p matLine>
+                Turno: {{classroom?.shift}} ({{classroom?.hour}})
+            </p>
+        </mat-list-item>
+    </mat-nav-list>
+
+
+
+    <mat-card *ngIf="enrollments">
+        <h3 mat-card-title>{{currentClassroom?.series}} {{currentClassroom?.subClass}} |
+            {{currentClassroom?.shift}}</h3>
+
+        <mat-tab-group>
+            <mat-tab label="Alunos">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" *ngFor="let student of currentClassroom?.students">
+                        {{student}}
+                    </mat-list-item>
+                </mat-list>
+            </mat-tab>
+            <mat-tab label="Professores">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" *ngFor="let professor of currentClassroom?.professors">
+                        {{professor}}
+                    </mat-list-item>
+                </mat-list>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button *ngIf="currentClassroom" mat-button mat-dialog-close (click)="classroomDetail(null)">Ok</button>
+</mat-dialog-actions>

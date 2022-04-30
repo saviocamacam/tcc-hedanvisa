@@ -1,0 +1,16 @@
+#editor-wrapper {
+  height: 100%;
+}
+
+#editor-wrapper .mce-tinymce.mce-container.mce-panel,
+#editor-wrapper .mce-container-body.mce-stack-layout {
+  height: 100%;
+}
+
+#editor-wrapper .mce-edit-area.mce-container.mce-panel.mce-stack-layout-item {
+  height: calc(100% - 75px); /* 75 is tinymce header and footer height*/
+}
+
+#editor-wrapper iframe {
+  height: 100% !important;
+}

@@ -1,0 +1,172 @@
+<div style="background-color: white; width: 100%; justify-self: center; align-self: center;">
+    <table class="table full">
+        <thead>
+            <tr class="mat-header-row">
+                <th class="border cell-props" colspan="3"></th>
+                <th class="border cell-props mat-header-cell" *ngFor="let student of students">
+                    <div class="rotate center">
+                        {{  empty(student)?  (student?.no + ' - ' + student?.name) : '' }}
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let matrix of data">
+                <!-- Primeira linha da disciplina -->
+                <tr>
+                    <th class="border cell-props" [attr.rowspan]="matrix['valuations'].length + matrix['recoverys'].length + 1 + matrix['medias'].length">
+                        <div class="rotate center">
+                            {{ matrix['label'] }}
+                        </div>
+                    </th>
+                    <th class="border cell-props" [attr.rowspan]="matrix['valuations'].length">
+                        Avaliações
+                    </th>
+
+                    <ng-container *ngIf="keys(matrix['valuations']).length;else noLength">
+                        <th class="border cell-props">
+                            {{ matrix['valuations'][keys(matrix['valuations'])[0]].label }}
+                        </th>
+
+                        <ng-container *ngFor="let student of students">
+                            <td class="border cell-props">{{ getScore(student, matrix, keys(matrix['valuations'])[0]) || '-' }}</td>
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-template #noLength>
+                        <th class="border cell-props"> - </th>
+
+                        <ng-container *ngFor="let student of students">
+                            <td class="border cell-props"> - </td>
+                        </ng-container>
+                    </ng-template>
+                </tr>
+                <!-- Avaliações -->
+                <tr *ngFor="let valuation of keys(matrix['valuations']).slice(1)">
+                    <th class="border cell-props">{{ matrix['valuations'][valuation].label }}</th>
+                    <ng-container *ngFor="let student of students">
+                        <td class="border cell-props">{{ getScore(student, matrix, valuation) || '-' }}</td>
+                    </ng-container>
+                </tr>
+
+                <!-- Primeira recuperação -->
+                <tr>
+                    <ng-container *ngIf="keys(matrix['recoverys']).length;else noLength">
+                        <th class="border cell-props" [attr.rowspan]="matrix['recoverys'].length">
+                            Recuperações
+                        </th>
+                        <th class="border cell-props">
+                            {{ matrix['recoverys'][keys(matrix['recoverys'])[0]].label }}
+                        </th>
+
+                        <ng-container *ngFor="let student of students">
+                            <td class="border cell-props">{{ getScore(student, matrix, keys(matrix['recoverys'])[0]) || '-' }}</td>
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-template #noLength>
+                        <th class="border cell-props"> - </th>
+
+                        <ng-container *ngFor="let student of students">
+                            <td class="border cell-props"> - </td>
+                        </ng-container>
+                    </ng-template>
+                </tr>
+                <!-- Recuperações restantes -->
+                <tr *ngFor="let recovery of keys(matrix['recoverys']).slice(1)">
+                    <th class="border cell-props">{{ matrix['recoverys'][recovery].label }}</th>
+                    <ng-container *ngFor="let student of students">
+                        <td class="border cell-props">{{ getScore(student, matrix, recovery) || '-' }}</td>
+                    </ng-container>
+                </tr>
+
+                <!-- Médias -->
+                <tr>
+                    <ng-container>
+                        <th class="border cell-props" [attr.rowspan]="matrix['medias'].length">
+                            Médias
+                        </th>
+                        <th class="border cell-props">
+                            {{ matrix['medias'][0].label }}
+                        </th>
+
+                        <ng-container *ngFor="let student of students">
+                            <td class="border cell-props" rowspan="">{{ '-' }}</td>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+
+                <tr *ngFor="let media of keys(matrix['medias']).slice(1)">
+                    <th class="border cell-props">
+                        {{ matrix['medias'][media].label }}
+                    </th>
+                    <ng-container *ngFor="let student of students">
+                        <td class="border cell-props">{{ '-' }}</td>
+                    </ng-container>
+                </tr>
+
+                <!-- Faltas -->
+                <tr>
+                    <th class="border cell-props">
+                        Faltas
+                    </th>
+
+                    <th class="border cell-props">
+                        
+                    </th>
+
+                    <ng-container *ngFor="let student of students">
+                        <td class="border cell-props"> {{ student[matrix['id']]?.miss || '-' }} </td>
+                    </ng-container>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<!--
+<div style="background-color: white; width: 100%; justify-self: center; align-self: center;">
+    <table mat-table [dataSource]="tableControl.dataSource">
+
+        <ng-container matColumnDef="subject">
+                <th mat-header-cell
+                    class="cell-props"
+                    *matHeaderCellDef>
+                </th>
+                <td mat-cell
+                    class="cell-props"
+                    *matCellDef="let element; let i = index" 
+                    [attr.rowspan]="tableControl.getRowSpan('subject', i)"
+                    [style.display]="tableControl.getRowSpan('subject', i) ? '' : 'none'"
+                >
+                    {{ element["subject"] }}
+                </td>
+        </ng-container>
+
+        <ng-container
+            *ngFor="let column of tableControl.columns"
+            matColumnDef="{{ column.name }}"
+        >
+            <th mat-header-cell
+                class="cell-props"
+                *matHeaderCellDef
+            >
+                <div class="rotate header-{{ column.label }}">
+                    <b>{{ column.label }}</b>
+                </div>
+            </th>
+
+            <td mat-cell
+                class="cell-props"
+                *matCellDef="let element"
+            >
+                {{ element[column.name] }}
+            </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="tableControl.displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: tableControl.displayedColumns"></tr>
+    </table>
+</div>
+-->

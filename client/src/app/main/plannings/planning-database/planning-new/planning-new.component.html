@@ -1,0 +1,390 @@
+<div id="academy-course" class="page-layout simple left-sidebar inner-scroll">
+    <!-- SIDEBAR -->
+    <fuse-sidebar
+        class="sidebar"
+        name="academy-course-left-sidebar-1"
+        position="left"
+        lockedOpen="gt-md"
+    >
+        <!-- SIDEBAR CONTENT -->
+        <div class="content" fusePerfectScrollbar>
+            <div class="steps">
+                <div
+                    class="step"
+                    *ngFor="
+                        let step of course.steps;
+                        let i = index;
+                        let last = last;
+                        let first = first
+                    "
+                    (click)="gotoStep(i)"
+                    [ngClass]="{
+                        current: currentStep === i,
+                        completed: currentStep > i,
+                        last: last,
+                        first: first
+                    }"
+                >
+                    <div class="index">
+                        <span>{{ i + 1 }}</span>
+                    </div>
+                    <div class="title">{{ step.title }}</div>
+                </div>
+            </div>
+        </div>
+        <!-- / SIDEBAR CONTENT -->
+    </fuse-sidebar>
+    <!-- / SIDEBAR -->
+
+    <!-- CENTER -->
+    <div class="center">
+        <!-- HEADER -->
+        <div
+            class="header mat-accent-bg p-24"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+        >
+            <button
+                mat-icon-button
+                class="sidebar-toggle mr-16"
+                fxHide.gt-md
+                (click)="toggleSidebar('academy-course-left-sidebar-1')"
+            >
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <button
+                mat-icon-button
+                class="mr-16"
+                [routerLink]="'/professor/banco-planejamentos'"
+            >
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+
+            <div>
+                <h2>{{ course.title }}</h2>
+            </div>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT -->
+        <div id="course-content" class="content">
+            <ng-container *ngFor="let step of course.steps; let i = index">
+                <div
+                    class="course-step"
+                    fusePerfectScrollbar
+                    *ngIf="currentStep === i"
+                    [@slideIn]="animationDirection"
+                >
+                    <div *ngIf="message" [class]="messageClass">
+                        {{ message }}
+                    </div>
+                    <form [formGroup]="formPlanning">
+                        <div
+                            *ngIf="i === 0"
+                            id="course-step-content"
+                            class="course-step-content"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <mat-radio-group
+                                class="example-radio-group "
+                                formControlName="year"
+                            >
+                                <mat-radio-button
+                                    class="example-radio-button"
+                                    *ngFor="let year of years"
+                                    [value]="year.id"
+                                >
+                                    {{ year.viewValue }}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <!-- <div class="example-selected-value">
+                                O ano selecionado é: {{ year }}
+                            </div> -->
+                        </div>
+                        <div
+                            *ngIf="i === 1"
+                            id="course-step-content"
+                            class="course-step-content"
+                        >
+                            <div
+                                class=" text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <mat-radio-group
+                                class="example-radio-group"
+                                formControlName="theme"
+                            >
+                                <mat-radio-button
+                                    class="example-radio-button"
+                                    *ngFor="let discipline of disciplines"
+                                    [value]="discipline.id"
+                                >
+                                    {{ discipline.viewValue }}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <!-- <div class="example-selected-value">
+                                A disciplina seleciona é:
+                                {{ formPlanning.get("theme").value }}
+                            </div> -->
+                        </div>
+                        <div
+                            *ngIf="i === 2"
+                            id="course-step-content"
+                            class="course-step-content px-0 pb-0"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <div class="px-24">
+                                <mat-form-field class="w-100-p">
+                                    <input
+                                        formControlName="name"
+                                        matInput
+                                        placeholder="Nome do conteúdo"
+                                    />
+                                </mat-form-field>
+                            </div>
+                            <app-text-editor
+                                [(dataModel)]="content"
+                            ></app-text-editor>
+                        </div>
+                        <div
+                            *ngIf="i === 3"
+                            id="course-step-content"
+                            class="px-0 pb-0  course-step-content"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <div class="px-24">
+                                <!-- <mat-selection-list class="mt-12 pt-0 pb-16">
+                                    <mat-list-option
+                                        checkboxPosition="before"
+                                        formControlName="referenceImage"
+                                        >Conteúdo em Mídia</mat-list-option
+                                    >
+                                    <mat-list-option
+                                        checkboxPosition="before"
+                                        formControlName="referenceText"
+                                        >Conteúdo em Texto</mat-list-option
+                                    >
+                                </mat-selection-list> -->
+
+                                <mat-form-field>
+                                    <input
+                                        matInput
+                                        [type]="'number'"
+                                        placeholder="Quantas Referências"
+                                        formControlName="referencesCount"
+                                        min="0"
+                                        max="10"
+                                    />
+                                </mat-form-field>
+                                <div
+                                    formArrayName="references"
+                                    *ngFor="
+                                        let grade of formPlanning.get(
+                                            'references'
+                                        ).controls;
+                                        let j = index
+                                    "
+                                >
+                                    <div [formGroupName]="j">
+                                        <mat-divider
+                                            class="my-16"
+                                        ></mat-divider>
+                                        <mat-form-field class="w-100-p">
+                                            <input
+                                                matInput
+                                                placeholder="Nome da referência {{
+                                                    j + 1
+                                                }}"
+                                                formControlName="reference_{{
+                                                    j
+                                                }}"
+                                            />
+                                        </mat-form-field>
+                                        <mat-form-field class="w-100-p">
+                                            <input
+                                                matInput
+                                                placeholder="link referência {{
+                                                    j + 1
+                                                }} (opcional)"
+                                                formControlName="reference_{{
+                                                    j
+                                                }}_link"
+                                            />
+                                        </mat-form-field>
+                                        <mat-form-field class="w-100-p">
+                                            <mat-select
+                                                class="mb-12 "
+                                                placeholder="Licença"
+                                                formControlName="reference_{{
+                                                    j
+                                                }}_license"
+                                                name="license"
+                                            >
+                                                <mat-option
+                                                    *ngFor="
+                                                        let license of planningDatabaseService.licenses$
+                                                            | async
+                                                    "
+                                                    [value]="license._id"
+                                                >
+                                                    {{ license.viewValue }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            *ngIf="i === 4"
+                            id="course-step-content"
+                            class="px-0 pb-0  course-step-content"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <div class="p-24">
+                                <mat-select
+                                    class="mb-12 "
+                                    placeholder="Licença"
+                                    formControlName="license"
+                                    name="license"
+                                >
+                                    <mat-option
+                                        *ngFor="
+                                            let license of planningDatabaseService.licenses$
+                                                | async
+                                        "
+                                        [value]="license._id"
+                                    >
+                                        {{ license.viewValue }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-card
+                                    *ngIf="
+                                        planningDatabaseService.licenses$
+                                            | async
+                                            | getByElementId
+                                                : formPlanning.get('license')
+                                                      .value as license
+                                    "
+                                >
+                                    <mat-card-header>
+                                        <mat-card-title>{{
+                                            license?.viewValue
+                                        }}</mat-card-title>
+                                        <mat-card-subtitle></mat-card-subtitle>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        {{ license?.description }}
+                                    </mat-card-content>
+                                    <mat-card-actions>
+                                        <a
+                                            mat-button
+                                            target="_blank"
+                                            [href]="license?.link"
+                                        >
+                                            Acessar Referência
+                                        </a>
+                                    </mat-card-actions>
+                                </mat-card>
+                            </div>
+                        </div>
+                        <div
+                            *ngIf="i === 5"
+                            id="course-step-content"
+                            class="px-0 pb-0  course-step-content"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <div class="px-24">
+                                <mat-form-field class="w-100-p">
+                                    <textarea
+                                        formControlName="goal"
+                                        matInput
+                                        placeholder="Objetivo"
+                                    ></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div
+                            *ngIf="i === 6"
+                            id="course-step-content"
+                            class="px-0 pb-0  course-step-content"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <app-bncc-list
+                                [discipline]="formPlanning.get('theme').value"
+                                [year]="formPlanning.get('year').value"
+                                (habilitiesChanged)="habilitiesChanged($event)"
+                            ></app-bncc-list>
+                        </div>
+
+                        <div
+                            *ngIf="i === 7"
+                            id="course-step-content"
+                            class="course-step-content example-section"
+                        >
+                            <div
+                                class="text-center mat-title"
+                                [innerHTML]="step.content"
+                            ></div>
+                            <app-creating-restrictions></app-creating-restrictions>
+                        </div>
+                    </form>
+                </div>
+            </ng-container>
+        </div>
+        <!-- / CONTENT -->
+
+        <div class="step-navigation">
+            <button
+                mat-fab
+                class="previous mat-accent white-fg"
+                (click)="gotoPreviousStep()"
+                [disabled]="currentStep === 0"
+                [fxHide]="currentStep === 0"
+            >
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+
+            <button
+                mat-fab
+                class="next mat-accent white-fg"
+                (click)="gotoNextStep()"
+                [disabled]="currentStep === course.totalSteps - 1"
+                [fxHide]="currentStep === course.totalSteps - 1"
+            >
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+
+            <button
+                mat-fab
+                class="done mat-green-600-bg"
+                (click)="savePlanning()"
+                [disabled]="currentStep !== course.totalSteps - 1"
+                [fxShow]="currentStep === course.totalSteps - 1"
+            >
+                <mat-icon>check</mat-icon>
+            </button>
+        </div>
+    </div>
+    <!-- / CENTER -->
+</div>

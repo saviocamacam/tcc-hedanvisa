@@ -1,0 +1,69 @@
+<fuse-progress-bar></fuse-progress-bar>
+
+<form [formGroup]="profileForm">
+    <mat-form-field class="w-100-p ">
+        <mat-label>Cargo</mat-label>
+        <mat-select formControlName="role" required>
+            <mat-option
+                *ngFor="let role of roles"
+                [value]="role.value"
+                [disabled]="role.availability !== 'done'"
+            >
+                {{ role.viewValue }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="_role.errors?.required"
+            >O Cargo é obrigatório</mat-error
+        >
+    </mat-form-field>
+
+    <mat-form-field class="w-100-p ">
+        <mat-label>Estado</mat-label>
+        <mat-select
+            [(ngModel)]="state"
+            [ngModelOptions]="{ standalone: true }"
+            (selectionChange)="getCountyByState($event.value)"
+        >
+            <mat-option *ngFor="let state of states" [value]="state.id">
+                {{ state.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-100-p ">
+        <mat-label>Cidade</mat-label>
+        <mat-select
+            [(ngModel)]="county"
+            [ngModelOptions]="{ standalone: true }"
+            (selectionChange)="getInstitutionByCounty($event.value)"
+        >
+            <mat-option *ngFor="let county of counties" [value]="county._id">
+                {{ county.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-100-p ">
+        <mat-label>Escola</mat-label>
+        <mat-select formControlName="school" required>
+            <mat-option *ngFor="let school of schools" [value]="school._id">
+                {{ school.institution.name }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="_school.errors?.required"
+            >Escola é obrigatório.</mat-error
+        >
+    </mat-form-field>
+</form>
+
+<div fxLayoutAlign="end center">
+    <button
+        id="submitButton"
+        mat-raised-button
+        class="mat-accent-bg"
+        (click)="onSubmit()"
+        [disabled]="profileForm.invalid"
+    >
+        Salvar
+    </button>
+</div>

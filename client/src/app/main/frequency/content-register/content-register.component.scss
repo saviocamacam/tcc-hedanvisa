@@ -1,0 +1,54 @@
+// Acrestenta borda
+.border {
+  border: 1px solid black; // White blue;
+}
+
+// Centralizar
+.center {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.cell-props {
+  // Text
+  font-size: 12px;
+  font-family: Verdana, Sans-Serif;
+  color: black;
+  // Centering
+  vertical-align: middle;
+  text-align: center;
+  // Border
+  border: 1px solid black;
+
+  min-width: 20px;
+  max-width: 150px;
+}
+
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type,
+th.mat-header-cell:last-of-type {
+  padding-right: 0px;
+}
+
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type,
+th.mat-header-cell:first-of-type {
+  padding-left: 0;
+}
+
+tr.mat-row {
+  height: 0;
+}
+
+tr.mat-header-row {
+  font-weight: bold;
+}
+
+.header-prop {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.mat-table {
+  width: 100%;
+}

@@ -1,0 +1,15 @@
+.grid {
+    display: flex;
+}
+.grid div {
+    width: 50%;
+    padding: 5px;
+}
+@media (max-width: 600px) {
+    .grid {
+        flex-wrap: wrap;
+    }
+    .grid div {
+        width: 100% !important;
+    }
+}

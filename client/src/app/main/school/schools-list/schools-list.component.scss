@@ -1,0 +1,92 @@
+@import "src/@fuse/scss/fuse";
+
+contacts-contact-list {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+
+    .mat-table {
+        width: 100%;
+        background: transparent;
+        box-shadow: none;
+
+        .mat-column-checkbox {
+            flex: 0 1 64px;
+            padding-left: 18px;
+        }
+
+        .mat-column-avatar {
+            flex: 0 1 64px;
+        }
+
+        .mat-column-buttons {
+            flex: 0 1 80px;
+        }
+
+        .mat-row {
+            position: relative;
+            cursor: pointer;
+            padding: 8px;
+
+            .mat-cell {
+                min-width: 0;
+
+                &.mat-column-detail-button {
+                    flex: 0 1 auto;
+                    padding: 0 24px 0 0;
+
+                    @include media-breakpoint('gt-md') {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#add-contact-button {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    padding: 0;
+    z-index: 99;
+
+    @include media-breakpoint-down('xs') {
+        position: sticky;
+        top: calc(100vh - 72px);
+        bottom: auto;
+    }
+}
+
+table {
+    width: 100%
+}
+
+.mat-table {
+    width: 100%
+}
+
+#table-row:hover {
+    cursor: pointer;
+    background: #D8D8D8
+}
+
+.center {
+    text-align: center;
+    align-content: center;
+    vertical-align: middle;
+}
+
+.cell-props {
+    max-width: 50px;
+}
+
+.mat-column-updateAt {
+    min-width: 60px;
+    max-width: 140px;
+}
+
+.mat-column-name {
+    max-width: none;
+    min-width: 120px;
+}

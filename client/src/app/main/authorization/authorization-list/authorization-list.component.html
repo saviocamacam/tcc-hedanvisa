@@ -1,0 +1,151 @@
+<h3
+    style="text-align: center"
+    *ngIf="(!requests || requests.length === 0) && !isLoading"
+>
+    <span *ngIf="filterBy === 'waiting'">Não há solicitações em espera</span>
+    <span *ngIf="filterBy === 'accepted'">Não há solicitações autorizadas</span>
+    <span *ngIf="filterBy === 'closed'">Não há solicitações suspensas</span>
+</h3>
+
+<mat-card
+    *ngIf="isLoading"
+    style="display: flex; justify-content: center; align-items: center"
+>
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+</mat-card>
+
+<div
+    class="mat-elevation-z4"
+    *ngIf="dataSource?.data && dataSource?.data?.length > 0 && !isLoading"
+>
+    <mat-table
+        #table
+        [dataSource]="dataSource"
+        matSort
+        [@animateStagger]="{ value: '50' }"
+        fusePerfectScrollbar
+    >
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Nome</mat-header-cell
+            >
+            <mat-cell *matCellDef="let request">
+                <p
+                    matTooltip="@{{ request?.shortName }}"
+                    class="text-truncate font-weight-600"
+                >
+                    {{ request?.name }}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Cargo</mat-header-cell
+            >
+            <mat-cell *matCellDef="let request">
+                <p class="text-truncate font-weight-600">{{ request?.role }}</p>
+                <!-- <p *ngIf="!request?.requesting?.role" class="text-truncate font-weight-600">{{request?.requesting?.showType}}</p> -->
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Telefone</mat-header-cell
+            >
+            <mat-cell *matCellDef="let request">
+                <p class="text-truncate font-weight-600">
+                    {{ request?.phone }}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="checkedPhone">
+            <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+            ></mat-header-cell>
+            <mat-cell *matCellDef="let request">
+                <mat-icon
+                    *ngIf="request?.checkedPhone"
+                    class="green-fg"
+                    matTooltip="Confirmado"
+                    >check_circle</mat-icon
+                >
+                <mat-icon
+                    *ngIf="!request?.checkedPhone"
+                    class="warn-fg"
+                    matTooltip="Bloqueado"
+                    >block</mat-icon
+                >
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Email</mat-header-cell
+            >
+            <mat-cell *matCellDef="let request">
+                <p class="text-truncate font-weight-600">
+                    {{ request?.email }}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="checkedEmail">
+            <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+            ></mat-header-cell>
+            <mat-cell *matCellDef="let request">
+                <mat-icon
+                    *ngIf="request?.checkedEmail"
+                    class="green-fg"
+                    matTooltip="Confirmado"
+                    >check_circle</mat-icon
+                >
+                <mat-icon
+                    *ngIf="!request?.checkedEmail"
+                    class="warn-fg"
+                    matTooltip="Confirmado"
+                    >block</mat-icon
+                >
+            </mat-cell>
+        </ng-container>
+
+        <ng-container
+            *ngIf="profile?.profileType === 'ProfileCounty'"
+            matColumnDef="locale"
+        >
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Local</mat-header-cell
+            >
+            <mat-cell *matCellDef="let request">
+                <p class="text-truncate font-weight-600">
+                    {{ request?.locale }}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row
+            id="table-row"
+            *matRowDef="let request; columns: displayedColumns"
+            class="contact"
+            [@animate]="{ value: '*', params: { y: '100%' } }"
+            (click)="judgeTheRequest(request)"
+        >
+        </mat-row>
+    </mat-table>
+
+    <h3 style="text-align: center" *ngIf="dataSource.filteredData.length === 0">
+        Não existem solicitações com este filtro.
+    </h3>
+
+    <mat-paginator
+        [pageSizeOptions]="[10, 20, 50, 100]"
+        showFirstLastButtons
+    ></mat-paginator>
+</div>

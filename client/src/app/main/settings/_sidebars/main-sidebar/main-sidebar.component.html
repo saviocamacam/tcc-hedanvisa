@@ -1,0 +1,102 @@
+<div class="sidebar-content">
+    <div class="card">
+        <!-- SIDEBAR CONTENT -->
+        <div class="content py-16" fusePerfectScrollbar>
+            <div class="nav material2">
+                <div
+                    class="nav-item"
+                    aria-label="account info"
+                    [ngClass]="{ disabled: !user?.mainProfile }"
+                    (click)="changeComponent('account')"
+                >
+                    <a
+                        class="nav-link"
+                        matRipple
+                        [ngClass]="{
+                            'active mat-accent-bg': component === 'account'
+                        }"
+                    >
+                        <div class="title">CONTA</div>
+                    </a>
+                </div>
+
+                <div
+                    class="nav-item"
+                    [ngClass]="{ disabled: !user?.mainProfile }"
+                    aria-label="personal info"
+                    (click)="changeComponent('personal')"
+                >
+                    <a
+                        class="nav-link"
+                        matRipple
+                        [ngClass]="{
+                            'active mat-accent-bg': component === 'personal'
+                        }"
+                    >
+                        <div class="title">INFORMAÇÕES PESSOAIS</div>
+                    </a>
+                </div>
+
+                <div
+                    class="nav-item"
+                    [ngClass]="{ disabled: !user?.mainProfile }"
+                    aria-label="address info"
+                    (click)="changeComponent('address')"
+                >
+                    <a
+                        class="nav-link"
+                        matRipple
+                        [ngClass]="{
+                            'active mat-accent-bg': component === 'address'
+                        }"
+                    >
+                        <div class="title">ENDEREÇO</div>
+                    </a>
+                </div>
+
+                <div
+                    class="nav-item"
+                    [ngClass]="{ disabled: !user?.mainProfile }"
+                    aria-label="profiles info"
+                    (click)="changeComponent('profiles')"
+                >
+                    <a
+                        class="nav-link"
+                        matRipple
+                        [ngClass]="{
+                            'active mat-accent-bg': component === 'profiles'
+                        }"
+                    >
+                        <div class="title">MEUS PERFIS</div>
+                    </a>
+                </div>
+
+                <div
+                    class="nav-item"
+                    aria-label="signature info"
+                    [ngClass]="{ disabled: !user?.mainProfile }"
+                    (click)="changeComponent('signature')"
+                >
+                    <a
+                        class="nav-link"
+                        matRipple
+                        [ngClass]="{
+                            'active mat-accent-bg': component === 'signature'
+                        }"
+                    >
+                        <div class="title">
+                            ASSINATURA
+                        </div>
+                    </a>
+                </div>
+
+                <!-- <div class="nav-item" [ngClass]="{'disabled': true}" aria-label="profile info">
+                    <a class="nav-link" matRipple matTooltip="Em breve...">
+                        <div class="title">MINHAS MEDALHAS</div>
+                    </a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / SIDEBAR CONTENT -->

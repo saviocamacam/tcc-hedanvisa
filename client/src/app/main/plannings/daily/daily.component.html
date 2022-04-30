@@ -1,0 +1,181 @@
+<div class="page-layout carded left-sidebar inner-scroll">
+    <!-- SIDEBAR -->
+    <fuse-sidebar
+        class="sidebar"
+        name="carded-left-sidebar-2"
+        position="left"
+        lockedOpen="gt-md"
+    >
+        <!-- SIDEBAR CONTENT -->
+        <div class="content " fusePerfectScrollbar>
+            <app-days></app-days>
+        </div>
+        <!-- / SIDEBAR CONTENT -->
+    </fuse-sidebar>
+    <!-- / SIDEBAR -->
+
+    <!-- CENTER -->
+    <div class="center">
+        <!-- CONTENT CARD -->
+        <div class="content-card mat-white-bg">
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar px-24 py-8">
+                <button
+                    mat-icon-button
+                    class="sidebar-toggle"
+                    fxHide.gt-md
+                    (click)="toggleSidebar('carded-left-sidebar-2')"
+                >
+                    <mat-icon>menu</mat-icon>
+                </button>
+
+                <mat-form-field class="mt-12 ml-12 mr-12 w-50-p">
+                    <input
+                        matInput
+                        placeholder="Título da Aula"
+                        [(ngModel)]="name"
+                    />
+                </mat-form-field>
+
+                <button
+                    mat-raised-button
+                    class="ml-12 mr-12"
+                    (click)="onSubmit()"
+                    [disabled]="!(myDateValue && name && periodSelected)"
+                >
+                    Salvar
+                </button>
+                <button
+                    mat-raised-button
+                    class="ml-12 mr-12"
+                    (click)="onSubmit()"
+                    [disabled]="!id"
+                >
+                    Compartilhar
+                </button>
+            </div>
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT -->
+            <div class="content" fusePerfectScrollbar>
+                <div class="pl-16 pr-16">
+                    <mat-form-field class="pl-16 pr-16">
+                        <mat-select
+                            [(value)]="periodSelected"
+                            placeholder="Bimestre"
+                        >
+                            <mat-option
+                                *ngFor="let period of periods"
+                                [value]="period.value"
+                            >
+                                {{ period.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="pl-16 pr-16 w-25-p">
+                        <input
+                            matInput
+                            [(ngModel)]="myDateValue"
+                            [matDatepicker]="picker"
+                            placeholder="Data do Plano"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-button-toggle-group
+                        value="plan"
+                        name="fontStyle"
+                        aria-label="Font Style"
+                        #group="matButtonToggleGroup"
+                    >
+                        <mat-button-toggle value="plan"
+                            >Ver plano</mat-button-toggle
+                        >
+                        <mat-button-toggle value="comments" [disabled]="!id"
+                            >Ver comentários</mat-button-toggle
+                        >
+                        <mat-button-toggle value="attachments" [disabled]="!id"
+                            >Ver anexos</mat-button-toggle
+                        >
+                    </mat-button-toggle-group>
+                </div>
+                <div class="p-16">
+                    <app-text-editor
+                        *ngIf="group.value == 'plan'"
+                        [(dataModel)]="dataModel"
+                    ></app-text-editor>
+                    <app-document-comments
+                        *ngIf="group.value == 'comments'"
+                    ></app-document-comments>
+                </div>
+
+                <div
+                    class="toolbar px-24 py-8"
+                    *ngIf="group.value == 'attachments'"
+                >
+                    <div
+                        _ngcontent-c151=""
+                        fxlayout="column"
+                        fxlayout.gt-xs="column"
+                        fxlayoutalign="center center"
+                        fxlayoutalign.gt-xs="center start"
+                        style="flex-direction: column; box-sizing: border-box; display: flex; max-width: 100%; place-content: flex-start center; align-items: flex-start;"
+                    >
+                        <div
+                            _ngcontent-c151=""
+                            class="black-fg"
+                            fxlayout="row"
+                            fxlayoutalign="start center"
+                            style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;"
+                        >
+                            <mat-icon
+                                _ngcontent-c151=""
+                                class="secondary-text s-18 mat-icon material-icons"
+                                role="img"
+                                aria-hidden="true"
+                                >home</mat-icon
+                            >
+                            <mat-icon
+                                _ngcontent-c151=""
+                                class="secondary-text s-16 mat-icon material-icons"
+                                role="img"
+                                aria-hidden="true"
+                                >chevron_right</mat-icon
+                            ><span _ngcontent-c151="" class="secondary-text">
+                                Planos Diarios</span
+                            >
+                            <mat-icon
+                                _ngcontent-c151=""
+                                class="secondary-text s-16 mat-icon material-icons"
+                                role="img"
+                                aria-hidden="true"
+                                >chevron_right</mat-icon
+                            ><span _ngcontent-c151="" class="secondary-text">
+                                {{ this.name || this?.date }}</span
+                            >
+                            <mat-icon
+                                _ngcontent-c151=""
+                                class="secondary-text s-16 mat-icon material-icons"
+                                role="img"
+                                aria-hidden="true"
+                                >chevron_right</mat-icon
+                            ><span _ngcontent-c151="" class="secondary-text">
+                                Anexos</span
+                            >
+                        </div>
+                    </div>
+                    <br />
+                    <app-document-attachments></app-document-attachments>
+                </div>
+            </div>
+            <!-- / CONTENT -->
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

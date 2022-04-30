@@ -1,0 +1,55 @@
+@media print {
+    .break-page {
+        page-break-before: always;
+    }
+}
+
+.border {
+    border: 1px solid black;
+}
+
+.cell-props {
+    // Text
+    font-size: 11px;
+    font-family: Verdana, Sans-Serif;
+    color: black;
+    // Centering
+    vertical-align: middle;
+    text-align: center;
+    // Border
+    border: 1px solid black;
+
+    min-width: 25px;
+    max-width: 25px;
+}
+
+.mat-header-cell {
+    white-space: nowrap;
+}
+
+.mat-column-N- {
+    max-width: 0px;
+    min-width: 0px;
+}
+
+.mat-column-Aluno {
+    text-align: left;
+    padding-left: 10px;
+    max-width: 10px;
+    min-width: 10px;
+}
+
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type,
+th.mat-header-cell:last-of-type {
+    padding-right: 0px;
+}
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type,
+th.mat-header-cell:first-of-type {
+    padding-left: 0;
+}
+tr.mat-footer-row,
+tr.mat-row {
+    height: 0;
+}

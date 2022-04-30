@@ -1,0 +1,98 @@
+<h2 style="text-align: center">Informações de Endereço</h2>
+
+<form [formGroup]="addressForm" class="mt-16">
+    <div align="center">
+        <mat-form-field style="width: 80%">
+            <mat-label>CEP</mat-label>
+            <input
+                matInput
+                type="text"
+                placeholder="00.000-000"
+                formControlName="cep"
+                (blur)="searchCEP()"
+                [brmasker]="{
+                    form: addressForm.get('cep'),
+                    mask: '00.000-000',
+                    len: 10
+                }"
+            />
+        </mat-form-field>
+
+        <mat-form-field style="width: 80%">
+            <mat-label>Estado</mat-label>
+            <mat-select
+                formControlName="uf"
+                (selectionChange)="stateChanged($event.value)"
+                required
+            >
+                <mat-option *ngFor="let state of states" [value]="state.abbr">
+                    {{ state.name }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="uf.errors?.required"
+                >Estado é obrigatório.</mat-error
+            >
+        </mat-form-field>
+
+        <mat-form-field class="w-80-p ">
+            <mat-label>Cidade</mat-label>
+            <mat-select formControlName="county" required>
+                <mat-option
+                    *ngFor="let county of counties"
+                    [value]="county._id"
+                >
+                    {{ county.name }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="county.errors?.required"
+                >Município é obrigatório.</mat-error
+            >
+        </mat-form-field>
+
+        <mat-form-field class="mr-64" style="width: 60%">
+            <mat-label>Logradouro</mat-label>
+            <input matInput formControlName="street" />
+        </mat-form-field>
+        <mat-form-field style="width: 15%">
+            <mat-label>Número</mat-label>
+            <input type="number" matInput formControlName="number" />
+        </mat-form-field>
+
+        <mat-form-field style="width: 80%">
+            <mat-label>Bairro</mat-label>
+            <input matInput formControlName="block" />
+        </mat-form-field>
+
+        <mat-form-field style="width: 80%">
+            <mat-label>Complemento</mat-label>
+            <input
+                matInput
+                placeholder="Complemento"
+                formControlName="complement"
+            />
+        </mat-form-field>
+
+        <br />
+        <button
+            id="submitButton"
+            mat-raised-button
+            color="accent"
+            class="mt-24"
+            (click)="onSubmit()"
+            [disabled]="addressForm.invalid || !addressForm.dirty"
+        >
+            Salvar
+        </button>
+        &nbsp;&nbsp;
+        <button
+            mat-raised-button
+            *ngIf="user?.$profiles?.length <= 0"
+            color="primary"
+            class="mt-24"
+            (click)="nextStep()"
+            [disabled]="!address || !address.id"
+        >
+            Próximo
+        </button>
+    </div>
+</form>

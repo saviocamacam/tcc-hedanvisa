@@ -1,0 +1,92 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+    <mat-checkbox
+        [(ngModel)]="hability.check"
+        (ngModelChange)="onSelectedChange()"
+        (click)="$event.stopPropagation()"
+    ></mat-checkbox>
+
+    <div class="info" fxFlex FlexLayout="column">
+        <div class="row-1" fxLayout="row" fxLayoutAlign="start center">
+            <div
+                class="name"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxFlex
+            >
+                <span class="text-truncate" *ngIf="hability?.$codigo">{{
+                    hability.$codigo
+                }}</span>
+                <!-- <mat-icon *ngIf="hability.hasAttachments">attachment</mat-icon> -->
+            </div>
+
+            <!-- <div fxLayout="row" fxLayoutAlign="start center">
+                <div class="time">{{ hability.$codigo }}</div>
+            </div> -->
+        </div>
+
+        <div class="row-2" fxLayout="row" fxLayoutAlign="start center">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <!-- <div class="subject text-truncate">
+                    {{ hability.$codigo }}
+                </div> -->
+
+                <div
+                    class="message text-truncate"
+                    *ngIf="hability?.habilidades"
+                >
+                    <span class="mat-title">
+                        {{ hability?.habilidades }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="p-8 pt-0" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <!-- <button mat-button color="accent">SHARE</button>
+        <button mat-button color="accent">EXPLORE</button> -->
+        <button
+            mat-icon-button
+            aria-label="expand card"
+            (click)="card9Expanded = !card9Expanded"
+        >
+            <mat-icon *ngIf="card9Expanded">keyboard_arrow_up</mat-icon>
+            <mat-icon *ngIf="!card9Expanded">keyboard_arrow_down</mat-icon>
+            Mais detalhes da Habilidade
+        </button>
+    </div>
+</div>
+
+<div class="card-expand-area" *ngIf="card9Expanded" [@expandCollapse]>
+    <div class="card-expanded-content">
+        <span class="mat-subheading-2">
+            {{ hability?.habilidades }}
+        </span>
+    </div>
+</div>
+
+<!-- 
+    alternativa preguiçosa
+    <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-checkbox
+        [(ngModel)]="selected"
+        (ngModelChange)="onSelectedChange()"
+        (click)="$event.stopPropagation()"
+    ></mat-checkbox>
+
+    <div class="info" fxFlex FlexLayout="column">
+        <div class="p-16">
+            <div class="h1">{{ hability?.codigo }}</div>
+            <div class="h4 secondary-text">
+                {{ hability?.objetosDeConhecimento }}
+            </div>
+        </div>
+
+        <div class="p-16 pt-0 line-height-1.75">
+            {{ hability?.habilidades }}
+        </div>
+    </div>
+</div>
+
+ -->

@@ -1,0 +1,31 @@
+h1,
+h2,
+h3,
+.center-text {
+    text-align: center;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+.space {
+    padding-bottom: 110px;
+}
+
+#frequency-cover {
+    text-transform: uppercase;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    margin: 30px;
+    padding-bottom: 30px;
+}
+
+.inline {
+    display: inline-block;
+    width: 33%;
+}

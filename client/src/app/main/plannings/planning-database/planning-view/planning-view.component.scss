@@ -1,0 +1,52 @@
+@import "src/@fuse/scss/fuse";
+
+.center {
+    position: relative;
+    overflow: hidden;
+
+    .content {
+        position: relative;
+        display: flex;
+
+        .course-step {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            overflow: auto;
+            background: mat-color($mat-grey, 200);
+
+            &.ng-animating {
+                overflow: hidden;
+            }
+
+            @media (max-width: 900px) {
+                padding: 0 0 120px 0;
+            }
+
+            .course-step-content {
+                padding: 24px;
+                max-width: 720px;
+                margin: 0 auto;
+                width: 100%;
+                background: white;
+                @include mat-elevation(4);
+            }
+        }
+    }
+}
+
+.fuse-card {
+    max-width: 100% !important;
+}
+
+ins {
+    text-decoration: none;
+    background-color: #d4fcbc;
+}
+
+del {
+    text-decoration: line-through;
+    background-color: #fbb6c2;
+    color: #555;
+}

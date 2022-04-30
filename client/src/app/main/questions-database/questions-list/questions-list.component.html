@@ -1,0 +1,287 @@
+<div *ngIf="questions?.length == 0">
+    <h3 class="text-center">Não há questões aqui.</h3>
+</div>
+<div *ngIf="questions?.length > 0">
+    <h3 class="text-center">{{ questions?.length }} questões encontradas.</h3>
+</div>
+
+<footer class="center doNotPrint">
+    <button
+        mat-raised-button
+        (click)="downloadPDF()"
+        class="mat-accent-bg m-16"
+    >
+        Imprimir
+    </button>
+    <br />
+    <br />
+</footer>
+
+<div id="printable" class="questions-list">
+    <div
+        class="invoice px-24 py-12"
+        *ngFor="let question of questions; let i = index"
+    >
+        <div *ngIf="question.show === true" class="fuse-card w-100-p">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="p-16" fxLayout="row" fxLayoutAlign="start center">
+                    <img
+                        class="w-40 h-40 border-radius-100"
+                        src="assets/images/avatars/profileOriginal.jpg"
+                    />
+
+                    <div class="ml-16">
+                        <div class="text-bold">
+                            {{ question?.owner?.user?.people?.name }} (@{{
+                                question?.owner?.user?.shortName
+                            }})
+                        </div>
+                        <div class="h5 text-bold secondary-text">
+                            professor(a) na escola
+                            {{
+                                question?.owner?.school?.requested?.institution
+                                    ?.name
+                            }}
+                        </div>
+                        <div class="h5 text-bold secondary-text">
+                            atualizado em
+                            {{ question?.updatedAt | date: "dd/MM/yyyy H:mm" }}
+                        </div>
+                        <div class="h4 secondary-text">
+                            {{ getQuestionYear(question?.meta?.year) }} |
+                            {{ getQuestionTheme(question?.meta?.theme) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="p-16">
+                    <div class="h4 secondary-text">Nº {{ i + 1 }}</div>
+                    <div class="h5 secondary-text">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <div class="ml-4 secondary-text">
+                                {{ question._id }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="p-16">
+                    <div class="h4 secondary-text">
+                        Avaliação
+                    </div>
+                    <div class="h5 secondary-text">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="s-16 amber-fg">star</mat-icon>
+                            <mat-icon class="s-16 amber-fg">star</mat-icon>
+                            <mat-icon class="s-16 amber-fg">star</mat-icon>
+                            <mat-icon class="s-16 amber-fg">star</mat-icon>
+                            <mat-icon class="s-16 amber-fg">star_half</mat-icon>
+                            <div class="ml-8 secondary-text">
+                                4.7
+                            </div>
+                            <div class="ml-4 secondary-text">
+                                (51)
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="px-16 pt-0 line-height-1.75">
+                <div class="card-divider m-4"></div>
+                <div
+                    class="p-16"
+                    fxLayout="row"
+                    fxLayoutAlign="space-between start"
+                >
+                    <div class="px-16 pb-0 w-50-p">
+                        <div class="h2 font-weight-300">Objetivo</div>
+
+                        <div class="h4">{{ question?.meta?.goal }}</div>
+                    </div>
+                    <div
+                        class="px-16 w-50-p"
+                        *ngIf="
+                            question?.meta?.habilities ||
+                            question?.meta?.descriptors
+                        "
+                    >
+                        <div class="h2 font-weight-300">
+                            Seletores e Habilidades
+                        </div>
+                        <mat-chip-list>
+                            <mat-chip
+                                *ngIf="question?.meta?.level == 1"
+                                color="accent"
+                                selected="true"
+                                >Dificuldade: Fácil</mat-chip
+                            >
+                            <mat-chip
+                                *ngIf="question?.meta?.level == 2"
+                                color="mat-yellow"
+                                selected="true"
+                                >Dificuldade: Média</mat-chip
+                            >
+                            <mat-chip
+                                *ngIf="question?.meta?.level == 3"
+                                color="warn"
+                                selected="true"
+                                >Dificuldade: Difícil</mat-chip
+                            >
+                            <mat-chip
+                                *ngFor="
+                                    let hability of question?.meta?.habilities
+                                "
+                                (click)="openHability(hability)"
+                                >{{ hability }}</mat-chip
+                            >
+                        </mat-chip-list>
+                        <mat-chip-list>
+                            <mat-chip
+                                *ngFor="
+                                    let descriptor of question?.meta
+                                        ?.descriptors
+                                "
+                                (click)="openDescriptor(descriptor)"
+                                >{{ descriptor }}</mat-chip
+                            >
+                        </mat-chip-list>
+                        <div
+                            class="h4 secondary-text"
+                            *ngIf="question?.meta?.habilities"
+                        >
+                            <div
+                                class="h4 secondary-text"
+                                *ngIf="question?.meta?.habilities"
+                            >
+                                Está relacionado à
+                                {{ question?.meta?.habilities.length }}
+                                {{
+                                    question?.meta?.habilities.length == 0
+                                        ? "habilidade"
+                                        : "habilidades"
+                                }}
+                                da BNCC
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="p-8 pt-0"
+                    fxLayout="row"
+                    fxLayoutAlign="space-between center"
+                >
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <button
+                            mat-button
+                            color="accent"
+                            [routerLink]="[
+                                '/professor/banco-questoes/view',
+                                question._id,
+                                'ver-questao'
+                            ]"
+                        >
+                            VER
+                        </button>
+                        <button
+                            mat-button
+                            color="accent"
+                            *ngIf="profile?.id == question.owner?._id"
+                            [routerLink]="[
+                                '/professor/banco-questoes/edit',
+                                question._id,
+                                'editar-questao'
+                            ]"
+                        >
+                            EDITAR
+                        </button>
+                        <button
+                            mat-button
+                            color="warn"
+                            *ngIf="profile?.id == question.owner?._id"
+                            (click)="deleteQuestion(question)"
+                        >
+                            EXCLUIR
+                        </button>
+                        <button
+                            mat-button
+                            color="warn"
+                            (click)="hide(question)"
+                        >
+                            OCULTAR
+                        </button>
+                        <!-- <button
+                        *ngIf="profile?.id != question.owner?._id"
+                        mat-button
+                        color="accent"
+                    >
+                        ADICIONAR À BIBLIOTECA
+                    </button> -->
+                    </div>
+                    <button
+                        *ngIf="question?.meta?.goal"
+                        mat-button
+                        aria-label="expand card"
+                        (click)="getQuestion(question)"
+                    >
+                        <mat-icon *ngIf="question.expanded"
+                            >keyboard_arrow_up</mat-icon
+                        >
+                        <mat-icon *ngIf="!question.expanded"
+                            >keyboard_arrow_down</mat-icon
+                        >
+                        Enunciado da questão
+                    </button>
+                </div>
+                <div
+                    class="card-expand-area"
+                    *ngIf="question.expanded || showAnswers"
+                    [@expandCollapse]
+                >
+                    <div class="p-0 card-expanded-content">
+                        <div class="card-divider m-4"></div>
+                        <div
+                            class="p-16"
+                            fxLayout="row"
+                            fxLayoutAlign="space-between start"
+                        >
+                            <div class="px-16 pb-0 w-50-p">
+                                <div class="h2 font-weight-300">
+                                    Enunciado
+                                </div>
+                                <div
+                                    class="my-8"
+                                    [innerHTML]="question?.content"
+                                ></div>
+                            </div>
+
+                            <div class="px-16 pb-0 w-50-p">
+                                <div class="h2 font-weight-300">
+                                    Resposta
+                                </div>
+                                <mat-selection-list class="pt-0 pb-16">
+                                    <mat-list-option
+                                        checkboxPosition="before"
+                                        *ngFor="
+                                            let answer of Object.values(
+                                                question.meta
+                                                    .answer_objective[0]
+                                            );
+                                            let i = index
+                                        "
+                                        [selected]="
+                                            selectedCheck(
+                                                i,
+                                                question?.meta?.correctAnswer
+                                            )
+                                        "
+                                    >
+                                        <span>{{ answer }}</span>
+                                    </mat-list-option>
+                                </mat-selection-list>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

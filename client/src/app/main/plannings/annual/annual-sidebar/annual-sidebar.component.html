@@ -1,0 +1,51 @@
+<div class="sidebar-content">
+
+    <div class="card">
+
+        <!-- SIDEBAR HEADER -->
+        <div class="header p-24" fxLayout="column" fxLayoutAlign="center center">
+
+
+            <mat-form-field class="w-100-p">
+                <mat-select placeholder="Curso" [(ngModel)]="course" (selectionChange)="courseChanged($event.value)">
+                    <mat-option *ngFor="let course of courses" [value]="course.value" [disabled]="course.availability !== 'done'">{{course.viewValue}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+
+            <mat-form-field class="w-100-p">
+                <mat-select placeholder="Série" [(ngModel)]="year" (selectionChange)="yearChanged($event.value)"
+                    [disabled]="!course">
+                    <mat-option *ngFor="let year of years" [value]="year.value">{{year.viewValue}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <!-- / SIDEBAR HEADER -->
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="content py-16" fusePerfectScrollbar>
+
+            <div class="nav material2">
+
+                <div class="nav-item" aria-label="inbox" *ngFor="let _attachment of attachments">
+                    <a class="nav-link" [ngClass]="{'active mat-accent-bg': _attachment?._id === attachment?._id}"
+                        (click)="onAttachmentChange(_attachment)">
+                        <!-- <span class="title">{{year.year.substring(0, 4)}}</span> -->
+                        <span class="title">{{_attachment?.meta?.date?.substring(0,4)}}</span>
+                    </a>
+                </div>
+            </div>
+
+            <div *ngIf="(course && year) && (profile && (profile.$profileType === 'ProfileCounty'))" align="center"
+                class="mt-32">
+                <button mat-raised-button class="mat-primary-bg" (click)="newDocument()">Submeter Documento</button>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+<!-- / SIDEBAR CONTENT -->

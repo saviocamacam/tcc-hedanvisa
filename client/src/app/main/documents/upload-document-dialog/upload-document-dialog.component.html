@@ -1,0 +1,28 @@
+<h1 mat-dialog-title fxLayoutAlign="center center">Carregar um arquivo PDF</h1>
+<hr>
+
+<mat-dialog-content>
+    <div align="center">
+        <input style="display: none" name="file" id="file" type="file" (change)="onFileChanged($event)" enctype="multipart/form-data"
+            #fileInput accept="application/pdf">
+        <button mat-raised-button (click)="fileInput.click()" class="mat-primary-bg w-80-p mt-20">Selecionar
+            arquivo</button>
+    </div>
+
+    <form [formGroup]="documentForm">
+        <div align="center">
+            <mat-form-field class="mt-24 w-80-p">
+                <input *ngIf="!hasFile" matInput type="text" placeholder="Nome do arquivo" disabled>
+                <input *ngIf="hasFile" matInput type="text" placeholder="Nome do arquivo" formControlName="filename">
+            </mat-form-field>
+        </div>
+
+
+    </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayoutAlign="center center" class="mt-16">
+    <button mat-button class="mat-accent-bg" (click)="onSubmit()" mat-dialog-close>Salvar</button>
+    <button mat-button mat-dialog-close class="mat-primary-bg">Cancelar</button>
+</mat-dialog-actions>

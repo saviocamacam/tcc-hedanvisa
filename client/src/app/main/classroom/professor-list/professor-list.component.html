@@ -1,0 +1,73 @@
+<h3 
+    *ngIf="!dataSource?.data || !(dataSource?.data?.length > 0)"
+    fxLayoutAlign="center center"
+    fxLayout="row"
+>
+    Nenhum Professor foi encontrado.
+</h3>
+
+<div class="mat-elevation-z8" *ngIf="dataSource?.data && (dataSource?.data?.length > 0)">
+    <mat-table #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Nome
+            </mat-header-cell>
+            <mat-cell *matCellDef="let professor">
+                <p 
+                    matTooltip="{{professor?.shortName}}"
+                    class="text-truncate font-weight-600"
+                >
+                    {{professor?.name}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="classes">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Turmas
+            </mat-header-cell>
+            <mat-cell *matCellDef="let professor">
+                <p
+                    matTooltip="{{professor?.classes}}"
+                    class="text-truncate font-weight-600"
+                >
+                    {{professor?.classes}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container *ngIf="profile.profileType === 'ProfileSchool'" matColumnDef="buttons">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let professor">
+                <button class="mat-primary-bg"
+                    *ngIf="!professorHasClassroom(professor._id)"
+                    item-end mat-raised-button
+                    (click)="activateProfessor(professor?._id)">
+                    Ativar
+                </button>
+                &nbsp; &nbsp;
+                <button class="mat-primary-bg"
+                    *ngIf="professorHasClassroom(professor._id)"
+                    mat-raised-button item-end
+                    (click)="deactivateProfessor(professor?._id)">
+                    Desativar
+                </button>
+            </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row id="table-row" *matRowDef="let professor; columns: displayedColumns;"
+                class="contact" [@animate]="{value:'*',params:{y:'100%'}}">
+        </mat-row>
+    </mat-table>
+
+    <h3 style="text-align: center" *ngIf="dataSource.filteredData.length === 0">
+        Não existe escola com este filtro.
+    </h3>
+
+    <mat-paginator
+        [pageSizeOptions]="[10, 20, 50, 100]"
+        showFirstLastButtons>
+    </mat-paginator>
+</div>

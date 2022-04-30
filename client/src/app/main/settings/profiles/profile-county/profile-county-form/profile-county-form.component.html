@@ -1,0 +1,50 @@
+<fuse-progress-bar></fuse-progress-bar>
+
+<form [formGroup]="profileForm">
+    <mat-form-field class="w-100-p ">
+        <mat-select
+            placeholder="Estado"
+            [(ngModel)]="state"
+            [ngModelOptions]="{ standalone: true }"
+            (selectionChange)="getCountyByState($event.value)"
+        >
+            <mat-option *ngFor="let state of states" [value]="state.id">
+                {{ state.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-100-p ">
+        <mat-select placeholder="Cidade" formControlName="county" required>
+            <mat-option *ngFor="let county of counties" [value]="county._id">
+                {{ county.name }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="county.errors?.required"
+            >Município é obrigatório.</mat-error
+        >
+    </mat-form-field>
+
+    <mat-form-field class="w-100-p ">
+        <mat-select placeholder="Departamento" formControlName="role" required>
+            <mat-option *ngFor="let role of roles" [value]="role.value">{{
+                role.viewValue
+            }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="role.errors?.required"
+            >O campo Departamento é obrigatório.</mat-error
+        >
+    </mat-form-field>
+</form>
+
+<div fxLayoutAlign="end center">
+    <button
+        id="submitButton"
+        mat-raised-button
+        class="mat-accent-bg"
+        (click)="onSubmit()"
+        [disabled]="profileForm.invalid"
+    >
+        Salvar
+    </button>
+</div>

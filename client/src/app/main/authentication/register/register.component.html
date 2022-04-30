@@ -1,0 +1,164 @@
+<div id="register" class="inner-scroll" fxLayout="row" fxLayoutAlign="start">
+    <div id="register-intro" fxFlex fxHide fxShow.gt-xs>
+        <div class="logo" [@animate]="{ value: '*', params: { scale: '0.2' } }">
+            <img src="assets/images/logos/fuse.svg" />
+        </div>
+
+        <div
+            class="title"
+            [@animate]="{ value: '*', params: { delay: '50ms', y: '25px' } }"
+        >
+            Bem vindo(a) ao OCAMACAM!
+        </div>
+
+        <div
+            class="description"
+            [@animate]="{ value: '*', params: { delay: '100ms', y: '25px' } }"
+        >
+            Alunos, Pais e Familiares, Professores e Orientadores Pedagógicos,
+            Gestores Escolares e Municipais, Voluntários e toda Comunidade de
+            vários cantos do país.
+        </div>
+    </div>
+
+    <div
+        id="register-form-wrapper"
+        fusePerfectScrollbar
+        [@animate]="{ value: '*', params: { delay: '300ms', x: '100%' } }"
+    >
+        <div id="register-form">
+            <div class="logo" fxHide.gt-xs>
+                <img src="assets/images/logos/fuse.svg" />
+            </div>
+
+            <div class="title">CRIE UMA CONTA</div>
+            <fuse-progress-bar></fuse-progress-bar>
+
+            <form
+                (ngSubmit)="signup()"
+                name="registerForm"
+                [formGroup]="registerForm"
+                novalidate
+            >
+                <div class="mb-4 red-fg">
+                    * Campo Obrigatório.
+                </div>
+                <mat-form-field floatLabel="never">
+                    <input
+                        matInput
+                        (change)="convertToLower($event.target.value)"
+                        placeholder="Login"
+                        id="shortName"
+                        formControlName="shortName"
+                        (blur)="shortNameExists()"
+                        (keyup)="_shortNameExists = false"
+                        required
+                    />
+                    <mat-error *ngIf="shortName.errors?.required">
+                        Login é obrigatório. Ex: nomesobrenome
+                    </mat-error>
+                </mat-form-field>
+                <mat-error *ngIf="_shortNameExists && !shortName.errors">
+                    O login '{{ shortName.value }}' já está cadastrado no ATLA
+                    Ensino.
+                </mat-error>
+
+                <mat-form-field floatLabel="never">
+                    <input
+                        matInput
+                        placeholder="Email"
+                        id="mainEmail"
+                        formControlName="mainEmail"
+                        (blur)="emailExists()"
+                        (keyup)="_emailExists = false"
+                        required
+                    />
+                    <mat-error *ngIf="mainEmail.errors?.required">
+                        Email é obrigatório.
+                    </mat-error>
+                    <mat-error *ngIf="mainEmail.errors?.email">
+                        Por favor, insira um endereço de e-mail válido.
+                    </mat-error>
+                </mat-form-field>
+                <mat-error *ngIf="_emailExists && !mainEmail.errors">
+                    O email '{{ mainEmail.value }}' já está cadastrado no ATLA
+                    Ensino.
+                </mat-error>
+
+                <mat-form-field floatLabel="never">
+                    <input
+                        matInput
+                        type="password"
+                        placeholder="Senha"
+                        formControlName="password"
+                        required
+                    />
+                    <mat-error *ngIf="password.errors?.required">
+                        Senha é obrigatória
+                    </mat-error>
+                    <mat-error *ngIf="password.errors?.minLength">
+                        Mínimo de 8 dígitos.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field floatLabel="never">
+                    <input
+                        matInput
+                        type="password"
+                        placeholder="Senha (Confirmação)"
+                        formControlName="passwordConfirm"
+                        required
+                    />
+                    <mat-error *ngIf="passwordConfirm.errors?.required">
+                        Confirmação de senha é obrigatória
+                    </mat-error>
+                    <mat-error
+                        *ngIf="passwordConfirm.errors?.passwordsNotMatch"
+                    >
+                        As senhas devem ser iguais
+                    </mat-error>
+                    <mat-error *ngIf="passwordConfirm.errors?.minLength">
+                        Mínimo de 8 dígitos.
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="terms" fxLayout="row" fxLayoutAlign="center center">
+                    <mat-checkbox
+                        color="warn"
+                        name="terms"
+                        aria-label="I read and accept"
+                        formControlName="checked"
+                        required
+                    >
+                        Eu li e aceito
+                    </mat-checkbox>
+                    <a class="link" (click)="termsAndConditions()">
+                        termos e condições
+                    </a>
+                </div>
+
+                <button
+                    id="submitButton"
+                    mat-raised-button
+                    color="warn"
+                    class="submit-button"
+                    aria-label="CRIAR CONTA"
+                    [disabled]="
+                        registerForm.invalid || _shortNameExists || _emailExists
+                    "
+                >
+                    CRIAR CONTA
+                </button>
+            </form>
+
+            <div
+                class="register"
+                fxLayout="column"
+                fxLayoutAlign="center center"
+            >
+                <span class="text">Já tem uma conta?</span>
+                <a class="link" [routerLink]="'/auth/login'">Login</a>
+            </div>
+        </div>
+    </div>
+</div>

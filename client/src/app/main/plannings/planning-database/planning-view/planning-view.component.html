@@ -1,0 +1,1393 @@
+<div class="page-layout carded fullwidth tabbed inner-scroll">
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg mat-accent-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+        <!-- HEADER -->
+        <div
+            class="header mat-accent-bg"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center"
+        >
+            <!-- APP TITLE -->
+            <div
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                *ngIf="planningDatabaseService.planning$ | async as planning"
+            >
+                <button
+                    mat-icon-button
+                    class="mr-16"
+                    [routerLink]="['../../../../']"
+                >
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div
+                    fxLayout="column"
+                    fxLayoutAlign="start start"
+                    [@animate]="{
+                        value: '*',
+                        params: { delay: '100ms', x: '-25px' }
+                    }"
+                >
+                    <div class="h2">{{ planning?.meta?.name }}</div>
+                    <div class="subtitle secondary-text">
+                        <span
+                            >{{ planning?.owner?.user?.people?.name }} |
+                            professor(a) na escola
+                            {{
+                                planning?.owner?.school?.requested?.institution
+                                    ?.name
+                            }}</span
+                        >
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- ADD BUTTON -->
+            <div
+                *ngIf="planningDatabaseService.planning$ | async as planning"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+            >
+                <button
+                    class="mx-4"
+                    *ngIf="profile?.id == planning.owner?._id"
+                    mat-raised-button
+                    [routerLink]="[
+                        '/professor/banco-planejamentos/edit',
+                        planning._id,
+                        'editar-plano',
+                        planning.documentVersion
+                    ]"
+                >
+                    EDITAR
+                </button>
+                <button
+                    class="mx-4"
+                    *ngIf="profile?.id == planning.owner?._id"
+                    mat-raised-button
+                    color="warn"
+                    (click)="deletePlanning(planning)"
+                >
+                    EXCLUIR
+                </button>
+                <button
+                    class="mx-4"
+                    *ngIf="profile?.id != planning.owner?._id"
+                    mat-raised-button
+                    (click)="forkPlanning(planning)"
+                >
+                    ADICIONAR À BIBLIOTECA
+                </button>
+            </div>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card mat-white-bg">
+            <!-- CONTENT -->
+            <div
+                class="content"
+                *ngIf="planningDatabaseService.planning$ | async as planning"
+            >
+                <mat-tab-group mat-stretch-tabs class=" w-100-p ">
+                    <mat-tab label="Conteúdo">
+                        <div class="tab-content h-100-p" fusePerfectScrollbar>
+                            <!-- CONTENT -->
+                            <div id="course-content" class="content  ">
+                                <ng-container>
+                                    <div
+                                        class="course-step w-100-p h-100-p p-24"
+                                        fusePerfectScrollbar
+                                    >
+                                        <div
+                                            id="course-step-content"
+                                            class="course-step-content p-0"
+                                        >
+                                            <!-- <app-text-editor
+                                                [(dataModel)]="planning.content"
+                                            ></app-text-editor> -->
+
+                                            <div class="p-24">
+                                                <mat-form-field
+                                                    class="w-45-p m-16"
+                                                >
+                                                    <mat-select
+                                                        placeholder="Versão atual"
+                                                        name="version"
+                                                        [(ngModel)]="compared"
+                                                        (selectionChange)="
+                                                            changeVersion(
+                                                                $event
+                                                            )
+                                                        "
+                                                    >
+                                                        <mat-option
+                                                            *ngFor="
+                                                                let item of planningDatabaseService.planningVerions$
+                                                                    | async;
+                                                                let i = index
+                                                            "
+                                                            [value]="
+                                                                item.version
+                                                            "
+                                                        >
+                                                            Versão
+                                                            {{ item.version }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+
+                                                <mat-form-field
+                                                    class="w-45-p m-16"
+                                                >
+                                                    <mat-select
+                                                        placeholder="Comparar com"
+                                                        name="version"
+                                                        (selectionChange)="
+                                                            compareVersion(
+                                                                $event
+                                                            )
+                                                        "
+                                                    >
+                                                        <mat-option
+                                                            *ngFor="
+                                                                let item of planningDatabaseService.planningVerions$
+                                                                    | async;
+                                                                let i = index
+                                                            "
+                                                            [value]="
+                                                                item.version
+                                                            "
+                                                        >
+                                                            Versão
+                                                            {{ item.version }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+
+                                                <mat-form-field
+                                                    class="w-45-p m-16"
+                                                >
+                                                    <mat-select
+                                                        placeholder="Versão ancestral"
+                                                        name="version"
+                                                        (selectionChange)="
+                                                            compareAncestralVersion(
+                                                                $event
+                                                            )
+                                                        "
+                                                    >
+                                                        <mat-option
+                                                            *ngFor="
+                                                                let item of planningDatabaseService.forkedVerions$
+                                                                    | async;
+                                                                let i = index
+                                                            "
+                                                            [value]="
+                                                                item.version
+                                                            "
+                                                        >
+                                                            Versão
+                                                            {{ item.version }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                <mat-form-field
+                                                    class="w-45-p m-16"
+                                                >
+                                                    <mat-select
+                                                        placeholder="Outras versões"
+                                                        name="version"
+                                                        [(ngModel)]="otherVersion"
+                                                        (selectionChange)="
+                                                            compareOtherVersion(
+                                                                $event
+                                                            )
+                                                        "
+                                                    >
+                                                        <mat-option
+                                                            *ngFor="
+                                                                let item of planningDatabaseService.otherVersions$
+                                                                    | async;
+                                                                let i = index
+                                                            "
+                                                            [value]="
+                                                                item
+                                                            "
+                                                        >
+                                                            Versão
+                                                            {{ item.version }} -
+                                                            {{
+                                                                item.owner
+                                                                    ?.shortName
+                                                            }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+
+                                                <div
+                                                    *ngIf="!bla"
+                                                    [innerHTML]="
+                                                        planning?.content
+                                                    "
+                                                ></div>
+                                                <mat-divider> </mat-divider>
+                                                <div
+                                                    *ngIf="bla"
+                                                    [innerHTML]="bla"
+                                                ></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <!-- / CONTENT -->
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Comentários">
+                        <div class="tab-content p-24" fusePerfectScrollbar>
+                            <!-- PUT YOUR TAB CONTENT HERE -->
+                            <app-content-blocked></app-content-blocked>
+                            <!-- / PUT YOUR TAB CONTENT HERE -->
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Comparação">
+                        <div class="tab-content p-24" fusePerfectScrollbar>
+                            <!-- PUT YOUR TAB CONTENT HERE -->
+
+                            <div
+                                class="fuse-card w-100-w"
+                                *ngIf="
+                                    planningDatabaseService.planning$
+                                        | async as planning
+                                "
+                            >
+                                <table class="simple clickable w-100-w">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-right">
+                                                Versão
+                                                {{ planning.documentVersion }}
+                                            </th>
+                                            <th
+                                                *ngIf="compare"
+                                                class="text-right"
+                                            >
+                                                Versão
+                                                {{ compare.documentVersion }}
+                                                ({{
+                                                    compare.owner?.user?.people
+                                                        ?.name
+                                                }}
+                                                @{{
+                                                    compare.owner?.user
+                                                        ?.shortName
+                                                }})
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Licença</td>
+                                            <td
+                                                *ngIf="planning"
+                                                class="text-right"
+                                            >
+                                                <div
+                                                    *ngIf="
+                                                        planningDatabaseService.licenses$
+                                                            | async
+                                                            | getByElementId
+                                                                : planning?.meta
+                                                                      ?.license as license
+                                                    "
+                                                >
+                                                    <a
+                                                        *ngIf="license._id"
+                                                        target="_blank"
+                                                        [href]="license?.link"
+                                                        >Licença:
+                                                        {{ license?._id }}</a
+                                                    >
+                                                    <p *ngIf="!license._id">
+                                                        -
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <td
+                                                *ngIf="compare"
+                                                class="text-right"
+                                            >
+                                                <div
+                                                    *ngIf="
+                                                        planningDatabaseService.licenses$
+                                                            | async
+                                                            | getByElementId
+                                                                : compare?.meta
+                                                                      ?.license as license
+                                                    "
+                                                >
+                                                    <a
+                                                        *ngIf="license._id"
+                                                        target="_blank"
+                                                        [href]="license?.link"
+                                                        >Licença:
+                                                        {{ license?._id }}
+                                                    </a>
+                                                    <p *ngIf="!license._id">
+                                                        -
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Última Alteração</td>
+                                            <td class="text-right">
+                                                {{
+                                                    planning.updatedAt
+                                                        ? (planning.updatedAt
+                                                          | date
+                                                              : "dd/MM/yy hh:mm")
+                                                        : "-"
+                                                }}
+                                            </td>
+                                            <td
+                                                *ngIf="compare"
+                                                class="text-right"
+                                            >
+                                                {{
+                                                    compare?.updatedAt
+                                                        ? (compare?.updatedAt
+                                                          | date
+                                                              : "dd/MM/yy hh:mm")
+                                                        : "-"
+                                                }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Disciplina</td>
+                                            <td
+                                                class="text-right"
+                                                *ngIf="planning"
+                                            >
+                                                <div
+                                                    *ngIf="
+                                                        _planningsService.disciplines$
+                                                            | async
+                                                            | getByElementIdUnderscore
+                                                                : planning?.meta
+                                                                      ?.theme as theme
+                                                    "
+                                                >
+                                                    {{ theme.viewValue }}
+                                                </div>
+                                            </td>
+                                            <td
+                                                class="text-right"
+                                                *ngIf="compare"
+                                            >
+                                                <div
+                                                    *ngIf="
+                                                        _planningsService.disciplines$
+                                                            | async
+                                                            | getByElementIdUnderscore
+                                                                : compare?.meta
+                                                                      ?.theme as theme
+                                                    "
+                                                >
+                                                    {{ theme.viewValue }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ano/Série</td>
+                                            <td
+                                                class="text-right"
+                                                *ngIf="
+                                                    _planningsService.years$
+                                                        | async
+                                                        | getByElementIdUnderscore
+                                                            : planning?.meta
+                                                                  ?.year as year
+                                                "
+                                            >
+                                                {{ year.viewValue }}
+                                            </td>
+                                            <td
+                                                class="text-right"
+                                                *ngIf="compare"
+                                            >
+                                                <div
+                                                    *ngIf="
+                                                        _planningsService.years$
+                                                            | async
+                                                            | getByElementIdUnderscore
+                                                                : compare?.meta
+                                                                      ?.year as year
+                                                    "
+                                                >
+                                                    {{ year.viewValue }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Objetivo</td>
+                                            <td class="text-right">
+                                                {{
+                                                    planning.meta?.goal
+                                                        ? planning.meta?.goal
+                                                        : "-"
+                                                }}
+                                            </td>
+                                            <td
+                                                class="text-right"
+                                                *ngIf="compare"
+                                            >
+                                                {{
+                                                    compare.meta?.goal
+                                                        ? compare.meta?.goal
+                                                        : "-"
+                                                }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Por que alterei</td>
+                                            <td class="text-right">
+                                                {{
+                                                    planning.meta?.why
+                                                        ? planning.meta?.why
+                                                        : "-"
+                                                }}
+                                            </td>
+                                            <td
+                                                class="text-right"
+                                                *ngIf="compare"
+                                            >
+                                                {{
+                                                    compare.meta?.why
+                                                        ? compare.meta?.why
+                                                        : "-"
+                                                }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Referências</td>
+                                            <td
+                                                class="text-right p-0"
+                                                *ngIf="planning"
+                                            >
+                                                <div
+                                                    class="text-right pr"
+                                                    *ngIf="
+                                                        !planning?.meta
+                                                            ?.references ||
+                                                        planning?.meta
+                                                            ?.references
+                                                            .length == 0
+                                                    "
+                                                >
+                                                    -
+                                                </div>
+                                                <mat-list>
+                                                    <mat-list-item
+                                                        *ngFor="
+                                                            let reference of planning
+                                                                ?.meta
+                                                                ?.references;
+                                                            let i = index
+                                                        "
+                                                    >
+                                                        <a
+                                                            target="_blank"
+                                                            [href]="
+                                                                reference[
+                                                                    'reference_' +
+                                                                        i +
+                                                                        '_link'
+                                                                ]
+                                                            "
+                                                            >{{
+                                                                reference[
+                                                                    "reference_" +
+                                                                        i
+                                                                ]
+                                                            }}
+                                                        </a>
+                                                        |
+                                                        {{
+                                                            reference[
+                                                                "reference_" +
+                                                                    i +
+                                                                    "_license"
+                                                            ]
+                                                        }}
+                                                    </mat-list-item>
+                                                </mat-list>
+                                            </td>
+                                            <td
+                                                class="text-right p-0"
+                                                *ngIf="compare"
+                                            >
+                                                <div
+                                                    class="text-right"
+                                                    *ngIf="
+                                                        !compare?.meta
+                                                            ?.references ||
+                                                        compare?.meta
+                                                            ?.references
+                                                            .length == 0
+                                                    "
+                                                >
+                                                    -
+                                                </div>
+                                                <mat-list>
+                                                    <mat-list-item
+                                                        *ngFor="
+                                                            let reference of compare
+                                                                ?.meta
+                                                                ?.references;
+                                                            let i = index
+                                                        "
+                                                    >
+                                                        <a
+                                                            target="_blank"
+                                                            [href]="
+                                                                reference[
+                                                                    'reference_' +
+                                                                        i +
+                                                                        '_link'
+                                                                ]
+                                                            "
+                                                            >{{
+                                                                reference[
+                                                                    "reference_" +
+                                                                        i
+                                                                ]
+                                                            }}</a
+                                                        >
+                                                        |
+                                                        {{
+                                                            reference[
+                                                                "reference_" +
+                                                                    i +
+                                                                    "_license"
+                                                            ]
+                                                        }}
+                                                    </mat-list-item>
+                                                </mat-list>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Habilidades</td>
+                                            <td
+                                                class="text-right"
+                                                *ngIf="planning"
+                                            >
+                                                <mat-chip-list>
+                                                    <mat-chip
+                                                        *ngFor="
+                                                            let hability of planning
+                                                                ?.meta
+                                                                ?.habilities
+                                                        "
+                                                        >{{
+                                                            hability
+                                                        }}</mat-chip
+                                                    >
+                                                </mat-chip-list>
+                                            </td>
+                                            <td
+                                                class="text-right"
+                                                *ngIf="compare"
+                                            >
+                                                <mat-chip-list>
+                                                    <mat-chip
+                                                        *ngFor="
+                                                            let hability of compare
+                                                                ?.meta
+                                                                ?.habilities
+                                                        "
+                                                        >{{
+                                                            hability
+                                                        }}</mat-chip
+                                                    >
+                                                </mat-chip-list>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- / PUT YOUR TAB CONTENT HERE -->
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Versões">
+                        <div class="tab-content" fusePerfectScrollbar>
+                            <!-- CONTENT -->
+                            <div id="course-content" class="content  ">
+                                <ng-container>
+                                    <div
+                                        class="course-step w-100-p h-100-p p-24"
+                                        fusePerfectScrollbar
+                                    >
+                                        <div id="course-step-content">
+                                            <!-- <app-text-editor
+                                                [(dataModel)]="planning.content"
+                                            ></app-text-editor> -->
+                                            <div
+                                                class="p-24"
+                                                *ngFor="
+                                                    let item of planningDatabaseService.planningSuggestions$
+                                                        | async;
+                                                    let i = index
+                                                "
+                                            >
+                                                <div class="fuse-card">
+                                                    <div
+                                                        class="p-16"
+                                                        fxLayout="row"
+                                                        fxLayoutAlign="space-between center"
+                                                    >
+                                                        <div class="pr-16">
+                                                            <div
+                                                                class="h1 font-weight-300"
+                                                            >
+                                                                {{
+                                                                    item.from
+                                                                        ?.user
+                                                                        ?.people
+                                                                        ?.name
+                                                                }}
+                                                                ({{
+                                                                    item.createdAt
+                                                                        | date
+                                                                            : "dd/MM/yy hh:mm"
+                                                                }})
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <mat-tab-group>
+                                                        <mat-tab
+                                                            label="detalhes"
+                                                        >
+                                                            <div
+                                                                class="p-8 pt-0"
+                                                                fxLayout="row"
+                                                                fxLayoutAlign="space-between center"
+                                                            >
+                                                                <div
+                                                                    fxLayout="row"
+                                                                    fxLayoutAlign="start center"
+                                                                >
+                                                                    <button
+                                                                        *ngIf="
+                                                                            item.status ==
+                                                                            'waiting'
+                                                                        "
+                                                                        class="mr-16"
+                                                                        mat-button
+                                                                        color="warn"
+                                                                        (click)="
+                                                                            denySuggestion(
+                                                                                item
+                                                                            )
+                                                                        "
+                                                                    >
+                                                                        recusar
+                                                                        sugestão
+                                                                    </button>
+                                                                    <button
+                                                                        class="mr-16"
+                                                                        mat-button
+                                                                        color="accent"
+                                                                        (click)="
+                                                                            getCompare(
+                                                                                item
+                                                                            )
+                                                                        "
+                                                                    >
+                                                                        comparar
+                                                                        sugestão
+                                                                    </button>
+
+                                                                    <button
+                                                                        class="mr-16"
+                                                                        mat-button
+                                                                        color="accent"
+                                                                        (click)="
+                                                                            acceptSuggestion(
+                                                                                item
+                                                                            )
+                                                                        "
+                                                                    >
+                                                                        aceitar
+                                                                        sugestão
+                                                                    </button>
+                                                                    <p>
+                                                                        {{
+                                                                            item
+                                                                                .patches
+                                                                                .length
+                                                                        }}
+                                                                        modificações
+                                                                    </p>
+                                                                </div>
+
+                                                                <button
+                                                                    mat-icon-button
+                                                                    aria-label="expand card"
+                                                                    (click)="
+                                                                        item.expanded = !item.expanded
+                                                                    "
+                                                                >
+                                                                    <mat-icon
+                                                                        *ngIf="
+                                                                            item.expanded
+                                                                        "
+                                                                        >keyboard_arrow_up</mat-icon
+                                                                    >
+                                                                    <mat-icon
+                                                                        *ngIf="
+                                                                            !item.expanded
+                                                                        "
+                                                                        >keyboard_arrow_down</mat-icon
+                                                                    >
+                                                                </button>
+                                                            </div>
+                                                            <div
+                                                                class="card-expand-area"
+                                                                *ngIf="
+                                                                    item.expanded
+                                                                "
+                                                                [@expandCollapse]
+                                                            >
+                                                                <div>
+                                                                    <table
+                                                                        class="simple clickable"
+                                                                    >
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>
+                                                                                    Atributo
+                                                                                </th>
+                                                                                <th
+                                                                                    class="text-right"
+                                                                                >
+                                                                                    Operação
+                                                                                </th>
+                                                                                <th
+                                                                                    class="text-right"
+                                                                                >
+                                                                                    Valor
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr
+                                                                                *ngFor="
+                                                                                    let patch of item.patches
+                                                                                "
+                                                                            >
+                                                                                <td>
+                                                                                    {{
+                                                                                        patch.path
+                                                                                    }}
+                                                                                </td>
+                                                                                <td
+                                                                                    class="text-right"
+                                                                                >
+                                                                                    {{
+                                                                                        patch.op
+                                                                                    }}
+                                                                                </td>
+                                                                                <td
+                                                                                    class="text-right"
+                                                                                >
+                                                                                    {{
+                                                                                        patch.value
+                                                                                            | htmlToPlaintext
+                                                                                            | slice
+                                                                                                : 0
+                                                                                                : 180
+                                                                                    }}{{
+                                                                                        patch
+                                                                                            ?.value
+                                                                                            ?.length >
+                                                                                        180
+                                                                                            ? "..."
+                                                                                            : ""
+                                                                                    }}
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </mat-tab>
+                                                        <mat-tab
+                                                            label="sugestão"
+                                                        >
+                                                            <div class="p-16">
+                                                                <p>
+                                                                    Lorem ipsum
+                                                                </p>
+                                                            </div>
+                                                        </mat-tab>
+                                                    </mat-tab-group>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                class="p-24"
+                                                *ngFor="
+                                                    let item of planningDatabaseService.planningVerions$
+                                                        | async;
+                                                    let i = index
+                                                "
+                                            >
+                                                <div class="fuse-card">
+                                                    <div
+                                                        class="px-16 pt-16"
+                                                        fxLayout="row"
+                                                        fxLayoutAlign="space-between center"
+                                                    >
+                                                        <div class="pr-16">
+                                                            <div
+                                                                class="h1 font-weight-300"
+                                                            >
+                                                                Versão
+                                                                {{
+                                                                    item.version
+                                                                }}
+                                                                ({{
+                                                                    (item.date
+                                                                        | date
+                                                                            : "dd/MM/yy hh:mm") ||
+                                                                        "sem data"
+                                                                }})
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <mat-tab-group
+                                                        [selectedIndex]="0"
+                                                    >
+                                                        <mat-tab
+                                                            label="detalhes"
+                                                        >
+                                                            <div
+                                                                class="p-8 pt-0"
+                                                                fxLayout="row"
+                                                                fxLayoutAlign="space-between center"
+                                                            >
+                                                                <div
+                                                                    fxLayout="row"
+                                                                    fxLayoutAlign="start center"
+                                                                >
+                                                                    <a
+                                                                        color="accent"
+                                                                        class="mr-24"
+                                                                        mat-button
+                                                                        [routerLink]="[
+                                                                            '../',
+                                                                            item.version
+                                                                        ]"
+                                                                    >
+                                                                        ir para
+                                                                        versão
+                                                                        {{
+                                                                            item.version
+                                                                        }}
+                                                                    </a>
+                                                                    <p>
+                                                                        {{
+                                                                            item
+                                                                                .patches
+                                                                                .length
+                                                                        }}
+                                                                        modificações
+                                                                    </p>
+                                                                </div>
+
+                                                                <button
+                                                                    mat-icon-button
+                                                                    aria-label="expand card"
+                                                                    (click)="
+                                                                        item.expanded = !item.expanded
+                                                                    "
+                                                                >
+                                                                    <mat-icon
+                                                                        *ngIf="
+                                                                            item.expanded
+                                                                        "
+                                                                        >keyboard_arrow_up</mat-icon
+                                                                    >
+                                                                    <mat-icon
+                                                                        *ngIf="
+                                                                            !item.expanded
+                                                                        "
+                                                                        >keyboard_arrow_down</mat-icon
+                                                                    >
+                                                                </button>
+                                                            </div>
+                                                            <div
+                                                                class="card-expand-area"
+                                                                *ngIf="
+                                                                    item.expanded
+                                                                "
+                                                                [@expandCollapse]
+                                                            >
+                                                                <div>
+                                                                    <table
+                                                                        class="simple clickable"
+                                                                    >
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>
+                                                                                    Atributo
+                                                                                </th>
+                                                                                <th
+                                                                                    class="text-right"
+                                                                                >
+                                                                                    Operação
+                                                                                </th>
+                                                                                <th
+                                                                                    class="text-right"
+                                                                                >
+                                                                                    Valor
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr
+                                                                                *ngFor="
+                                                                                    let patch of item.patches
+                                                                                "
+                                                                            >
+                                                                                <td>
+                                                                                    {{
+                                                                                        patch.path
+                                                                                    }}
+                                                                                </td>
+                                                                                <td
+                                                                                    class="text-right"
+                                                                                >
+                                                                                    {{
+                                                                                        patch.op
+                                                                                    }}
+                                                                                </td>
+                                                                                <td
+                                                                                    class="text-right"
+                                                                                >
+                                                                                    {{
+                                                                                        patch.value
+                                                                                            | htmlToPlaintext
+                                                                                            | slice
+                                                                                                : 0
+                                                                                                : 180
+                                                                                    }}{{
+                                                                                        patch
+                                                                                            ?.value
+                                                                                            ?.length >
+                                                                                        180
+                                                                                            ? "..."
+                                                                                            : ""
+                                                                                    }}
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </mat-tab>
+
+                                                        <mat-tab
+                                                            label="sugestão"
+                                                        >
+                                                            <div
+                                                                class="p-8 pt-0"
+                                                                fxLayout="row"
+                                                                fxLayoutAlign="space-between center"
+                                                            >
+                                                                <div
+                                                                    fxLayout="row"
+                                                                    fxLayoutAlign="start center"
+                                                                >
+                                                                    <button
+                                                                        class="mx-16"
+                                                                        *ngIf="
+                                                                            item.version >
+                                                                                1 &&
+                                                                            planning
+                                                                                ?.meta
+                                                                                ?.forked &&
+                                                                            item.version ==
+                                                                                planning.documentVersion &&
+                                                                            !item.pulling
+                                                                        "
+                                                                        mat-button
+                                                                        color="accent"
+                                                                        (click)="
+                                                                            pullRequest(
+                                                                                planning
+                                                                            )
+                                                                        "
+                                                                    >
+                                                                        enviar
+                                                                        sugestão
+                                                                    </button>
+                                                                    <button
+                                                                        class="mx-16"
+                                                                        *ngIf="
+                                                                            item.version >
+                                                                                1 &&
+                                                                            planning
+                                                                                ?.meta
+                                                                                ?.forked &&
+                                                                            item.pulling &&
+                                                                            item
+                                                                                .pulling
+                                                                                ?.status ==
+                                                                                'waiting'
+                                                                        "
+                                                                        mat-button
+                                                                        color="warn"
+                                                                        (click)="
+                                                                            deleteSuggestion(
+                                                                                item.pulling
+                                                                            )
+                                                                        "
+                                                                    >
+                                                                        cancelar
+                                                                        sugestão
+                                                                    </button>
+                                                                    <p
+                                                                        *ngIf="
+                                                                            item.version >
+                                                                                1 &&
+                                                                            planning
+                                                                                ?.meta
+                                                                                ?.forked &&
+                                                                            item.version ==
+                                                                                planning.documentVersion &&
+                                                                            !item.pulling
+                                                                        "
+                                                                    >
+                                                                        Adicione
+                                                                        uma
+                                                                        mensagem
+                                                                        de
+                                                                        justificativa
+                                                                    </p>
+                                                                    <p
+                                                                        *ngIf="
+                                                                            i !=
+                                                                                0 &&
+                                                                            planning
+                                                                                ?.meta
+                                                                                ?.forked &&
+                                                                            !item.pulling
+                                                                        "
+                                                                    >
+                                                                        Só é
+                                                                        possível
+                                                                        enviar
+                                                                        sugestão
+                                                                        da
+                                                                        última
+                                                                        versão
+                                                                        gerada
+                                                                    </p>
+                                                                    <p
+                                                                        *ngIf="
+                                                                            item.version >
+                                                                                1 &&
+                                                                            planning
+                                                                                ?.meta
+                                                                                ?.forked &&
+                                                                            item.pulling
+                                                                        "
+                                                                    >
+                                                                        Última
+                                                                        atualização
+                                                                        {{
+                                                                            item
+                                                                                ?.pulling
+                                                                                ?.updatedAt
+                                                                                | date
+                                                                                    : "dd/MM/yy hh:mm"
+                                                                        }}
+                                                                    </p>
+                                                                    <p
+                                                                        *ngIf="
+                                                                            item.version >
+                                                                                1 &&
+                                                                            !planning
+                                                                                ?.meta
+                                                                                ?.forked &&
+                                                                            item.pulled
+                                                                        "
+                                                                    >
+                                                                        Última
+                                                                        atualização
+                                                                        {{
+                                                                            item
+                                                                                ?.pulled
+                                                                                ?.updatedAt
+                                                                                | date
+                                                                                    : "dd/MM/yy hh:mm"
+                                                                        }}
+                                                                    </p>
+                                                                    <p
+                                                                        *ngIf="
+                                                                            !planning
+                                                                                ?.meta
+                                                                                ?.forked &&
+                                                                            !item.pulled
+                                                                        "
+                                                                    >
+                                                                        Este
+                                                                        documento
+                                                                        não
+                                                                        recebeu
+                                                                        nenhuma
+                                                                        sugestão
+                                                                    </p>
+                                                                </div>
+                                                                <button
+                                                                    mat-icon-button
+                                                                    aria-label="expand card"
+                                                                    (click)="
+                                                                        item.expanded1 = !item.expanded1
+                                                                    "
+                                                                >
+                                                                    <mat-icon
+                                                                        *ngIf="
+                                                                            item.expanded1
+                                                                        "
+                                                                        >keyboard_arrow_up</mat-icon
+                                                                    >
+                                                                    <mat-icon
+                                                                        *ngIf="
+                                                                            !item.expanded1
+                                                                        "
+                                                                        >keyboard_arrow_down</mat-icon
+                                                                    >
+                                                                </button>
+                                                            </div>
+                                                            <div
+                                                                class="card-expand-area"
+                                                                *ngIf="
+                                                                    item.expanded1
+                                                                "
+                                                                [@expandCollapse]
+                                                            >
+                                                                <div
+                                                                    *ngIf="
+                                                                        item.version >
+                                                                            1 &&
+                                                                        planning
+                                                                            ?.meta
+                                                                            ?.forked &&
+                                                                        item.version ==
+                                                                            planning.documentVersion &&
+                                                                        !item.pulling
+                                                                    "
+                                                                >
+                                                                    <div
+                                                                        class="px-24 pb-24"
+                                                                    >
+                                                                        <mat-form-field
+                                                                            class="w-100-p "
+                                                                        >
+                                                                            <textarea
+                                                                                [(ngModel)]="
+                                                                                    why
+                                                                                "
+                                                                                matInput
+                                                                                placeholder="Justificativa"
+                                                                            ></textarea>
+                                                                        </mat-form-field>
+                                                                    </div>
+                                                                </div>
+                                                                <table
+                                                                    *ngIf="
+                                                                        item.pulling
+                                                                    "
+                                                                    class="simple clickable"
+                                                                >
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                Estado
+                                                                            </td>
+                                                                            <td
+                                                                                class="text-right"
+                                                                            >
+                                                                                {{
+                                                                                    item
+                                                                                        .pulling
+                                                                                        .status
+                                                                                        | defaultKeys
+                                                                                }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                Justificativa
+                                                                            </td>
+                                                                            <td
+                                                                                class="text-right"
+                                                                            >
+                                                                                {{
+                                                                                    item
+                                                                                        .pulling
+                                                                                        .why
+                                                                                }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                Enviada
+                                                                                em
+                                                                            </td>
+                                                                            <td
+                                                                                class="text-right"
+                                                                            >
+                                                                                {{
+                                                                                    item
+                                                                                        .pulling
+                                                                                        .createdAt
+                                                                                        | date
+                                                                                            : "dd/MM/yy hh:mm"
+                                                                                }}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+
+                                                                <table
+                                                                    *ngIf="
+                                                                        item.pulled
+                                                                    "
+                                                                    class="simple clickable"
+                                                                >
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                Estado
+                                                                            </td>
+                                                                            <td
+                                                                                class="text-right"
+                                                                            >
+                                                                                {{
+                                                                                    item
+                                                                                        .pulled
+                                                                                        .status
+                                                                                        | defaultKeys
+                                                                                }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                Origem
+                                                                            </td>
+                                                                            <td
+                                                                                class="text-right"
+                                                                            >
+                                                                                {{
+                                                                                    item
+                                                                                        ?.pulled
+                                                                                        ?.from
+                                                                                        ?.user
+                                                                                        ?.people
+                                                                                        ?.name
+                                                                                }}
+                                                                                (@{{
+                                                                                    item
+                                                                                        ?.pulled
+                                                                                        ?.from
+                                                                                        ?.user
+                                                                                        ?.shortName
+                                                                                }})
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                Justificativa
+                                                                            </td>
+                                                                            <td
+                                                                                class="text-right"
+                                                                            >
+                                                                                {{
+                                                                                    item
+                                                                                        .pulled
+                                                                                        .why
+                                                                                }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                Enviada
+                                                                                em
+                                                                            </td>
+                                                                            <td
+                                                                                class="text-right"
+                                                                            >
+                                                                                {{
+                                                                                    item
+                                                                                        .pulled
+                                                                                        .createdAt
+                                                                                        | date
+                                                                                            : "dd/MM/yy hh:mm"
+                                                                                }}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </mat-tab>
+                                                    </mat-tab-group>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <!-- / CONTENT -->
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Estatísticas">
+                        <div class="tab-content p-24" fusePerfectScrollbar>
+                            <!-- PUT YOUR TAB CONTENT HERE -->
+                            <app-content-blocked></app-content-blocked>
+                            <!-- / PUT YOUR TAB CONTENT HERE -->
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Aplicações">
+                        <div class="tab-content p-24" fusePerfectScrollbar>
+                            <!-- PUT YOUR TAB CONTENT HERE -->
+                            <app-content-blocked></app-content-blocked>
+                            <!-- / PUT YOUR TAB CONTENT HERE -->
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+            <!-- / CONTENT -->
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

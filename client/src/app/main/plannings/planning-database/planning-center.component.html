@@ -1,0 +1,133 @@
+<div id="planing-center" class="page-layout simple left-sidebar inner-sidebar tabbed inner-scroll">
+    <!-- HEADER -->
+    <div class="header mat-accent-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between center">
+        <!-- APP TITLE -->
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-md
+                (click)="toggleSidebar('simple-left-sidebar-4')">
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon mr-16" [@animate]="{
+                        value: '*',
+                        params: { delay: '50ms', scale: '0.2' }
+                    }">account_box
+                </mat-icon>
+                <span class="logo-text h1 text-uppercase" [@animate]="{
+                        value: '*',
+                        params: { delay: '100ms', x: '-25px' }
+                    }">
+                    Banco de Aulas
+                </span>
+            </div>
+        </div>
+        <!-- / APP TITLE -->
+
+        <!-- SEARCH -->
+        <div class="search-input-wrapper mt-16 ml-8 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+            <label for="search" class="mr-8">
+                <mat-icon>search</mat-icon>
+            </label>
+            <mat-form-field mat-no-float class="m-0" floatLabel="never">
+                <input matInput id="search" placeholder="Pesquise por algo" />
+            </mat-form-field>
+        </div>
+        <!-- / SEARCH -->
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content">
+        <!-- SIDEBAR -->
+        <fuse-sidebar class="sidebar" name="simple-left-sidebar-4" position="left" lockedOpen="gt-md">
+            <!-- SIDEBAR CONTENT -->
+            <div class="nav content p-24" fusePerfectScrollbar>
+                <div class="header pb-24">
+                    <button mat-raised-button class="mat-accent compose-dialog-button w-100-p text-uppercase"
+                        routerLink="/professor/banco-planejamentos/new/novo-plano" aria-label="Compose">
+                        criar conteúdo
+                    </button>
+                </div>
+                <div class="nav-subheader text-uppercase">
+                    FILTRO DE CONTEÚDOS
+                </div>
+                <mat-form-field floatLabel="never" class="w-100-p mt-24 text-uppercase">
+                    <mat-select class="account-selection " placeholder="Selecione a Disciplina" [ngModel]="discipline"
+                        (onChange)="changeFilter()">
+                        <mat-option *ngFor="let discipline of disciplines" class="text-uppercase"
+                            [value]="discipline.id">
+                            {{ discipline.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field floatLabel="never" class="w-100-p text-uppercase">
+                    <mat-select class="account-selection " placeholder="Selecione o Ano" [ngModel]="year"
+                        (onChange)="changeFilter()">
+                        <mat-option *ngFor="let year of years" class="text-uppercase" [value]="year.id">
+                            {{ year.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- <fuse-demo-sidebar></fuse-demo-sidebar> -->
+            </div>
+            <!-- / SIDEBAR CONTENT -->
+        </fuse-sidebar>
+        <!-- / SIDEBAR -->
+
+        <!-- CENTER -->
+        <div class="center" fusePerfectScrollbar>
+            <!-- CONTENT -->
+
+            <mat-tab-group (selectedTabChange)="tabChanged($event)" mat-stretch-tabs dynamicHeight="true"
+                [selectedIndex]="3">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">star_border</mat-icon>
+                        Em Alta
+                    </ng-template>
+                    <div class="p-64">
+                        <app-content-blocked></app-content-blocked>
+                    </div>
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">share</mat-icon>
+                        Minha Rede
+                    </ng-template>
+                    <div class="p-64">
+                        <app-content-blocked></app-content-blocked>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">share</mat-icon>
+                        Minha Escola
+                    </ng-template>
+                    <div class="my-24">
+                        <app-planning-list></app-planning-list>
+                        <!-- <app-content-blocked></app-content-blocked> -->
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">done</mat-icon>
+                        Minha Biblioteca
+                    </ng-template>
+                    <div class="my-24">
+                        <app-planning-list></app-planning-list>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+
+            <!-- / CONTENT -->
+        </div>
+        <!-- / CENTER -->
+    </div>
+    <!-- / CONTENT -->
+</div>

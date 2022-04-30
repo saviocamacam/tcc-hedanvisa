@@ -1,0 +1,69 @@
+{
+  "ano": "3º Ano",
+  "nivel": "Ensino Médio",
+  "disciplina": "Matemática",
+  "temas": [
+    {
+      "1": "Espaço e Forma",
+      "descritores": [
+        { "D1": "Identificar figuras semelhantes mediante o reconhecimento de relações de proporcionalidade." },
+        { "D2": "Reconhecer aplicações das relações métricas do triângulo retângulo em um problema que envolva figuras planas ou espaciais." },
+        { "D3": "Relacionar diferentes poliedros ou corpos redondos com suas planificações ou vistas." },
+        { "D4": "Identificar a relação entre o número de vértices, faces e/ou arestas de poliedros expressa em um problema." },
+        { "D5": "Resolver problema que envolva razões trigonométricas no triângulo retângulo (seno, cosseno, tangente)." },
+        { "D6": "Identificar a localização de pontos no plano cartesiano." },
+        { "D7": "Interpretar geometricamente os coeficientes da equação de uma reta." },
+        { "D8": "Identificar a equação de uma reta apresentada a partir de dois pontos dados ou de um ponto e sua inclinação." },
+        { "D9": "Relacionar a determinação do ponto de interseção de duas ou mais retas com a resolução de um sistema de equações com duas incógnitas." },
+        { "D10": "Reconhecer, dentre as equações do 2o grau com duas incógnitas, as que representam circunferências." }
+      ]
+    },
+
+
+    {
+      "2": "Grandezas e Medidas",
+      "descritores": [
+        { "D11": "Resolver problema envolvendo o cálculo de perímetro de figuras planas." },
+        { "D12": "Resolver problema envolvendo o cálculo de área de figuras planas." },
+        { "D13": "Resolver problema envolvendo a área total e/ou volume de um sólido (prisma, pirâmide, cilindro, cone, esfera)." }
+      ]
+    },
+
+
+    {
+      "3": "Números e Operações/Álgebra e Funções",
+      "descritores": [
+        { "D14": "Identificar a localização de números reais na reta numérica." },
+        { "D15": "Resolver problema que envolva variação proporcional, direta ou inversa, entre grandezas." },
+        { "D16": "Resolver problema que envolva porcentagem." },
+        { "D17": "Resolver problema envolvendo equação do 2o grau." },
+        { "D18": "Reconhecer expressão algébrica que representa uma função a partir de uma tabela." },
+        { "D19": "Resolver problema envolvendo uma função do 1o grau." },
+        { "D20": "Analisar crescimento/decrescimento, zeros de funções reais apresentadas em gráficos." },
+        { "D21": "Identificar o gráfico que representa uma situação descrita em um texto." },
+        { "D22": "Resolver problema envolvendo P.A./P.G. dada a fórmula do termo geral." },
+        { "D23": "Reconhecer o gráfico de uma função polinomial de 1o grau por meio de seus coeficientes." },
+        { "D24": "Reconhecer a representação algébrica de uma função do 1o grau dado o seu gráfico." },
+        { "D25": "Resolver problemas que envolvam os pontos de máximo ou de mínimo no gráfico de uma função polinomial do 2o grau." },
+        { "D26": "Relacionar as raízes de um polinômio com sua decomposição em fatores do 1o grau." },
+        { "D27": "Identificar a representação algébrica e/ou gráfica de uma função exponencial." },
+        { "D28": "Identificar a representação algébrica e/ou gráfica de uma função logarítmica, reconhecendo-a como inversa da função exponencial." },
+        { "D29": "Resolver problema que envolva função exponencial." },
+        { "D30": "Identificar gráficos de funções trigonométricas (seno, cosseno, tangente) reconhecendo suas propriedades." },
+        { "D31": "Determinar a solução de um sistema linear associando-o à uma matriz." },
+        { "D32": "Resolver problema de contagem utilizando o princípio multiplicativo ou noções de permutação simples, arranjo simples e/ou combinação simples." },
+        { "D33": "Calcular a probabilidade de um evento." }
+      ]
+    },
+
+
+    {
+      "4": "Tratamento da Informação",
+      "descritores": [
+        { "D27": "Resolver problema envolvendo informações apresentadas em tabelas e/ou gráficos." },
+        { "D28": "Associar informações apresentadas em listas e/ou tabelas simples aos gráficos que as representam e vice-versa." }
+      ]
+    }
+
+  ]
+}

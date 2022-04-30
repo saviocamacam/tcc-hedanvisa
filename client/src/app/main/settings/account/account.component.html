@@ -1,0 +1,202 @@
+<h2 style="text-align: center">Informações de Conta</h2>
+
+<form [formGroup]="userForm" class="mt-16">
+    <div align="center">
+        <mat-form-field style="width: 80%">
+            <mat-label>Nome de Usuário</mat-label>
+            <input
+                matInput
+                type="text"
+                placeholder="testerson"
+                formControlName="shortName"
+                required
+            />
+            <mat-error *ngIf="userForm.get('shortName').errors?.required"
+                >Nome de usuário é obrigatório.</mat-error
+            >
+        </mat-form-field>
+
+        <mat-form-field style="width: 80%">
+            <mat-label>Email</mat-label>
+            <input
+                matInput
+                type="email"
+                placeholder="testerson@email.com"
+                formControlName="mainEmail"
+            />
+            <mat-error *ngIf="userForm.get('mainEmail').errors?.email"
+                >Por favor, insira um endereço de e-mail válido.</mat-error
+            >
+            <mat-icon
+                mat-icon-button
+                matSuffix
+                *ngIf="
+                    userForm.get('mainEmail').value &&
+                    !user?.$mainEmailAsObject?.$checked
+                "
+                (click)="validateContact('email')"
+                matTooltip="Clique para validar o seu email."
+                class="mat-primary-fg"
+                >access_time</mat-icon
+            >
+            <mat-icon
+                matSuffix
+                *ngIf="
+                    userForm.get('mainEmail').value &&
+                    user?.$mainEmailAsObject?.$checked
+                "
+                matTooltip="Email validado!"
+                class="green-fg"
+                >check</mat-icon
+            >
+        </mat-form-field>
+
+        <mat-form-field style="width: 80%">
+            <mat-label>Celular</mat-label>
+            <input
+                matInput
+                type="text"
+                formControlName="mainPhone"
+                placeholder="(00) 90000-0000"
+                [brmasker]="{
+                    form: userForm.get('mainPhone'),
+                    mask: '(00) 00000-0000',
+                    len: 15
+                }"
+            />
+            <!-- <mat-icon mat-icon-button isIconButton matSuffix *ngIf="userForm.get('mainPhone').value && !phoneChecked "
+                    (click)="validateContact('phone')" matTooltip="Clique para validar o seu número." class="mat-primary-fg">access_time
+                </mat-icon> -->
+            <mat-icon
+                matSuffix
+                *ngIf="
+                    userForm.get('mainPhone').value &&
+                    user?.$mainPhoneAsObject?.$checked
+                "
+                matTooltip="Número de celular validado!"
+                class="green-fg"
+                >check</mat-icon
+            >
+        </mat-form-field>
+
+        <div class="mt-8 mb-8" fxLayout="column" fxLayoutAlign="center center">
+            <mat-chip-list
+                *ngIf="
+                    !userForm.get('mainPhone').value ||
+                    userForm.get('mainPhone').value === ''
+                "
+            >
+                <mat-chip color="warn" selected
+                    >Insira o celular para sua segurança.</mat-chip
+                >
+            </mat-chip-list>
+        </div>
+
+        <!-- <mat-form-field style="width: 24%" *ngIf="passwordFields" floatLabel="never" appearance="outline">
+                <mat-label>Senha Antiga</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="oldPassword" minlength="8">
+                <mat-error *ngIf="userForm.get('oldPassword').errors?.minlength">Mínimo de 8 caracteres.</mat-error>
+            </mat-form-field>
+            &nbsp; -->
+        <mat-form-field
+            class="w-25-p m-4"
+            *ngIf="passwordFields"
+            floatLabel="never"
+            appearance="outline"
+        >
+            <mat-label>Senha Antiga</mat-label>
+            <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                placeholder="Nova Senha"
+                formControlName="oldPassword"
+                minlength="8"
+            />
+            <mat-error *ngIf="userForm.get('oldPassword').errors?.minlength"
+                >Mínimo de 8 caracteres.</mat-error
+            >
+        </mat-form-field>
+        <mat-form-field
+            class="w-25-p m-4"
+            *ngIf="passwordFields"
+            floatLabel="never"
+            appearance="outline"
+        >
+            <mat-label>Nova Senha</mat-label>
+            <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                placeholder="Nova Senha"
+                formControlName="password"
+                minlength="8"
+            />
+            <mat-error *ngIf="userForm.get('password').errors?.minlength"
+                >Mínimo de 8 caracteres.</mat-error
+            >
+        </mat-form-field>
+
+        <mat-form-field
+            class="w-25-p m-4"
+            *ngIf="passwordFields"
+            floatLabel="never"
+            appearance="outline"
+        >
+            <mat-label>Confirma Senha</mat-label>
+            <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="passwordConfirm"
+                minlength="8"
+            />
+            <mat-error *ngIf="userForm.get('passwordConfirm').errors?.minlength"
+                >Mínimo de 8 caracteres.</mat-error
+            >
+            <mat-error
+                *ngIf="
+                    userForm.get('passwordConfirm').errors?.confirmPassword
+                        ?.passwordsNotMatch
+                "
+                >Senhas não confirmam.</mat-error
+            >
+        </mat-form-field>
+
+        <mat-icon
+            matSuffix
+            *ngIf="passwordFields"
+            (click)="hide = !hide"
+            matTooltip="Clique para ver/esconder as senhas."
+            >{{ hide ? "visibility" : "visibility_off" }}</mat-icon
+        >
+        <br />
+        <br />
+        <a class="link" *ngIf="!passwordFields" (click)="passwordFields = true"
+            >Alterar a minha senha</a
+        >
+        <a class="link" *ngIf="passwordFields" (click)="clearPasswords()"
+            >Cancelar alteração de senha</a
+        >
+        &nbsp;&nbsp; | &nbsp;&nbsp;
+        <a class="link" (click)="desativeAccount()">Desativar a minha conta</a>
+        <br />
+        <button
+            id="submitButton"
+            mat-raised-button
+            color="accent"
+            class="mt-24"
+            (click)="updateUser()"
+            [disabled]="userForm.invalid || userForm.pristine"
+        >
+            Salvar
+        </button>
+        &nbsp;&nbsp;
+        <button
+            mat-raised-button
+            *ngIf="user?.$profiles?.length <= 0"
+            color="primary"
+            class="mt-24"
+            (click)="nextStep()"
+        >
+            Próximo
+        </button>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+<div style="background-color: white; width: 100%;">
+    <table mat-table [dataSource]="tableControl?.dataSource" style="min-width: 100%">
+        <ng-container 
+            *ngFor="let span of tableControl?.displayedSpans"
+            matColumnDef="{{ span }}"
+        >
+            <th mat-header-cell
+                class="cell-props"
+                *matHeaderCellDef>
+            </th>
+            <td mat-cell
+                class="cell-props"
+                *matCellDef="let element; let i = index" 
+                [attr.rowspan]="tableControl?.getRowSpan(span, i)"
+                [style.display]="tableControl?.getRowSpan(span, i) ? '' : 'none'"
+            >
+                <b>{{ element[span] }}</b>
+            </td>
+        </ng-container>
+        
+        <ng-container
+            *ngFor="let column of tableControl?.columns"
+            matColumnDef="{{ column.name }}"
+        >
+            <th mat-header-cell
+                class="cell-props"
+                *matHeaderCellDef
+            >
+                <div class="rotate header-{{ column.label }}">
+                    <b>{{ column.label }}</b>
+                </div>
+            </th>
+
+            <td mat-cell
+                class="cell-props"
+                *matCellDef="let element"
+            >
+                {{ element[column.name] }}
+            </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="tableControl?.displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: tableControl?.displayedColumns"></tr>
+    </table>
+</div>
